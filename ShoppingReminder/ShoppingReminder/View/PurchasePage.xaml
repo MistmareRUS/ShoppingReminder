@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.View.PurchasePage">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout x:Name="purchseStack">
+                <Label Text="Название"/>
+                <Entry Text="{Binding Name}"/>
+                <Label Text="Количество"/>
+                <Entry Text="{Binding Count}"/>
+                <Label Text="Ед. измерения"/>
+                <!--<Entry Text="{Binding Units}"/>-->
+                <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}">
+                    <Picker.Items>
+                        <x:String>Шт.</x:String>
+                        <x:String>Кг</x:String>
+                        <x:String>л</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}"/>
+                <Button Text="Удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}"/>
+                <Button Text="Назад" Command="{Binding ListVM.BackCommand}" />
+            </StackLayout>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

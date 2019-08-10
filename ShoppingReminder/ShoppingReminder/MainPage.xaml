@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingReminder"
+             x:Class="ShoppingReminder.MainPage">
+    <FlyoutItem Title="Текущая покупка">
+        <Tab Title="Активные покупки">
+            <ShellContent Title="Текущее">
+                <ContentPage>
+                    <StackLayout x:Name="CurrentStack">
+                        
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+        <Tab Title="Купленные">
+            <ShellContent Title="Текущее">
+                <ContentPage >
+                    <StackLayout x:Name="CompletetCurrentStack">
+                        
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    
+    
+    <FlyoutItem Title="Запланированное">
+        <Tab Title="***">
+            <ShellContent Title="Текущее">
+                <ContentPage>
+                    <StackLayout>
+                        <Label Text="text"/>
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    
+    
+    <FlyoutItem Title="История покупок">
+        <Tab Title="***">
+            <ShellContent Title="Текущее">
+                <ContentPage>
+                    <StackLayout x:Name="HistoryStack">
+                        
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    
+    
+    <FlyoutItem Title="Настройки">
+        <Tab Title="***">
+            <ShellContent Title="Текущее">
+                <ContentPage>
+                    <StackLayout x:Name="SettingsStack">
+                        <Button Text="Сброс текущих" Clicked="Button_Clicked"/>
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+</Shell>

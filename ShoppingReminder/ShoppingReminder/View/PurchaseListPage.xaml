@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.View.PurchaseListPage">
+    <ContentView.Content>
+        <StackLayout>
+            <Button Text="Новый предмет" TextColor="Red" Command="{Binding CreatePurchaseCommand}"/>
+            <Button Text="Очистить" Command="{Binding ClearPurchaseCommand}"/>
+            <Button Text="Готово" Command="{Binding CompletePurchaseCommand}"/>
+            <Button Text="Фото" IsEnabled="False"/>
+            <!--<Button Text="тест" Command="{Binding DeletePurchaseCommand}"/>-->
+            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>                                
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                        
+                                        <Label Text="{Binding Name}" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" />
+                                        <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
+
+                                    <Button Text="Complete" Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="2"/>
+                                    <Button Text="Delete" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="2"/>
+                                    <Button Text="/\" Grid.Row="0" Grid.Column="3"/>
+                                    <Button Text="\/" Grid.Row="1" Grid.Column="3"/>
+                                </Grid>                                
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
