@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace ShoppingReminder.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CompletedPurchaseListPage : ContentView
-	{
-		public CompletedPurchaseListPage (PurchaseListViewModel vm)
-		{
-			InitializeComponent ();
+    public partial class CompletedPurchaseListPage : ContentView
+    {
+        public CompletedPurchaseListPage(PurchaseListViewModel vm)
+        {
+            InitializeComponent();
             BindingContext = vm;
         }
-	}
+    }
 }

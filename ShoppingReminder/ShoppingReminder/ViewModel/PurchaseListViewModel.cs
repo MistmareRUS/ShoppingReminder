@@ -57,6 +57,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand ClearPurchaseCommand { get; protected set; }
         public ICommand UpPurchaseCommand { get; protected set; }
         public ICommand DownPurchaseCommand { get; protected set; }
+        //добавить/открыть фотки+
 
         private void CreatePurchase()
         {
@@ -94,9 +95,9 @@ namespace ShoppingReminder.ViewModel
                 temp.Units = item.Units;                
                 currentList.PurchasesList.Add(temp);
             }
-            App.HistoryOfPurchase.Add(currentList);
-            App.Database.SaveHistoryItem(currentList);
+            App.Database.SaveHistoryItem(currentList);            
             App.CurrentPurchases = new List<PurchaseViewModel>();
+            Main.history.Back();
             Back();
         }
         private void MarkAsCompletedPurchase(object obj)
@@ -136,7 +137,8 @@ namespace ShoppingReminder.ViewModel
                 }
                 else
                 {
-                    App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName).Completed = true;
+                    var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
+                    temp = purchase;
                 }
             }
             Back();

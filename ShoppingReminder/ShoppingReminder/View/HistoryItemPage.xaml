@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.View.HistoryItemPage">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout>
+                <Label Text="Дата"/>
+                <Label Text="{Binding PurchaseList.Date}"/>
+                <Label Text="ИД"/>
+                <Label Text="{Binding PurchaseList.Id}"/>
+            </StackLayout>
+            <ListView ItemsSource="{Binding PurchaseList.PurchasesList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" />
+                                    <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout>
+                <Label Text="Фотки туть"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Delete" Command="{Binding DeleteHistoryItemCommand}" CommandParameter="{Binding PurchaseList.Id}"/>
+                <Button Text="Back" Command="{Binding BackCommand}"/>
+            </StackLayout>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

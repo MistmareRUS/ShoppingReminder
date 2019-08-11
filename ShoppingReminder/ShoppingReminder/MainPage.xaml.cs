@@ -21,7 +21,7 @@ namespace ShoppingReminder
         public StackLayout CompletedPurchasesStackLayout { get; set; }
         public StackLayout HistoryStackLayout { get; set; }
         public PurchaseListViewModel activePurchases;
-        public HistoryViewModel history;
+        public HistoryListViewModel history;
 
         public MainPage()
         {
@@ -31,10 +31,8 @@ namespace ShoppingReminder
             HistoryStackLayout = HistoryStack;
 
             activePurchases = new PurchaseListViewModel(this);
-            history = new HistoryViewModel(this);
+            history = new HistoryListViewModel(this);
             
-
-            //activePurchases.Back();//хз
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -42,6 +40,13 @@ namespace ShoppingReminder
             App.Database.ClearPurchases();
             App.CurrentPurchases = new List<PurchaseViewModel>();
             activePurchases.Back();
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            App.Database.ClearHistory();
+            App.HistoryOfPurchase = new List<ListOfPurchase>();
+            history.Back();
         }
     }
 }

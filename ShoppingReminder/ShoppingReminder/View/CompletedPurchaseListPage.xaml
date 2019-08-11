@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingReminder.View.CompletedPurchaseListPage">
-    <ContentPage.Content>
-        <StackLayout>
+  <ContentView.Content>
+      <StackLayout>
             <ListView x:Name="purchaseList" ItemsSource="{Binding CompletedPurchases}" SelectedItem="" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -14,7 +14,7 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{Binding Count}" FontSize="Small"/>
                                         <Label Text="{Binding Units}" FontSize="Small"/>
-                                    </StackLayout>                                    
+                                    </StackLayout>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
@@ -22,5 +22,5 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+  </ContentView.Content>
+</ContentView>

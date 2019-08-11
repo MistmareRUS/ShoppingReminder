@@ -26,6 +26,7 @@ namespace ShoppingReminder.Repository
             db.DropTable<Purchase>();
             db.CreateTable<Purchase>();
         }
+        
 
         public IEnumerable<Purchase> GetPurchaseItems()
         {
@@ -118,7 +119,7 @@ namespace ShoppingReminder.Repository
         SerializedHistoryItem SerializeHistory(ListOfPurchase deser)
         {
             var ser = new SerializedHistoryItem();
-            ser.Id = deser.Id;
+            //ser.Id = deser.Id;
             ser.Date = deser.Date;
             ser.PurchasesList = ObjectToByteArray(deser.PurchasesList);
             ser.Check = deser.Check;//TODO: сериализация фото
