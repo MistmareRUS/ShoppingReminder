@@ -7,6 +7,7 @@ using System.Text;
 using Xamarin.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using ShoppingReminder.ViewModel;
 
 namespace ShoppingReminder.Repository
 {
@@ -61,13 +62,15 @@ namespace ShoppingReminder.Repository
             db.CreateTable<SerializedHistoryItem>();
         }
 
-        public List<ListOfPurchase> GetHistoryItems()
+        public List<HistoryViewModel> GetHistoryItems()
         {
             var sh= (from i in db.Table<SerializedHistoryItem>() select i).ToList();
-            var tempList = new List<ListOfPurchase>();
+            var tempList = new List<HistoryViewModel>();
             foreach (var item in sh)
             {
-                tempList.Add(DeserializeHistory(item));
+                var tempDes = DeserializeHistory(item);
+                var tempHVM = new HistoryViewModel() { ListOfPurchase=tempDes };
+                tempList.Add(tempHVM);
             }
             return tempList;
         }

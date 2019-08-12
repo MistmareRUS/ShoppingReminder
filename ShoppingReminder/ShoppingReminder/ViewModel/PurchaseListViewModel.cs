@@ -58,11 +58,18 @@ namespace ShoppingReminder.ViewModel
         public ICommand UpPurchaseCommand { get; protected set; }
         public ICommand DownPurchaseCommand { get; protected set; }
         //добавить/открыть фотки+
+        public void Back()
+        {
+            Main.CurrentPurchasesStackLayout.Children.Clear();
+            Main.CompletedPurchasesStackLayout.Children.Clear();
+            Main.CurrentPurchasesStackLayout.Children.Add(new PurchaseListPage(this));
+            Main.CompletedPurchasesStackLayout.Children.Add(new CompletedPurchaseListPage(this));
+        }
 
         private void CreatePurchase()
         {
             Main.CurrentPurchasesStackLayout.Children.Clear();
-            var creatingPage = new PurchasePage(new PurchaseViewModel(this)
+            var creatingPage = new PurchasePage(new PurchaseViewModel()
             {
                 ListVM=this
             });
@@ -117,13 +124,6 @@ namespace ShoppingReminder.ViewModel
                 App.CurrentPurchases.Remove(purchase);
             }
             Back();
-        }
-        public void Back()
-        {
-            Main.CurrentPurchasesStackLayout.Children.Clear();
-            Main.CompletedPurchasesStackLayout.Children.Clear();
-            Main.CurrentPurchasesStackLayout.Children.Add(new PurchaseListPage(this));
-            Main.CompletedPurchasesStackLayout.Children.Add(new CompletedPurchaseListPage(this));
         }
 
         private void SavePurchase(object obj)

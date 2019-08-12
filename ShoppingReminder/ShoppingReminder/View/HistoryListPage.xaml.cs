@@ -17,7 +17,7 @@ namespace ShoppingReminder.View
 		{
 			InitializeComponent ();
             BindingContext = vm;
-            HistoryListItemView.ItemsSource = App.HistoryOfPurchase;
-		}
-	}
+            //TODO: убрать отображение ID
+        }
+    }
 }

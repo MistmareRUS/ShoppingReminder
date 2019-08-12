@@ -6,11 +6,11 @@
       <StackLayout>
             <StackLayout>
                 <Label Text="Дата"/>
-                <Label Text="{Binding PurchaseList.Date}"/>
+                <Label Text="{Binding Date}"/>
                 <Label Text="ИД"/>
-                <Label Text="{Binding PurchaseList.Id}"/>
+                <Label Text="{Binding Id}"/>
             </StackLayout>
-            <ListView ItemsSource="{Binding PurchaseList.PurchasesList}">
+            <ListView ItemsSource="{Binding PurchasesList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -37,8 +37,8 @@
                 <Label Text="Фотки туть"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Delete" Command="{Binding DeleteHistoryItemCommand}" CommandParameter="{Binding PurchaseList.Id}"/>
-                <Button Text="Back" Command="{Binding BackCommand}"/>
+                <Button Text="Delete" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>
+                <Button Text="Back" Command="{Binding ListVM.BackCommand}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

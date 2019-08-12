@@ -11,8 +11,8 @@ namespace ShoppingReminder.ViewModel
 {
     public class HistoryListViewModel
     {
+        public List<HistoryViewModel> PurchaseList => App.HistoryOfPurchase;
         public MainPage Main;
-        public ListOfPurchase PurchaseList { get; set; }
         public HistoryListViewModel(MainPage mp)
         {
             Main = mp;
@@ -20,18 +20,33 @@ namespace ShoppingReminder.ViewModel
             DeleteHistoryItemCommand = new Command(DeleteHistoryItem);
             ClearHistoryCommand = new Command(ClearHistory);
 
+            foreach (var item in App.HistoryOfPurchase)
+            {
+                item.ListVM = this;
+            }
+
             Back();
         }
 
+        public ICommand DeleteHistoryItemCommand { get; private set; }
+        public ICommand BackCommand { get; private set; }
+        public ICommand ClearHistoryCommand { get; protected set; }
+
+        public void Back()
+        {
+            App.HistoryOfPurchase = App.Database.GetHistoryItems();
+            Main.HistoryStackLayout.Children.Clear();
+            Main.HistoryStackLayout.Children.Add(new HistoryListPage(this));
+        }
         private async void ClearHistory()
         {
-            var confirm = await Main.DisplayAlert("Внимание", "Очистить созраненную историю?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert("Внимание", "Очистить сохраненную историю?", "Да", "Нет");
             if (!confirm)
             {
                 return;
             }
-            App.HistoryOfPurchase = new List<ListOfPurchase>();
             App.Database.ClearHistory();
+            App.HistoryOfPurchase = App.Database.GetHistoryItems();
             Back();
         }
 
@@ -51,18 +66,9 @@ namespace ShoppingReminder.ViewModel
 
         }
 
-        public ICommand DeleteHistoryItemCommand { get; private set; }
-        public ICommand BackCommand { get; private set; }
-        public ICommand ClearHistoryCommand { get; protected set; }
 
-        public void Back()
-        {
-            App.HistoryOfPurchase = App.Database.GetHistoryItems();
-            Main.HistoryStackLayout.Children.Clear();
-            Main.HistoryStackLayout.Children.Add(new HistoryListPage(this));
-        }
-        ListOfPurchase selectedPurchaseList;
-        public ListOfPurchase SelectedPurchaseList
+        HistoryViewModel selectedPurchaseList;
+        public HistoryViewModel SelectedPurchaseList
         {
             get
             {
@@ -72,12 +78,13 @@ namespace ShoppingReminder.ViewModel
             {
                 if (selectedPurchaseList != value)
                 {
-                    PurchaseList = value;
+                    HistoryViewModel tempHistory = value;
+                    tempHistory.ListVM = new HistoryListViewModel(Main);
                     selectedPurchaseList = null;
                     Main.HistoryStackLayout.Children.Clear();
-                    Main.HistoryStackLayout.Children.Add(new HistoryItemPage(this));
+                    Main.HistoryStackLayout.Children.Add(new HistoryItemPage(tempHistory));
                 }
             }
-        }
+        }        
     }    
 }

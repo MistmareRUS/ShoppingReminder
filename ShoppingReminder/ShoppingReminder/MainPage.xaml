@@ -29,8 +29,8 @@
         <Tab Title="***">
             <ShellContent Title="Текущее">
                 <ContentPage>
-                    <StackLayout>
-                        <Label Text="text"/>
+                    <StackLayout x:Name="PlanStack">
+                        <Label Text="Здесь будет список долгосрочных планов"/>
                     </StackLayout>
                 </ContentPage>
             </ShellContent>

@@ -25,35 +25,34 @@ namespace ShoppingReminder
                 return database;
             }
         }
+
         public static List<PurchaseViewModel> CurrentPurchases { get; set; }
-        public static List<ListOfPurchase> HistoryOfPurchase { get; set; }
+        public static List<PlanViewModel> Plans { get; set; }
+        public static List<HistoryViewModel> HistoryOfPurchase { get; set; }
+
         public App()
         {
-            Debug.WriteLine("к-тор!!!!!!!!!!!!!!!!!!!              !!!!!!!!!!!!!!!!!!!!!!!!!");
             InitializeComponent();
             CurrentPurchases = new List<PurchaseViewModel>();
-            HistoryOfPurchase = Database.GetHistoryItems();
+            Plans = new List<PlanViewModel>();
 
             LoadCurrentPurchasesFromDB();
+            HistoryOfPurchase = Database.GetHistoryItems();
             
             MainPage = new MainPage();
         }
 
         protected override void OnStart()
         {
-            Debug.WriteLine("старт!!!!!!!!!!!!!!!!!!!              !!!!!!!!!!!!!!!!!!!!!!!!!");
+
         }
 
         protected override void OnSleep()
         {
-            Debug.WriteLine("слип!!!!!!!!!!!!!!!!!!!              !!!!!!!!!!!!!!!!!!!!!!!!!");
-            SaveCurrentPurchasesToDB();
-            
+            SaveCurrentPurchasesToDB();            
         }
         protected override void OnResume()
         {
-            Debug.WriteLine("ресум!!!!!!!!!!!!!!!!!!!              !!!!!!!!!!!!!!!!!!!!!!!!!");
-            
 
         }
         void SaveCurrentPurchasesToDB()
@@ -79,7 +78,7 @@ namespace ShoppingReminder
             CurrentPurchases.Clear();
             foreach (var item in purchases)
             {
-                PurchaseViewModel temp = new PurchaseViewModel(null)
+                PurchaseViewModel temp = new PurchaseViewModel()
                 {
                     Name = item.Name,
                     Count = item.Count,

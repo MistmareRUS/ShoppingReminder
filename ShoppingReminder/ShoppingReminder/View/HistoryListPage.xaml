@@ -4,20 +4,20 @@
              x:Class="ShoppingReminder.View.HistoryListPage">
   <ContentView.Content>
       <StackLayout>
-            <ListView x:Name="HistoryListItemView" SelectedItem="{Binding SelectedPurchaseList, Mode=TwoWay}"   RowHeight="50">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <ViewCell.View>
-                  <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding Date}"/>
-                    <Label Text="{Binding Id}"/>
-                                    <!--<Button Text="Удалить" Command="{Binding DeleteHistoryItemCommand}"/>-->
-                  </StackLayout>
-                </ViewCell.View>
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
+            <ListView ItemsSource="{Binding PurchaseList}" SelectedItem="{Binding SelectedPurchaseList, Mode=TwoWay}"   RowHeight="50">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <ViewCell>
+                  <ViewCell.View>
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text="{Binding Date}"/>
+                      <Label Text="{Binding Id}"/>
+                                    <Button Text="Удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding}"/>
+                     </StackLayout>
+                  </ViewCell.View>
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
       </StackLayout>
   </ContentView.Content>

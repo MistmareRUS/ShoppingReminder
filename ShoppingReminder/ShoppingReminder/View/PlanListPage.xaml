@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.View.PlanListPage">
+  <ContentView.Content>
+      <StackLayout>
+            <ListView BindingContext="{Binding PlanList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}"/>
+                                    <Button Text="Добавить к текущим" Command="{Binding ListVM.AddToCurrentPurchaseCommand}"/>
+                                    <Button Text="Убрать из списка" Command="{Binding DeletePlanItemCommand}"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Введите запланированную покупку..." x:Name="NewPlanEntry"/>
+                <Button Text="Добавить" Command="{Binding CreateCommand}" CommandParameter="NewPlanEntry.Text"/>
+            </StackLayout>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

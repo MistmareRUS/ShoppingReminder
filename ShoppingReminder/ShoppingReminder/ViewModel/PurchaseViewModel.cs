@@ -13,7 +13,7 @@ namespace ShoppingReminder.ViewModel
         public string VaiableName;
 
    
-        public PurchaseViewModel(PurchaseListViewModel listVM)
+        public PurchaseViewModel()
         {
             Purchase = new Purchase();
         }

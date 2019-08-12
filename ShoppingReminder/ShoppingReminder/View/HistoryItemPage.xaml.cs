@@ -14,12 +14,14 @@ namespace ShoppingReminder.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HistoryItemPage : ContentView
 	{
-        public HistoryListViewModel ViewModel { get; private set; }
-        public HistoryItemPage (HistoryListViewModel vm)
+        public HistoryViewModel ViewModel { get; private set; }
+
+        public HistoryItemPage (HistoryViewModel vm)
 		{
 			InitializeComponent ( );
             ViewModel = vm;
             BindingContext = ViewModel;
+            //TODO: убрать отображение ID
 		}
 	}
 }

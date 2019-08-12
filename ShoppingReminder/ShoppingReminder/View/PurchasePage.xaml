@@ -4,7 +4,7 @@
              x:Class="ShoppingReminder.View.PurchasePage">
   <ContentView.Content>
       <StackLayout>
-            <StackLayout x:Name="purchseStack">
+            <StackLayout>
                 <Label Text="Название"/>
                 <Entry Text="{Binding Name}"/>
                 <Label Text="Количество"/>
