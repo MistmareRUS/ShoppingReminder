@@ -12,7 +12,7 @@
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding Date}"/>
                       <Label Text="{Binding Id}"/>
-                                    <Button Text="Удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="Удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>
                      </StackLayout>
                   </ViewCell.View>
                 </ViewCell>

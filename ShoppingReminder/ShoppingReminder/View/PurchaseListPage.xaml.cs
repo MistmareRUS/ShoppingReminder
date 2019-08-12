@@ -13,7 +13,7 @@ namespace ShoppingReminder.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PurchaseListPage : ContentView
-	{
+	{        
 		public PurchaseListPage (PurchaseListViewModel vm)
 		{
             InitializeComponent();

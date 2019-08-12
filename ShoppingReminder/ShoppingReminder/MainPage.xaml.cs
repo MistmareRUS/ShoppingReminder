@@ -53,5 +53,12 @@ namespace ShoppingReminder
             App.HistoryOfPurchase = App.Database.GetHistoryItems();
             history.Back();
         }
+
+        private void Button_Clicked_2(object sender, EventArgs e)
+        {
+            App.Database.ClearPlans();
+            App.LoadPlansFromDB();
+            plan.Back();
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace ShoppingReminder
             Plans = new List<PlanViewModel>();
 
             LoadCurrentPurchasesFromDB();
+            LoadPlansFromDB();
             HistoryOfPurchase = Database.GetHistoryItems();
             
             MainPage = new MainPage();
@@ -86,6 +87,20 @@ namespace ShoppingReminder
                     Completed = item.Completed
                 };
                 CurrentPurchases.Add(temp);
+            }
+        }
+        public static void LoadPlansFromDB()
+        {
+            var plans = App.Database.GetPlanItems();
+            Plans.Clear();
+            foreach (var item in plans)
+            {
+                PlanViewModel temp = new PlanViewModel()
+                {
+                    Name = item.Name,
+                    Id=item.Id
+                };
+                Plans.Add(temp);
             }
         }
         

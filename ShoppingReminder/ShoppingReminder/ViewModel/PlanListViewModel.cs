@@ -19,36 +19,100 @@ namespace ShoppingReminder.ViewModel
             DeletePlanItemCommand = new Command(DeletePlanItem);
             BackCommand = new Command(Back);
             CreateCommand = new Command(Create);
+
             foreach (var item in App.Plans)
             {
                 item.ListVM = this;
             }
             Back();
         }
-        public ICommand AddToCurrentPurchaseCommand;
-        public ICommand DeletePlanItemCommand;
-        public ICommand BackCommand;
-        public ICommand CreateCommand;
+        private ICommand addToCurrentPurchaseCommand;
+        public ICommand AddToCurrentPurchaseCommand
+        {
+            get
+            {
+                return this.addToCurrentPurchaseCommand;
+            }
+            set
+            {
+                this.addToCurrentPurchaseCommand = value; 
+            }
+        }
+        private ICommand deletePlanItemCommand;
+        public ICommand DeletePlanItemCommand
+        {
+            get
+            {
+                return this.deletePlanItemCommand;
+            }
+            set
+            {
+                this.deletePlanItemCommand = value;
+            }
+        }
+        private ICommand backCommand;
+        public ICommand BackCommand
+        {
+            get
+            {
+                return this.backCommand;
+            }
+            set
+            {
+                this.backCommand = value;
+            }
+        }
+        private ICommand createCommand;
+        public ICommand CreateCommand
+        {
+            get
+            {
+                return this.createCommand;
+            }
+            set
+            {
+                this.createCommand = value;
+            }
+        }
 
         public void Back()
         {
+            App.LoadPlansFromDB();
+            foreach (var item in App.Plans)
+            {
+                item.ListVM = this;
+            }
             Main.PlanStackLayout.Children.Clear();
             Main.PlanStackLayout.Children.Add(new PlanListPage(this));
         }
 
         private void Create(object obj)
         {
-            Main.DisplayAlert("", "типо создать...", "X");
+            var text = (Entry)obj;
+            App.Database.SavePlanItem(new Plan(){ Name = text.Text });
+            Back();
         }
 
         private void DeletePlanItem(object obj)
         {
-            Main.DisplayAlert("", "типо удалить...", "X");
+            PlanViewModel temp = (PlanViewModel)obj;
+            App.Database.DeletePlanItem(temp.Id);
+            Back();
         }
 
         private void AddToCurrentPurchase(object obj)
         {
-            Main.DisplayAlert("", "типо добавить...", "X");
+            PlanViewModel temp = (PlanViewModel)obj;
+            PurchaseViewModel purchase = new PurchaseViewModel()
+            {
+                Name = temp.Name,
+                ListVM = Main.activePurchases
+            };
+            App.CurrentPurchases.Add(purchase);
+            App.Database.DeletePlanItem(temp.Id);
+            Main.activePurchases.Back();
+            Main.plan.Back();
+
         }
 
         PlanViewModel selectedPurchase;
@@ -62,7 +126,9 @@ namespace ShoppingReminder.ViewModel
             {
                 if (selectedPurchase != value)
                 {
+                    PlanViewModel tempPlan = value;
                     selectedPurchase = null;
+                    //Если понадобится выводить каждый итем- дабавить построение здесь
                 }
             }
         }

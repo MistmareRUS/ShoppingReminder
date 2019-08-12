@@ -57,6 +57,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand ClearPurchaseCommand { get; protected set; }
         public ICommand UpPurchaseCommand { get; protected set; }
         public ICommand DownPurchaseCommand { get; protected set; }
+        
         //добавить/открыть фотки+
         public void Back()
         {
@@ -138,7 +139,7 @@ namespace ShoppingReminder.ViewModel
                 else
                 {
                     var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
-                    temp = purchase;
+                    temp = purchase;//TODO: зачем?
                 }
             }
             Back();

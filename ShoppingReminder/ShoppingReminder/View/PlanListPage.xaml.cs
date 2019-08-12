@@ -17,14 +17,7 @@ namespace ShoppingReminder.View
         public PlanListPage (PlanListViewModel vm)
 		{
 			InitializeComponent ();
-            BindingContext = vm;
-
-		}
-
-        //private void Button_Clicked(object sender, EventArgs e)
-        //{
-        //    App.Plans.Add(new Plan { Name = NewPlanEntry.Text });//TODO: сохранять в БД и обновлять в App.
-        //    ViewModel.Back();            
-        //}
+            BindingContext = vm;            
+        }        
     }
 }

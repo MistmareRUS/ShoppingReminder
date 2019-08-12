@@ -58,6 +58,7 @@
                     <StackLayout x:Name="SettingsStack">
                         <Button Text="Сброс текущих" Clicked="Button_Clicked"/>
                         <Button Text="Сброс истории" Clicked="Button_Clicked_1"/>
+                        <Button Text="Сброс планов" Clicked="Button_Clicked_2"/>
                     </StackLayout>
                 </ContentPage>
             </ShellContent>

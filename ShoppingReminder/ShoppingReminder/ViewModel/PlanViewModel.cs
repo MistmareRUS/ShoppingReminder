@@ -9,7 +9,6 @@ namespace ShoppingReminder.ViewModel
     {
         public Plan Plan { get; private set; }
         public PlanListViewModel ListVM { get; set; }
-        public string VaiableName;
 
 
         public PlanViewModel()

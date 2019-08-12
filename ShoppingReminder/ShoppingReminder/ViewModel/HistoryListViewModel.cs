@@ -35,6 +35,10 @@ namespace ShoppingReminder.ViewModel
         public void Back()
         {
             App.HistoryOfPurchase = App.Database.GetHistoryItems();
+            foreach (var item in App.HistoryOfPurchase)
+            {
+                item.ListVM = this;
+            }
             Main.HistoryStackLayout.Children.Clear();
             Main.HistoryStackLayout.Children.Add(new HistoryListPage(this));
         }

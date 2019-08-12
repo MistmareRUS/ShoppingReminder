@@ -20,6 +20,7 @@ namespace ShoppingReminder.Repository
             db = new SQLiteConnection(dbPath);
             db.CreateTable<Purchase>();
             db.CreateTable<SerializedHistoryItem>();
+            db.CreateTable<Plan>();
         }
         ///******************покупки*********************//
         public void ClearPurchases()
@@ -54,6 +55,40 @@ namespace ShoppingReminder.Repository
                 return db.Insert(item);
             }
         }
+        ///******************планы*********************//
+        public void ClearPlans()
+        {
+            db.DropTable<Plan>();
+            db.CreateTable<Plan>();
+        }
+
+
+        public IEnumerable<Plan> GetPlanItems()
+        {
+            return (from i in db.Table<Plan>() select i).ToList();
+
+        }
+        public Plan GetPlanItem(int id)
+        {
+            return db.Get<Plan>(id);
+        }
+        public int DeletePlanItem(int id)
+        {
+            return db.Delete<Plan>(id);
+        }
+        public int SavePlanItem(Plan item)
+        {
+            if (item.Id != 0)
+            {
+                db.Update(item);
+                return item.Id;
+            }
+            else
+            {
+                return db.Insert(item);
+            }
+        }
+
         ///******************история*********************//
 
         public void ClearHistory()
