@@ -21,7 +21,6 @@ namespace ShoppingReminder.View
 			InitializeComponent ( );
             ViewModel = vm;
             BindingContext = ViewModel;
-            //TODO: убрать отображение ID
 		}
 	}
 }

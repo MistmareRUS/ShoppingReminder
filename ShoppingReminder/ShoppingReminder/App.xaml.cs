@@ -29,6 +29,7 @@ namespace ShoppingReminder
         public static List<PurchaseViewModel> CurrentPurchases { get; set; }
         public static List<PlanViewModel> Plans { get; set; }
         public static List<HistoryViewModel> HistoryOfPurchase { get; set; }
+        MainPage MP;
 
         public App()
         {
@@ -39,8 +40,7 @@ namespace ShoppingReminder
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
             HistoryOfPurchase = Database.GetHistoryItems();
-            
-            MainPage = new MainPage();
+            MainPage = MP = new MainPage();
         }
 
         protected override void OnStart()
@@ -54,7 +54,12 @@ namespace ShoppingReminder
         }
         protected override void OnResume()
         {
-
+            LoadCurrentPurchasesFromDB();
+            foreach (var item in CurrentPurchases)
+            {
+                item.ListVM = MP.activePurchases;
+            }
+            MP.activePurchases.Back();
         }
         void SaveCurrentPurchasesToDB()
         {
@@ -71,7 +76,7 @@ namespace ShoppingReminder
                 };
                 Database.SavePurchaseItem(temp);
             }
-            CurrentPurchases = new List<PurchaseViewModel>();
+            CurrentPurchases.Clear();
         }
         void  LoadCurrentPurchasesFromDB()
         {
@@ -91,7 +96,7 @@ namespace ShoppingReminder
         }
         public static void LoadPlansFromDB()
         {
-            var plans = App.Database.GetPlanItems();
+            var plans = Database.GetPlanItems();
             Plans.Clear();
             foreach (var item in plans)
             {

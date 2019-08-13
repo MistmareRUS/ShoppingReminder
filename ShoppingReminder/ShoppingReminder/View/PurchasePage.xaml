@@ -8,7 +8,7 @@
                 <Label Text="Название"/>
                 <Entry Text="{Binding Name}"/>
                 <Label Text="Количество"/>
-                <Entry Text="{Binding Count}"/>
+                <Entry Text="{Binding Count}" Keyboard="Numeric"/>
                 <Label Text="Ед. измерения"/>
                 <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}">
                     <Picker.Items>
@@ -21,6 +21,7 @@
             <StackLayout Orientation="Horizontal">
                 <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}"/>
                 <Button Text="Удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}"/>
+                <Button Text="В планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
                 <Button Text="Назад" Command="{Binding ListVM.BackCommand}" />
             </StackLayout>
       </StackLayout>

@@ -4,6 +4,7 @@
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
         <StackLayout>
+            <Label x:Name="Counter" TextColor="Red"/>
             <Button Text="Новый предмет" TextColor="Red" Command="{Binding CreatePurchaseCommand}"/>
             <Button Text="Очистить" Command="{Binding ClearPurchaseCommand}"/>
             <Button Text="Готово" Command="{Binding CompletePurchaseCommand}"/>
@@ -13,12 +14,13 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>                                
-                                    <Grid>
+                                <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
@@ -33,6 +35,7 @@
                                     <Button Text="Delete" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="2"/>
                                     <Button Text="/\" Grid.Row="0" Grid.Column="3" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}"/>
                                     <Button Text="\/" Grid.Row="1" Grid.Column="3" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="В планы" Grid.Row="1" Grid.Column="4" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
                                 </Grid>                                
                             </ViewCell.View>
                         </ViewCell>

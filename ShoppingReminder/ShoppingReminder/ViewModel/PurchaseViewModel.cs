@@ -63,6 +63,17 @@ namespace ShoppingReminder.ViewModel
                 Purchase.Completed = value;
             }
         }
+        public int Id
+        {
+            get
+            {
+                return Purchase.Id;
+            }
+            set
+            {
+                Purchase.Id = value;
+            }
+        }
 
         public bool isValid
         {

@@ -29,6 +29,7 @@ namespace ShoppingReminder.ViewModel
             ClearPurchaseCommand = new Command(ClearPurchase);
             UpPurchaseCommand = new Command(UpPurchase);
             DownPurchaseCommand = new Command(DownPurchase);
+            ToPlansCommand = new Command(ToPlans);
 
             foreach (var item in App.CurrentPurchases)
             {
@@ -38,15 +39,58 @@ namespace ShoppingReminder.ViewModel
             Back();
         }
 
-        private async void DownPurchase(object obj)
+        private async void ToPlans(object obj)
         {
-           await Main.DisplayAlert("", "Реализуй меня!", "ok");
+            var confirm = await Main.DisplayAlert("Внимание", "Переместить в планы?", "Да", "Нет");
+            if (!confirm)
+            {
+                return;
+            }
+            PurchaseViewModel temp = obj as PurchaseViewModel;
+            if (temp != null)
+            {
+                App.Database.SavePlanItem(new Plan() { Name = temp.Name });
+                Main.plan.Back();
+                App.CurrentPurchases.Remove(temp);
+                Back();
+            }            
         }
 
-        private async void UpPurchase(object obj)
+        private void UpPurchase(object obj)
         {
-            await Main.DisplayAlert("","Реализуй меня!","ok");
+            var listIndex = App.CurrentPurchases.IndexOf(obj as PurchaseViewModel);
+            for (int i = listIndex-1; i >= 0; i--)
+            {
+                if (!App.CurrentPurchases[i].Completed)
+                {
+                    Swap(listIndex,i);
+                    break;
+                }
+            }
+            Back();
         }
+        private  void DownPurchase(object obj)
+        {
+            var listIndex = App.CurrentPurchases.IndexOf(obj as PurchaseViewModel);
+            for (int i = listIndex + 1; i <App.CurrentPurchases.Count; i++)
+            {
+                if (!App.CurrentPurchases[i].Completed)
+                {
+                    Swap(listIndex, i);
+                    break;
+                }
+            }
+            Back();
+
+        }
+        private void Swap(int a,int b)
+        {
+            PurchaseViewModel temp;
+            temp = App.CurrentPurchases[a];
+            App.CurrentPurchases[a] = App.CurrentPurchases[b];
+            App.CurrentPurchases[b] = temp;
+        }
+
 
         public ICommand CreatePurchaseCommand { get; protected set; }
         public ICommand DeletePurchaseCommand { get; protected set; }
@@ -57,7 +101,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand ClearPurchaseCommand { get; protected set; }
         public ICommand UpPurchaseCommand { get; protected set; }
         public ICommand DownPurchaseCommand { get; protected set; }
-        
+        public ICommand ToPlansCommand { get; protected set; }
         //добавить/открыть фотки+
         public void Back()
         {
@@ -139,7 +183,7 @@ namespace ShoppingReminder.ViewModel
                 else
                 {
                     var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
-                    temp = purchase;//TODO: зачем?
+                    //temp = purchase;//TODO: зачем?
                 }
             }
             Back();

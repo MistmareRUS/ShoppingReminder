@@ -7,8 +7,6 @@
             <StackLayout>
                 <Label Text="Дата"/>
                 <Label Text="{Binding Date}"/>
-                <Label Text="ИД"/>
-                <Label Text="{Binding Id}"/>
             </StackLayout>
             <ListView ItemsSource="{Binding PurchasesList}">
                 <ListView.ItemTemplate>
