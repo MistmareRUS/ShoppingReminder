@@ -12,7 +12,7 @@ namespace ShoppingReminder.Model
         public int Id { get; set; }
         public List<Purchase> PurchasesList { get; set; }
         public DateTime Date { get; set; }
-        public byte[] Check { get; set; }
+        public string Check { get; set; }
     }
     [Table("History")]
     [Serializable]
@@ -22,7 +22,7 @@ namespace ShoppingReminder.Model
         public int Id { get; set; }
         public byte[] PurchasesList { get; set; }
         public DateTime Date { get; set; }
-        public byte[] Check { get; set; }        
+        public string Check { get; set; }        
     }
 
 }

@@ -4,9 +4,16 @@
              x:Class="ShoppingReminder.View.PurchasePage">
   <ContentView.Content>
       <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Назад" Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
+                    <Button Text="X" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}"/>
+                    <Button Text="В планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End"/>
+                </StackLayout>
+            </StackLayout>
             <StackLayout>
                 <Label Text="Название"/>
-                <Entry Text="{Binding Name}"/>
+                <Entry Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
                 <Label Text="Количество"/>
                 <Entry Text="{Binding Count}" Keyboard="Numeric"/>
                 <Label Text="Ед. измерения"/>
@@ -14,15 +21,14 @@
                     <Picker.Items>
                         <x:String>Шт.</x:String>
                         <x:String>Кг</x:String>
+                        <x:String>Уп.</x:String>
                         <x:String>л</x:String>
                     </Picker.Items>
                 </Picker>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}"/>
-                <Button Text="Удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}"/>
-                <Button Text="В планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
-                <Button Text="Назад" Command="{Binding ListVM.BackCommand}" />
+                
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

@@ -156,20 +156,23 @@ namespace ShoppingReminder.Repository
         }
         SerializedHistoryItem SerializeHistory(ListOfPurchase deser)
         {
-            var ser = new SerializedHistoryItem();
-            //ser.Id = deser.Id;
-            ser.Date = deser.Date;
-            ser.PurchasesList = ObjectToByteArray(deser.PurchasesList);
-            ser.Check = deser.Check;//TODO: сериализация фото
+            var ser = new SerializedHistoryItem
+            {
+                Date = deser.Date,
+                PurchasesList = ObjectToByteArray(deser.PurchasesList),
+                Check = deser.Check
+            };
             return ser;
         }
         ListOfPurchase DeserializeHistory(SerializedHistoryItem ser)
         {
-            var deser = new ListOfPurchase();
-            deser.Id = ser.Id;
-            deser.Date = ser.Date;
-            deser.PurchasesList = (List<Purchase>)(ByteArrayToObject(ser.PurchasesList));
-            deser.Check = ser.Check; //TODO: десериализовать фото
+            var deser = new ListOfPurchase
+            {
+                Id = ser.Id,
+                Date = ser.Date,
+                PurchasesList = (List<Purchase>)(ByteArrayToObject(ser.PurchasesList)),
+                Check = ser.Check
+            };
             return deser;
         }
 

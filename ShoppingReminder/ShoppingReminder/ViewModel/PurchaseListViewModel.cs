@@ -30,6 +30,8 @@ namespace ShoppingReminder.ViewModel
             UpPurchaseCommand = new Command(UpPurchase);
             DownPurchaseCommand = new Command(DownPurchase);
             ToPlansCommand = new Command(ToPlans);
+            TakePhotoCommand = new Command(TakePhoto);
+
 
             foreach (var item in App.CurrentPurchases)
             {
@@ -37,6 +39,60 @@ namespace ShoppingReminder.ViewModel
             }
 
             Back();
+        }
+
+        //Photo selectedPhoto;
+        public void SelectPhoto(object sender,SelectedItemChangedEventArgs e)
+        {
+            Photo temp = sender as Photo;
+            if (temp != null)
+            {
+                Main.DisplayAlert("",temp.ImgSrc,"Ok");                
+            }
+            
+        }
+
+        private async void TakePhoto()
+        {
+            var newOrNot = await Main.DisplayAlert("Внимание!", "Действия с фотографиями чеков...", "Добавить", "Просмотреть");
+            if (newOrNot)
+            {
+                Main.TakePhoto();
+            }
+            else
+            {
+                string strPath = GetCurrentPhotoString();
+                if (strPath == null)
+                {
+                    await Main.DisplayAlert("Внимание!", "К данной покупке не прикреплено ни одного фото.", "Ок");
+                    return;
+                }
+                Main.CurrentPurchasesStackLayout.Children.Clear();
+                ListView lv = Main.GetPhotos(strPath, Main.CurrentPurchasesStackLayout);
+                Main.CurrentPurchasesStackLayout.Children.Add(lv);
+                Main.CurrentPurchasesStackLayout.Children.Add(new StackLayout
+                {
+                    HorizontalOptions = LayoutOptions.End,
+                    Orientation=StackOrientation.Horizontal,
+                    Children={
+                        new Button() {  Text = "Очистить" },
+                        new Button() { Command = BackCommand, Text = "<" }
+                    }
+                });
+            }
+        }
+        string GetCurrentPhotoString()
+        {
+            object savedPath;
+            try
+            {
+                savedPath = App.Current.Properties["CurrentPhotos"];
+                return (string)savedPath;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private async void ToPlans(object obj)
@@ -102,7 +158,8 @@ namespace ShoppingReminder.ViewModel
         public ICommand UpPurchaseCommand { get; protected set; }
         public ICommand DownPurchaseCommand { get; protected set; }
         public ICommand ToPlansCommand { get; protected set; }
-        //добавить/открыть фотки+
+        public ICommand TakePhotoCommand { get; protected set; }
+
         public void Back()
         {
             Main.CurrentPurchasesStackLayout.Children.Clear();
@@ -110,7 +167,6 @@ namespace ShoppingReminder.ViewModel
             Main.CurrentPurchasesStackLayout.Children.Add(new PurchaseListPage(this));
             Main.CompletedPurchasesStackLayout.Children.Add(new CompletedPurchaseListPage(this));
         }
-
         private void CreatePurchase()
         {
             Main.CurrentPurchasesStackLayout.Children.Clear();
@@ -132,12 +188,13 @@ namespace ShoppingReminder.ViewModel
         }
         private async void CompletePurchase()
         {
-            var confirm = await Main.DisplayAlert("Внимание", "Завершить покупку?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert("Внимание!", "Завершить покупку?", "Да", "Нет");
             if (!confirm)
             {
                 return;
             }
-            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check = new byte[0] };//TODO:пустой массив?
+            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now };
+
             foreach (var item in App.CurrentPurchases)
             {
                 //TODO:все или только завершенные?
@@ -183,7 +240,6 @@ namespace ShoppingReminder.ViewModel
                 else
                 {
                     var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
-                    //temp = purchase;//TODO: зачем?
                 }
             }
             Back();

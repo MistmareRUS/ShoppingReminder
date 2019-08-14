@@ -4,22 +4,25 @@
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
         <StackLayout>
-            <Label x:Name="Counter" TextColor="Red"/>
-            <Button Text="Новый предмет" TextColor="Red" Command="{Binding CreatePurchaseCommand}"/>
-            <Button Text="Очистить" Command="{Binding ClearPurchaseCommand}"/>
-            <Button Text="Готово" Command="{Binding CompletePurchaseCommand}"/>
-            <Button Text="Фото" IsEnabled="False"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
+                <Button Text="X" Command="{Binding ClearPurchaseCommand}" />
+                    <Button Text="&#10003;" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End"/>
+            </StackLayout>
+            </StackLayout>
             <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>                                
-                                <Grid>
-                                        <Grid.RowDefinitions>
+                                <Grid ColumnSpacing="1" RowSpacing="1" BackgroundColor="Yellow">
+                                    <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                            <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
@@ -27,21 +30,24 @@
                                             <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                         
-                                        <Label Text="{Binding Name}" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                                        <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" />
+                                        <Label Text="{Binding Name}" FontSize="Large" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End"/>
                                         <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
 
-                                    <Button Text="Complete" Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="2"/>
-                                    <Button Text="Delete" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="2"/>
-                                    <Button Text="/\" Grid.Row="0" Grid.Column="3" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="\/" Grid.Row="1" Grid.Column="3" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="В планы" Grid.Row="1" Grid.Column="4" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="&#10003;" Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3"/>
+                                    <Button Text="X" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4"/>
+                                    <Button Text="/\" Grid.Row="0" Grid.Column="5" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="\/" Grid.Row="1" Grid.Column="5" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="&lt;" Grid.Row="1" Grid.Column="2" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
                                 </Grid>                                
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackLayout >
+                <Button Text="+" TextColor="Red" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End"/>
+            </StackLayout>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

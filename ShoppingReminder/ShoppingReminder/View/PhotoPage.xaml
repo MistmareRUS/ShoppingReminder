@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.View.PhotoPage">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Чеки покупок от:"/>
+                <Label Text="{Binding }"/>
+            </StackLayout>
+            <ListView ItemsSource="{Binding }">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout>
+                                    <Image/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>                
+            </ListView>
+            <Label x:Name="NoPhotos" Text="С данной покупкой не было сденано ни одной фотографии чеков" IsVisible="False"/>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

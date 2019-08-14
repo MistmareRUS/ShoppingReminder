@@ -39,10 +39,19 @@
     
     
     <FlyoutItem Title="История покупок">
-        <Tab Title="***">
+        <Tab Title="История покупок">
             <ShellContent Title="Текущее">
                 <ContentPage>
                     <StackLayout x:Name="HistoryStack">
+                        
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+        <Tab >
+            <ShellContent Title="Фото">
+                <ContentPage>
+                    <StackLayout x:Name="PhotoStack">
                         
                     </StackLayout>
                 </ContentPage>
@@ -59,6 +68,7 @@
                         <Button Text="Сброс текущих" Clicked="Button_Clicked"/>
                         <Button Text="Сброс истории" Clicked="Button_Clicked_1"/>
                         <Button Text="Сброс планов" Clicked="Button_Clicked_2"/>
+                        <Button Text="Сброс фоток" Clicked="Button_Clicked_3"/>
                     </StackLayout>
                 </ContentPage>
             </ShellContent>
