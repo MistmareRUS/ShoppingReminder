@@ -81,7 +81,7 @@ namespace ShoppingReminder
                 return;
             }
         }
-        public ListView GetPhotos(string source, StackLayout layout)
+        public void GetPhotos(string source, StackLayout layout,ICommand back,ICommand deletePhoto,ICommand deletePhotos)
         {
             string[] pathes = source.Split('&');
             var sourses = new Photo[pathes.Length - 1];
@@ -93,11 +93,11 @@ namespace ShoppingReminder
                 };
                 sourses[i] = temp;
             }
+
             ListView lv = new ListView()
             {
                 HasUnevenRows = true,
-                //SelectedItem=sel,
-                SelectionMode=ListViewSelectionMode.Single,
+                //SelectionMode=ListViewSelectionMode.Single,
                 ItemsSource = sourses,
                 Margin = 3,                
 
@@ -126,40 +126,63 @@ namespace ShoppingReminder
 
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    var stack = new StackLayout();
+                    var stackForTemplate = new StackLayout();
                     var img = new Image();
                     img.SetBinding(Image.SourceProperty, "ImgSrc");
-                    stack.Children.Add(img);
-                    return new ViewCell { View = stack };
+                    stackForTemplate.Children.Add(img);
+                    return new ViewCell { View = stackForTemplate };
                 })                
 
             };
             lv.ItemSelected += (s,e)=> 
             {
-                layout.Children.Clear();
                 var tempSrc = ((Photo)((ListView)s).SelectedItem).ImgSrc;
                 StackLayout sl = new StackLayout();
                 WebView wv = new WebView();
-                wv.HeightRequest = 300;
-                wv.WidthRequest = 300;
+                wv.HeightRequest = 500;
+                wv.WidthRequest = 500;
+                //TODO: настроить вьюшку
 
                 var htmlSrs = new HtmlWebViewSource();
                 htmlSrs.Html = "<img src=\"" + tempSrc + "\"/>";
 
                 wv.Source = htmlSrs;
                 sl.Children.Add(wv);
-                var btn = new Button { Text = "<" };
-                btn.Clicked += (_s,_e)=> {layout.Children[0]= GetPhotos(source, layout); };
-                sl.Children.Add(new Button { Text="X"});
-                sl.Children.Add(btn);
-
+                layout.Children.Clear();
                 layout.Children.Add(sl);
+
+                var btn = new Button { Text = "<" };
+                btn.Clicked += (_s,_e)=> 
+                {
+                    GetPhotos(source, layout, back, deletePhoto, deletePhotos);
+                };
+
+                var btnStack = new StackLayout
+                {
+                    HorizontalOptions = LayoutOptions.End,
+                    Orientation = StackOrientation.Horizontal,
+                    Children =
+                    {
+                        new Button() { Command = deletePhoto, Text = "X" },
+                        btn
+                    }
+                };
+                layout.Children.Add(btnStack);
             };
-            return lv;
+            
+            layout.Children.Clear();
+            layout.Children.Add(lv);
+            layout.Children.Add(new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.End,
+                Orientation = StackOrientation.Horizontal,
+                Children ={
+                    new Button() { Command=deletePhotos, Text = "X" },
+                    new Button() { Command = back, Text = "<" }
+                }
+            });
         }
-
         
-
         private void Button_Clicked(object sender, EventArgs e)
         {
             App.Database.ClearPurchases();

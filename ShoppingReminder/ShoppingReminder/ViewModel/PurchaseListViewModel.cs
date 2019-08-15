@@ -31,6 +31,8 @@ namespace ShoppingReminder.ViewModel
             DownPurchaseCommand = new Command(DownPurchase);
             ToPlansCommand = new Command(ToPlans);
             TakePhotoCommand = new Command(TakePhoto);
+            DeletePhotoCommand = new Command(DeletePhoto);
+            DeletePhotosCommand = new Command(DeletePhotos);
 
 
             foreach (var item in App.CurrentPurchases)
@@ -39,6 +41,16 @@ namespace ShoppingReminder.ViewModel
             }
 
             Back();
+        }
+
+        private void DeletePhotos()//object obj)
+        {
+            Main.DisplayAlert("", "Типо удалить фоткИ", "Ok");            
+        }
+
+        private void DeletePhoto()//object obj)
+        {
+            Main.DisplayAlert("", "Типо удалить фоткУ", "Ok");
         }
 
         //Photo selectedPhoto;
@@ -67,18 +79,7 @@ namespace ShoppingReminder.ViewModel
                     await Main.DisplayAlert("Внимание!", "К данной покупке не прикреплено ни одного фото.", "Ок");
                     return;
                 }
-                Main.CurrentPurchasesStackLayout.Children.Clear();
-                ListView lv = Main.GetPhotos(strPath, Main.CurrentPurchasesStackLayout);
-                Main.CurrentPurchasesStackLayout.Children.Add(lv);
-                Main.CurrentPurchasesStackLayout.Children.Add(new StackLayout
-                {
-                    HorizontalOptions = LayoutOptions.End,
-                    Orientation=StackOrientation.Horizontal,
-                    Children={
-                        new Button() {  Text = "Очистить" },
-                        new Button() { Command = BackCommand, Text = "<" }
-                    }
-                });
+                Main.GetPhotos(strPath, Main.CurrentPurchasesStackLayout,BackCommand,DeletePhotoCommand,DeletePhotosCommand);                
             }
         }
         string GetCurrentPhotoString()
@@ -159,6 +160,8 @@ namespace ShoppingReminder.ViewModel
         public ICommand DownPurchaseCommand { get; protected set; }
         public ICommand ToPlansCommand { get; protected set; }
         public ICommand TakePhotoCommand { get; protected set; }
+        public ICommand DeletePhotoCommand { get; protected set; }
+        public ICommand DeletePhotosCommand { get; protected set; }
 
         public void Back()
         {
