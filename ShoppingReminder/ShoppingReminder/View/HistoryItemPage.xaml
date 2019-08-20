@@ -30,13 +30,10 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout>
-                <Label Text="Фотки туть"/>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Delete" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>
-                <Button Text="Back" Command="{Binding ListVM.BackCommand}"/>
+            </ListView>            
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Button Text="X" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>
+                <Button Text="&#60;" Command="{Binding ListVM.BackCommand}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

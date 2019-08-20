@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -34,7 +35,6 @@ namespace ShoppingReminder.ViewModel
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
 
-
             foreach (var item in App.CurrentPurchases)
             {
                 item.ListVM = this;
@@ -43,26 +43,38 @@ namespace ShoppingReminder.ViewModel
             Back();
         }
 
-        private void DeletePhotos()//object obj)
+        private async void DeletePhotos()
         {
-            Main.DisplayAlert("", "Типо удалить фоткИ", "Ok");            
-        }
-
-        private void DeletePhoto()//object obj)
-        {
-            Main.DisplayAlert("", "Типо удалить фоткУ", "Ok");
-        }
-
-        //Photo selectedPhoto;
-        public void SelectPhoto(object sender,SelectedItemChangedEventArgs e)
-        {
-            Photo temp = sender as Photo;
-            if (temp != null)
+            var confirm = await Main.DisplayAlert("Внимание!", "Удалить текущие фотографии?", "Да","Нет");
+            if (!confirm)
+                return;
+            var fullPath = GetCurrentPhotoString();
+            if (fullPath == null)
+                return;
+            var pathes = fullPath.Split(new char[]{'&'},StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in pathes)
             {
-                Main.DisplayAlert("",temp.ImgSrc,"Ok");                
+                File.Delete(item);
             }
-            
+            App.Current.Properties["CurrentPhotos"] = null;
+            await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
+            Back();
         }
+
+        private async void DeletePhoto(object obj)
+        {
+            var confirm= await Main.DisplayAlert("Внимание!", "Удалить фотографию?", "Да","Нет");
+            if (!confirm)
+                return;
+            string path = (string)obj;
+            File.Delete(path);
+            var fullPath = GetCurrentPhotoString();
+            var pathIndex = fullPath.IndexOf(path);
+            var newFullPath = fullPath.Remove(pathIndex, path.Length + 1);
+            App.Current.Properties["CurrentPhotos"] = newFullPath;
+            await Main.DisplayAlert("", "Фото удалено.", "Ок");
+            Main.GetPhotos(newFullPath, Main.CurrentPurchasesStackLayout, BackCommand, DeletePhotoCommand, DeletePhotosCommand);
+        }       
 
         private async void TakePhoto()
         {
@@ -196,15 +208,15 @@ namespace ShoppingReminder.ViewModel
             {
                 return;
             }
-            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now };
-
+            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check= GetCurrentPhotoString() };
+            App.Current.Properties["CurrentPhotos"] = null;
             foreach (var item in App.CurrentPurchases)
             {
                 //TODO:все или только завершенные?
                 var temp = new Purchase();
                 temp.Name = item.Name;
                 temp.Count = item.Count;
-                temp.Units = item.Units;                
+                temp.Units = item.Units;                            
                 currentList.PurchasesList.Add(temp);
             }
             App.Database.SaveHistoryItem(currentList);            

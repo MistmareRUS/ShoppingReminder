@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,14 +66,12 @@ namespace ShoppingReminder
 
                 MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                 {
-                    SaveToAlbum = true,
+                    SaveToAlbum = false,
                     Directory = "ShoppingReminder",
-                    Name = $"{DateTime.Now.ToString("dd.MM.yyyy_hh.mm.ss")}.jpg"
+                    Name = $"{DateTime.Now.ToString("dd.MM.yyyy_hh.mm.ss")}.jpg"//TODO: изменить формат
                 });
-
                 if (file == null)
                     return;
-
                 App.Current.Properties["CurrentPhotos"] += file.Path+"&";
             }
             else
@@ -93,46 +92,20 @@ namespace ShoppingReminder
                 };
                 sourses[i] = temp;
             }
-
             ListView lv = new ListView()
             {
                 HasUnevenRows = true,
-                //SelectionMode=ListViewSelectionMode.Single,
                 ItemsSource = sourses,
-                Margin = 3,                
-
-                #region webView
-                // в этом варианте вверх/вниз мотает список, а лево/право двигает картинку
-                //ItemTemplate = new DataTemplate(() =>
-                //{
-                //    var wv = new WebView();
-                //    wv.Margin = 3;
-                //    wv.HeightRequest = 300;
-                //    wv.WidthRequest = 300;
-
-                //    //wv.SetBinding(WebView.SourceProperty, "ImgSrc");
-
-                //    var htmlSrs = new HtmlWebViewSource();
-                //    htmlSrs.SetBinding(HtmlWebViewSource.HtmlProperty, "ImgSrc");
-
-                //    wv.Source = htmlSrs;
-
-                //    var s = new StackLayout();
-                //    s.Children.Add(wv);
-
-                //    return new ViewCell { View = s };
-                //})
-                #endregion
-
+                Margin = 0,
+               
                 ItemTemplate = new DataTemplate(() =>
                 {
                     var stackForTemplate = new StackLayout();
                     var img = new Image();
-                    img.SetBinding(Image.SourceProperty, "ImgSrc");
+                    img.SetBinding(Image.SourceProperty, "ImgSrc");                    
                     stackForTemplate.Children.Add(img);
                     return new ViewCell { View = stackForTemplate };
-                })                
-
+                })
             };
             lv.ItemSelected += (s,e)=> 
             {
@@ -151,8 +124,8 @@ namespace ShoppingReminder
                 layout.Children.Clear();
                 layout.Children.Add(sl);
 
-                var btn = new Button { Text = "<" };
-                btn.Clicked += (_s,_e)=> 
+                var btnBack = new Button { Text = "<" };
+                btnBack.Clicked += (_s,_e)=> 
                 {
                     GetPhotos(source, layout, back, deletePhoto, deletePhotos);
                 };
@@ -163,8 +136,8 @@ namespace ShoppingReminder
                     Orientation = StackOrientation.Horizontal,
                     Children =
                     {
-                        new Button() { Command = deletePhoto, Text = "X" },
-                        btn
+                        new Button() { Command = deletePhoto, CommandParameter=tempSrc, Text = "X" },
+                        btnBack
                     }
                 };
                 layout.Children.Add(btnStack);
@@ -177,7 +150,7 @@ namespace ShoppingReminder
                 HorizontalOptions = LayoutOptions.End,
                 Orientation = StackOrientation.Horizontal,
                 Children ={
-                    new Button() { Command=deletePhotos, Text = "X" },
+                    new Button() { Command=deletePhotos, CommandParameter=source, Text = "X" },
                     new Button() { Command = back, Text = "<" }
                 }
             });
@@ -192,7 +165,7 @@ namespace ShoppingReminder
 
         private void Button_Clicked_1(object sender, EventArgs e)
         {
-            App.Database.ClearHistory();
+            App.Database.ClearHistory();//не удаляет фотки
             App.HistoryOfPurchase = App.Database.GetHistoryItems();
             history.Back();
         }
@@ -206,7 +179,24 @@ namespace ShoppingReminder
 
         private void Button_Clicked_3(object sender, EventArgs e)
         {
-            App.Current.Properties["CurrentPhotos"] = null;
+            App.Current.Properties["CurrentPhotos"] = null;//удалить из хранилища
+        }
+
+        private async void Button_Clicked_4(object sender, EventArgs e)
+        {
+            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");
+            var files = dir.GetFiles();
+            var confirm= await  DisplayAlert(files.Length.ToString(), "Удалить файлы?", "Да","Нет");
+            if (confirm)
+            {
+                foreach (var item in files)
+                {
+                    File.Delete(item.FullName);
+                }
+                return;
+            }
+            var l = new ListView { ItemsSource = dir.GetFiles() };
+            SettingsStack.Children.Add(l);
         }
     }
 }

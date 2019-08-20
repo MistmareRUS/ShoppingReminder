@@ -9,16 +9,22 @@ namespace ShoppingReminder.ViewModel
     {
         public ListOfPurchase ListOfPurchase { get; set; }
         public HistoryListViewModel ListVM { get; set; }
-        public IEnumerable<string> PhotoPath
-        {
-            get
-            {
-                return ListOfPurchase.Check.Split('&');
-            }
-        }
+
         public HistoryViewModel()
         {
             ListOfPurchase = new ListOfPurchase();
+        }
+
+        public string Check
+        {
+            get
+            {
+                return ListOfPurchase.Check;
+            }
+            set
+            {
+                ListOfPurchase.Check = value;
+            }
         }
         public DateTime Date
         {

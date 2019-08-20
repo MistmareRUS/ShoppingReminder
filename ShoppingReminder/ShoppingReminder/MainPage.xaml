@@ -48,8 +48,8 @@
                 </ContentPage>
             </ShellContent>
         </Tab>
-        <Tab >
-            <ShellContent Title="Фото">
+        <Tab Title="Фото" IsEnabled="False">
+            <ShellContent >
                 <ContentPage>
                     <StackLayout x:Name="PhotoStack">
                         
@@ -69,6 +69,7 @@
                         <Button Text="Сброс истории" Clicked="Button_Clicked_1"/>
                         <Button Text="Сброс планов" Clicked="Button_Clicked_2"/>
                         <Button Text="Сброс фоток" Clicked="Button_Clicked_3"/>
+                        <Button Text="Удаление фоток" Clicked="Button_Clicked_4"/>
                     </StackLayout>
                 </ContentPage>
             </ShellContent>

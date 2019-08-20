@@ -160,7 +160,8 @@ namespace ShoppingReminder.Repository
             {
                 Date = deser.Date,
                 PurchasesList = ObjectToByteArray(deser.PurchasesList),
-                Check = deser.Check
+                Check = deser.Check,
+                Id=deser.Id
             };
             return ser;
         }
