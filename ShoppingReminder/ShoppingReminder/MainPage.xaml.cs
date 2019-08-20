@@ -72,7 +72,7 @@ namespace ShoppingReminder
                 });
                 if (file == null)
                     return;
-                App.Current.Properties["CurrentPhotos"] += file.Path+"&";
+                App.Current.Properties["CurrentPhotos"] += file.Path + "&";
             }
             else
             {
@@ -80,7 +80,7 @@ namespace ShoppingReminder
                 return;
             }
         }
-        public void GetPhotos(string source, StackLayout layout,ICommand back,ICommand deletePhoto,ICommand deletePhotos)
+        public void GetPhotos(string source, StackLayout layout, ICommand back, ICommand deletePhoto, ICommand deletePhotos)
         {
             string[] pathes = source.Split('&');
             var sourses = new Photo[pathes.Length - 1];
@@ -97,35 +97,35 @@ namespace ShoppingReminder
                 HasUnevenRows = true,
                 ItemsSource = sourses,
                 Margin = 0,
-               
+
                 ItemTemplate = new DataTemplate(() =>
                 {
                     var stackForTemplate = new StackLayout();
                     var img = new Image();
-                    img.SetBinding(Image.SourceProperty, "ImgSrc");                    
+                    img.SetBinding(Image.SourceProperty, "ImgSrc");
                     stackForTemplate.Children.Add(img);
                     return new ViewCell { View = stackForTemplate };
                 })
             };
-            lv.ItemSelected += (s,e)=> 
+            lv.ItemSelected += (s, e) =>
             {
                 var tempSrc = ((Photo)((ListView)s).SelectedItem).ImgSrc;
-                StackLayout sl = new StackLayout();
-                WebView wv = new WebView();
-                wv.HeightRequest = 500;
-                wv.WidthRequest = 500;
-                //TODO: настроить вьюшку
-
-                var htmlSrs = new HtmlWebViewSource();
-                htmlSrs.Html = "<img src=\"" + tempSrc + "\"/>";
-
-                wv.Source = htmlSrs;
-                sl.Children.Add(wv);
+                var wv = new MyWebView()
+                {
+                    WidthRequest = 500,
+                    HeightRequest = 500,
+                    Source = "File:///" + tempSrc,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HorizontalOptions = LayoutOptions.FillAndExpand
+                    
+                };
+                Xamarin.Forms.PlatformConfiguration.AndroidSpecific.WebView.SetDisplayZoomControls(wv, true);
+                Xamarin.Forms.PlatformConfiguration.AndroidSpecific.WebView.SetEnableZoomControls(wv, true);
                 layout.Children.Clear();
-                layout.Children.Add(sl);
+                layout.Children.Add(wv);
 
                 var btnBack = new Button { Text = "<" };
-                btnBack.Clicked += (_s,_e)=> 
+                btnBack.Clicked += (_s, _e) =>
                 {
                     GetPhotos(source, layout, back, deletePhoto, deletePhotos);
                 };
@@ -142,7 +142,7 @@ namespace ShoppingReminder
                 };
                 layout.Children.Add(btnStack);
             };
-            
+
             layout.Children.Clear();
             layout.Children.Add(lv);
             layout.Children.Add(new StackLayout
@@ -155,7 +155,7 @@ namespace ShoppingReminder
                 }
             });
         }
-        
+
         private void Button_Clicked(object sender, EventArgs e)
         {
             App.Database.ClearPurchases();
@@ -186,7 +186,7 @@ namespace ShoppingReminder
         {
             DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");
             var files = dir.GetFiles();
-            var confirm= await  DisplayAlert(files.Length.ToString(), "Удалить файлы?", "Да","Нет");
+            var confirm = await DisplayAlert(files.Length.ToString(), "Удалить файлы?", "Да", "Нет");
             if (confirm)
             {
                 foreach (var item in files)
@@ -198,5 +198,9 @@ namespace ShoppingReminder
             var l = new ListView { ItemsSource = dir.GetFiles() };
             SettingsStack.Children.Add(l);
         }
+    }
+    public class MyWebView : WebView
+    {
+        
     }
 }

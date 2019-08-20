@@ -167,6 +167,18 @@ namespace ShoppingReminder.ViewModel
                     if (string.IsNullOrEmpty(tempHistory.Check))
                     {
                         Main.PhotoStackLayout.Children.Add(new Label { Text = "К данной покупке не прикреплено ни одного фото." });
+                        var btnStack = new StackLayout
+                        {
+                            HorizontalOptions = LayoutOptions.EndAndExpand,
+                            VerticalOptions =LayoutOptions.EndAndExpand,
+                            Orientation = StackOrientation.Horizontal,
+                            Children =
+                            {
+                                new Button() { Command = BackCommand, Text = "Back" },
+                        
+                            }
+                        };
+                        Main.PhotoStackLayout.Children.Add(btnStack);
                     }
                     else
                     {

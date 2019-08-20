@@ -49,9 +49,9 @@
             </ShellContent>
         </Tab>
         <Tab Title="Фото" IsEnabled="False">
-            <ShellContent >
+            <ShellContent>
                 <ContentPage>
-                    <StackLayout x:Name="PhotoStack">
+                    <StackLayout x:Name="PhotoStack" Orientation="Vertical">
                         
                     </StackLayout>
                 </ContentPage>
