@@ -15,20 +15,19 @@
                 <Label Text="Название"/>
                 <Entry Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
                 <Label Text="Количество"/>
-                <Entry Text="{Binding Count}" Keyboard="Numeric"/>
+                <Entry Text="{Binding Count}" Keyboard="Telephone"/>
                 <Label Text="Ед. измерения"/>
                 <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}">
                     <Picker.Items>
-                        <x:String>Шт.</x:String>
+                        <x:String>Шт</x:String>
                         <x:String>Кг</x:String>
-                        <x:String>Уп.</x:String>
+                        <x:String>Упак</x:String>
                         <x:String>л</x:String>
                     </Picker.Items>
                 </Picker>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}"/>
-                
+            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+                <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"/>                
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

@@ -17,7 +17,11 @@ namespace ShoppingReminder.View
         public PlanListPage (PlanListViewModel vm)
 		{
 			InitializeComponent ();
-            BindingContext = vm;            
+            BindingContext = vm;
+            listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+                if (e.SelectedItem == null) return;
+                ((ListView)sender).SelectedItem = null; 
+            };
         }        
     }
 }

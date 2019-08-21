@@ -4,19 +4,39 @@
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
                 <Button Text="Фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}"/>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
-                <Button Text="X" Command="{Binding ClearPurchaseCommand}" />
-                    <Button Text="&#10003;" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
+                    <Button Text="X" Command="{Binding ClearPurchaseCommand}" />
+                        <Button Text="&#10003;" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End"/>
+                </StackLayout>
             </StackLayout>
+
+            <StackLayout x:Name="emptyListstack" IsVisible="False">
+                <Label/>
+                <Label Text="Список пуст. Дабавте новый товар." x:Name="emptyListLabel"  HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"/>
+                <Label/>
             </StackLayout>
-            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}" HasUnevenRows="True">
+            
+            <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand" BackgroundColor="Aqua">
+                <Label/>
+                <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label/>
+                <Label  Text="- завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label/>
+                <Label  Text="- добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label/>
+                <Label  Text="- добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label/>
+            </StackLayout>
+            
+            
+            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}" HasUnevenRows="True" VerticalOptions="CenterAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>                                
-                                <Grid ColumnSpacing="1" RowSpacing="1" BackgroundColor="Yellow">
+                                <Grid ColumnSpacing="1" RowSpacing="1">
                                     <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>

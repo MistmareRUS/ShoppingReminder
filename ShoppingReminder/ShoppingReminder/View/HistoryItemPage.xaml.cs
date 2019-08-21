@@ -21,6 +21,10 @@ namespace ShoppingReminder.View
 			InitializeComponent ( );
             ViewModel = vm;
             BindingContext = ViewModel;
-		}
+            listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+                if (e.SelectedItem == null) return;
+                ((ListView)sender).SelectedItem = null;
+            };
+        }
 	}
 }

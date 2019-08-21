@@ -4,6 +4,8 @@ using ShoppingReminder.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +14,7 @@ namespace ShoppingReminder
 {
     public partial class App : Application
     {
+        public static int HistoryAbleToSaveCount = 10;
         public const string DATABASE_NAME = "Purchase.db";
         public static PurchaseRepository database;
         public static PurchaseRepository Database
@@ -32,7 +35,9 @@ namespace ShoppingReminder
         MainPage MP;
 
         public App()
-        {
+        {  
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
             InitializeComponent();
             CurrentPurchases = new List<PurchaseViewModel>();
             Plans = new List<PlanViewModel>();
@@ -45,7 +50,6 @@ namespace ShoppingReminder
 
         protected override void OnStart()
         {
-
         }
 
         protected override void OnSleep()

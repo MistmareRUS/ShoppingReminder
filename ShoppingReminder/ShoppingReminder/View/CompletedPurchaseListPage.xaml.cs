@@ -17,6 +17,16 @@ namespace ShoppingReminder.View
         {
             InitializeComponent();
             BindingContext = vm;
+
+            purchaseList.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+                if (e.SelectedItem == null) return;
+                ((ListView)sender).SelectedItem = null;
+            };
+
+            if (App.CurrentPurchases.Count < 1||!App.CurrentPurchases.Any(p=>p.Completed))
+            {               
+                ((Tab)(vm.Main.CompletedPurchasesStackLayout.Parent.Parent.Parent)).IsEnabled = false;
+            }
         }
     }
 }

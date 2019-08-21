@@ -4,11 +4,11 @@
              x:Class="ShoppingReminder.View.HistoryItemPage">
   <ContentView.Content>
       <StackLayout>
-            <StackLayout>
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Дата"/>
-                <Label Text="{Binding Date}"/>
+                <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}"/>
             </StackLayout>
-            <ListView ItemsSource="{Binding PurchasesList}">
+            <ListView ItemsSource="{Binding PurchasesList}" x:Name="listView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

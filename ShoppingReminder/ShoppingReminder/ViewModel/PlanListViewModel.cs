@@ -89,6 +89,10 @@ namespace ShoppingReminder.ViewModel
         private void Create(object obj)
         {
             var text = (Entry)obj;
+            if (string.IsNullOrEmpty(text.Text))
+            {
+                return;
+            }
             App.Database.SavePlanItem(new Plan(){ Name = text.Text });
             Back();
         }
@@ -114,24 +118,5 @@ namespace ShoppingReminder.ViewModel
             Main.plan.Back();
 
         }
-
-        PlanViewModel selectedPurchase;
-        public PlanViewModel SelectedPlan
-        {
-            get
-            {
-                return selectedPurchase;
-            }
-            set
-            {
-                if (selectedPurchase != value)
-                {
-                    PlanViewModel tempPlan = value;
-                    selectedPurchase = null;
-                    //Если понадобится выводить каждый итем- дабавить построение здесь
-                }
-            }
-        }
-
     }
 }

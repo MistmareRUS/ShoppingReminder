@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingReminder.View.CompletedPurchaseListPage">
   <ContentView.Content>
-      <StackLayout>
-            <ListView x:Name="purchaseList" ItemsSource="{Binding CompletedPurchases}" SelectedItem="" HasUnevenRows="True">
+      <StackLayout>            
+            <ListView x:Name="purchaseList" ItemsSource="{Binding CompletedPurchases}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell IsEnabled="False">
+                        <ViewCell>
                             <ViewCell.View>
                                 <StackLayout>
                                     <Label Text="{Binding Name}" FontSize="Medium"/>

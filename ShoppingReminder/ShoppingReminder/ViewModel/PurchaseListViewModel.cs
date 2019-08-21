@@ -208,19 +208,59 @@ namespace ShoppingReminder.ViewModel
             {
                 return;
             }
+
+
+            if (App.CurrentPurchases.Count < 1)
+            {
+                var photos = GetCurrentPhotoString();
+                if (photos==null)
+                {
+                    await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков. Сохранение не возможно.", "Ок");
+                    return;
+                }
+                confirm = await Main.DisplayAlert("Внимание!", "В списке нет ни одного товара. Всё равно сохранить?", "Да", "Нет");
+            }
+            if (!confirm)
+                {
+                    return;
+                }
+            while (App.HistoryOfPurchase.Count >= App.HistoryAbleToSaveCount)
+            {
+                var haveToDeleteItem = (App.HistoryOfPurchase.FirstOrDefault(p => p.Date == App.HistoryOfPurchase.Min(h => h.Date)));
+                Main.DeletePhotosHelper(haveToDeleteItem.Check);
+                App.Database.DeleteHistoryItem(haveToDeleteItem.Id);
+                Main.history.Back();
+            }
             var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check= GetCurrentPhotoString() };
             App.Current.Properties["CurrentPhotos"] = null;
-            foreach (var item in App.CurrentPurchases)
+            if (App.CurrentPurchases.Any(p => !p.Completed))
             {
-                //TODO:все или только завершенные?
-                var temp = new Purchase();
-                temp.Name = item.Name;
-                temp.Count = item.Count;
-                temp.Units = item.Units;                            
-                currentList.PurchasesList.Add(temp);
+                confirm = await Main.DisplayAlert("Внимание!", "Не все покупки отмечены как завершенные. Какие из них сохранить?", "Все", "Только завершенные");
+            }
+            if (confirm)
+            {
+                foreach (var item in App.CurrentPurchases)
+                {
+                    var temp = new Purchase();
+                    temp.Name = item.Name;
+                    temp.Count = item.Count;
+                    temp.Units = item.Units;                            
+                    currentList.PurchasesList.Add(temp);
+                }
+            }
+            else
+            {
+                foreach (var item in App.CurrentPurchases.Where(p=>p.Completed))
+                {
+                    var temp = new Purchase();
+                    temp.Name = item.Name;
+                    temp.Count = item.Count;
+                    temp.Units = item.Units;
+                    currentList.PurchasesList.Add(temp);
+                }
             }
             App.Database.SaveHistoryItem(currentList);            
-            App.CurrentPurchases = new List<PurchaseViewModel>();
+            App.CurrentPurchases.Clear();
             Main.history.Back();
             Back();
         }
@@ -230,11 +270,17 @@ namespace ShoppingReminder.ViewModel
             if (purchase != null && purchase.isValid)
             {
                 App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = true;
+                ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent)).IsEnabled = true;
             }
             Back();
         }
-        private void DeletePurchase(object obj)
+        private async void DeletePurchase(object obj)
         {
+            var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот элемент из списка?", "Да", "Нет");
+            if (!confirm)
+            {
+                return;
+            }
             PurchaseViewModel purchase = obj as PurchaseViewModel;
             if (purchase != null)
             {
@@ -250,11 +296,17 @@ namespace ShoppingReminder.ViewModel
             {
                 if (string.IsNullOrEmpty(purchase.VaiableName))
                 {
+                    if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
+                    {
+                        Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                        return;
+                    }
                     App.CurrentPurchases.Add(purchase);
                 }
                 else
                 {
                     var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
+
                 }
             }
             Back();

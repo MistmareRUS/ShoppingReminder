@@ -70,6 +70,8 @@
                         <Button Text="Сброс планов" Clicked="Button_Clicked_2"/>
                         <Button Text="Сброс фоток" Clicked="Button_Clicked_3"/>
                         <Button Text="Удаление фоток" Clicked="Button_Clicked_4"/>
+                        <Entry x:Name="xEntry"/>
+                        <Button Text="Разделитель" Clicked="Button_Clicked_5"/>
                     </StackLayout>
                 </ContentPage>
             </ShellContent>

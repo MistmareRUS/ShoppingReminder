@@ -4,15 +4,17 @@
              x:Class="ShoppingReminder.View.PlanListPage">
   <ContentView.Content>
       <StackLayout>
-            <ListView ItemsSource="{Binding PlanList}">
+            <ListView ItemsSource="{Binding PlanList}" x:Name="listView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label Text="{Binding Name}"/>
-                                    <Button Text="Добавить к текущим" Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="Убрать из списка" Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                                        
+                                        <Button Text="+" Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}"/>
+                                        <Button Text="X" Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}"/>
+                                    </StackLayout>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
@@ -20,8 +22,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Vertical">
-                <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry"/>
-                <Button Text="Добавить" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" />
+                <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry" HorizontalTextAlignment="Center"/>
+                <Button Text="Добавить" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -27,6 +28,7 @@ namespace ShoppingReminder
         public StackLayout HistoryStackLayout { get; set; }
         public StackLayout PlanStackLayout { get; set; }
         public StackLayout PhotoStackLayout { get; set; }
+        //вьюмодели для обращению к каждой из страниц приложения
         public PurchaseListViewModel activePurchases;
         public HistoryListViewModel history;
         public PlanListViewModel plan;
@@ -68,7 +70,7 @@ namespace ShoppingReminder
                 {
                     SaveToAlbum = false,
                     Directory = "ShoppingReminder",
-                    Name = $"{DateTime.Now.ToString("dd.MM.yyyy_hh.mm.ss")}.jpg"//TODO: изменить формат
+                    Name = $"{DateTime.Now.ToString("yyyy.MM.dd_hh.mm.ss")}.jpg"//TODO: изменить формат
                 });
                 if (file == null)
                     return;
@@ -112,8 +114,8 @@ namespace ShoppingReminder
                 var tempSrc = ((Photo)((ListView)s).SelectedItem).ImgSrc;
                 var wv = new MyWebView()
                 {
-                    WidthRequest = 500,
-                    HeightRequest = 500,
+                    WidthRequest = 1000,
+                    HeightRequest = 1000,
                     Source = "File:///" + tempSrc,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand
@@ -145,14 +147,24 @@ namespace ShoppingReminder
 
             layout.Children.Clear();
             layout.Children.Add(lv);
-            layout.Children.Add(new StackLayout
+            var listBtnStack = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.EndAndExpand,
                 Orientation = StackOrientation.Horizontal,
                 Children ={
                     new Button() { Command=deletePhotos, CommandParameter=source, Text = "X" },
                     new Button() { Command = back, Text = "<" }
                 }
+            };
+            layout.Children.Add(new StackLayout {
+                Children =
+                {
+                    new Label{Text="Прикрепленных фото: "+sourses.Length.ToString(),VerticalTextAlignment=TextAlignment.Center},
+                    listBtnStack
+                },
+                Orientation=StackOrientation.Horizontal,
+                HorizontalOptions=LayoutOptions.FillAndExpand,
+                VerticalOptions=LayoutOptions.Center
             });
         }
 
@@ -197,6 +209,21 @@ namespace ShoppingReminder
             }
             var l = new ListView { ItemsSource = dir.GetFiles() };
             SettingsStack.Children.Add(l);
+        }
+
+        private void Button_Clicked_5(object sender, EventArgs e)
+        {
+            //double x = Convert.ToDouble( xEntry.Text);
+            //DisplayAlert(x.ToString(),Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator+"  "+Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator, "Ок");
+            App.CurrentPurchases[0].Count = 5.6;
+        }
+        public void DeletePhotosHelper(string fullPath)
+        {
+            var pathes = fullPath.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in pathes)
+            {
+                File.Delete(item);
+            }
         }
     }
     public class MyWebView : WebView

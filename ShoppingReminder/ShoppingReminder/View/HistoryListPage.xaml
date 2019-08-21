@@ -10,10 +10,9 @@
                 <ViewCell>
                   <ViewCell.View>
                     <StackLayout Orientation="Horizontal">
-                      <Label Text="{Binding Date}"/>
-                      <Label Text="{Binding Id}"/>
-                      <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                        <Button Text="X" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>                          
+                      <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}"/>
+                      <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                        <Button Text="X" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id} "/>                          
                       </StackLayout>
                      </StackLayout>
                   </ViewCell.View>

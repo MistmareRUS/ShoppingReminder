@@ -12,7 +12,7 @@ namespace ShoppingReminder.ViewModel
 {
     public class HistoryListViewModel
     {
-        public List<HistoryViewModel> PurchaseList => App.HistoryOfPurchase;
+        public List<HistoryViewModel> PurchaseList => App.HistoryOfPurchase.OrderByDescending(h=>h.Date).ToList();
         public MainPage Main;
         public HistoryListViewModel(MainPage mp)
         {
@@ -44,11 +44,7 @@ namespace ShoppingReminder.ViewModel
                 await Main.DisplayAlert("Внимание!", "Нет фотографий.", "Ок");
                 return;
             }
-            var pathes = fullPath.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var item in pathes)
-            {
-                File.Delete(item);
-            }
+            Main.DeletePhotosHelper(fullPath);
             HistoryViewModel tempHVM = PurchaseList.FirstOrDefault(p => p.Check == fullPath);
             ListOfPurchase tempList = new ListOfPurchase
             {
@@ -136,15 +132,19 @@ namespace ShoppingReminder.ViewModel
             if (!confirm)
             {
                 return;
-            }            
-            var result=App.Database.DeleteHistoryItem((int)obj);
+            }
+            var index = (int)obj;
+            var item = App.HistoryOfPurchase.FirstOrDefault(h => h.Id == index);
+            Main.DeletePhotosHelper(item.Check);
+            var result=App.Database.DeleteHistoryItem(index);
             if (result == 0)
             {
                 await Main.DisplayAlert("Внимание!","Произошла ошибка при удалении","ОК");
             }
             Back();
-
+            //TODO: фотки не удаляются!
         }
+        
 
 
         HistoryViewModel selectedPurchaseList;
@@ -166,7 +166,9 @@ namespace ShoppingReminder.ViewModel
                     t.IsEnabled = true;
                     if (string.IsNullOrEmpty(tempHistory.Check))
                     {
-                        Main.PhotoStackLayout.Children.Add(new Label { Text = "К данной покупке не прикреплено ни одного фото." });
+                        Main.PhotoStackLayout.Children.Add(new Label { Text = "К данной покупке не прикреплено ни одного фото.",
+                            HorizontalTextAlignment =TextAlignment.Center, VerticalTextAlignment=TextAlignment.Center,
+                            HorizontalOptions =LayoutOptions.CenterAndExpand,VerticalOptions=LayoutOptions.CenterAndExpand});
                         var btnStack = new StackLayout
                         {
                             HorizontalOptions = LayoutOptions.EndAndExpand,
