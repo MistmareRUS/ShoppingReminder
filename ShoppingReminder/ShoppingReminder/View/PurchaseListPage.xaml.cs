@@ -20,7 +20,7 @@ namespace ShoppingReminder.View
             InitializeComponent();
             viewModel = vm;
             BindingContext = viewModel;   
-
+            
             if (App.CurrentPurchases.Count < 1)
             {
                 CreateButtonCommand();

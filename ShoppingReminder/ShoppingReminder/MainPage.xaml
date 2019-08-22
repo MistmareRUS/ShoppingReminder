@@ -2,11 +2,22 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder"
-             x:Class="ShoppingReminder.MainPage">
+             BackgroundColor="Green"
+             FlyoutBackgroundColor="Yellow">
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style>
+                
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+    
+    
+    
     <FlyoutItem Title="Текущая покупка">
         <Tab Title="Активные покупки">
             <ShellContent Title="Текущее">
-                <ContentPage>
+                <ContentPage x:Name="testContent">
                     <StackLayout x:Name="CurrentStack">
                         
                     </StackLayout>
@@ -30,7 +41,7 @@
             <ShellContent Title="Текущее">
                 <ContentPage>
                     <StackLayout x:Name="PlanStack">
-                        <Label Text="Здесь будет список долгосрочных планов"/>
+                        
                     </StackLayout>
                 </ContentPage>
             </ShellContent>
@@ -63,7 +74,7 @@
     <FlyoutItem Title="Настройки">
         <Tab Title="***">
             <ShellContent Title="Текущее">
-                <ContentPage>
+                <ContentPage BackgroundImageSource="star.png">
                     <StackLayout x:Name="SettingsStack">
                         <Button Text="Сброс текущих" Clicked="Button_Clicked"/>
                         <Button Text="Сброс истории" Clicked="Button_Clicked_1"/>
@@ -77,5 +88,4 @@
             </ShellContent>
         </Tab>
     </FlyoutItem>
-
 </Shell>

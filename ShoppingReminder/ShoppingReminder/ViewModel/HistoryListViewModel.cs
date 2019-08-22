@@ -142,7 +142,6 @@ namespace ShoppingReminder.ViewModel
                 await Main.DisplayAlert("Внимание!","Произошла ошибка при удалении","ОК");
             }
             Back();
-            //TODO: фотки не удаляются!
         }
         
 

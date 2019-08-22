@@ -46,6 +46,11 @@ namespace ShoppingReminder
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
+
+            var cont = (ContentPage)(CurrentPurchasesStackLayout.Parent);
+            cont.BackgroundImageSource=
+
+            //testContent.
         }
 
         public async void TakePhoto()
@@ -70,7 +75,7 @@ namespace ShoppingReminder
                 {
                     SaveToAlbum = false,
                     Directory = "ShoppingReminder",
-                    Name = $"{DateTime.Now.ToString("yyyy.MM.dd_hh.mm.ss")}.jpg"//TODO: изменить формат
+                    Name = $"{DateTime.Now.ToString("yyyy.MM.dd_hh.mm.ss")}.jpg"
                 });
                 if (file == null)
                     return;

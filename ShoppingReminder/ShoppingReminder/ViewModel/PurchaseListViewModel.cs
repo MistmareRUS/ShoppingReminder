@@ -34,12 +34,29 @@ namespace ShoppingReminder.ViewModel
             TakePhotoCommand = new Command(TakePhoto);
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
+            UnmarkAsCompletedPurchaseCommand = new Command(UnmarkAsCompletedPurchase);
 
             foreach (var item in App.CurrentPurchases)
             {
                 item.ListVM = this;
             }
+            Back();
+        }
 
+        private void UnmarkAsCompletedPurchase(object obj)
+        {
+            PurchaseViewModel purchase = obj as PurchaseViewModel;
+            if (purchase != null && purchase.isValid)
+            {
+                App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = false;
+                if (!App.CurrentPurchases.Any(p => p.Completed))
+                {                   
+                    var t = (Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent);
+                    t.IsEnabled = false;
+                    var fi = (FlyoutItem)(t.Parent);
+                    fi.CurrentItem = fi.Items[0];
+                }
+            }
             Back();
         }
 
@@ -165,6 +182,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand DeletePurchaseCommand { get; protected set; }
         public ICommand SavePurchaseCommand { get; protected set; }
         public ICommand MarkAsCompletedPurchaseCommand { get; protected set; }
+        public ICommand UnmarkAsCompletedPurchaseCommand { get; protected set; }
         public ICommand BackCommand { get; protected set; }
         public ICommand CompletePurchaseCommand { get; protected set; }
         public ICommand ClearPurchaseCommand { get; protected set; }

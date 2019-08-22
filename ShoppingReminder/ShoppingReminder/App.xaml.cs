@@ -35,9 +35,7 @@ namespace ShoppingReminder
         MainPage MP;
 
         public App()
-        {  
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+        {
             InitializeComponent();
             CurrentPurchases = new List<PurchaseViewModel>();
             Plans = new List<PlanViewModel>();
