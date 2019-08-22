@@ -1,5 +1,6 @@
 ﻿using ShoppingReminder.Model;
 using ShoppingReminder.Repository;
+using ShoppingReminder.Themes;
 using ShoppingReminder.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace ShoppingReminder
     public partial class App : Application
     {
         public static int HistoryAbleToSaveCount = 10;
+        public static Theme theme = Theme.Default;
+
         public const string DATABASE_NAME = "Purchase.db";
         public static PurchaseRepository database;
         public static PurchaseRepository Database

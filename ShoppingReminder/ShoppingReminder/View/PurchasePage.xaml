@@ -5,10 +5,10 @@
   <ContentView.Content>
       <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Назад" Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" />
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
-                    <Button Text="X" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}"/>
-                    <Button Text="В планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End"/>
+                <Button Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" Style="{DynamicResource BackBtn}" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout>
@@ -27,7 +27,8 @@
                 </Picker>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                <Button Text="ОК" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"/>                
+                <Button Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
+                        HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />                
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

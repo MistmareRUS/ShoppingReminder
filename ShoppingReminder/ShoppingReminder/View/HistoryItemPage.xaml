@@ -32,8 +32,8 @@
                 </ListView.ItemTemplate>
             </ListView>            
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="X" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}"/>
-                <Button Text="&#60;" Command="{Binding ListVM.BackCommand}"/>
+                <Button Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Command="{Binding ListVM.BackCommand}" Style="{DynamicResource BackBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

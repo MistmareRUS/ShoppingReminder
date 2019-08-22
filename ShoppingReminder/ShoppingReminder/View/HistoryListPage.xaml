@@ -12,7 +12,7 @@
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}"/>
                       <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                        <Button Text="X" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id} "/>                          
+                           <Button Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>                          
                       </StackLayout>
                      </StackLayout>
                   </ViewCell.View>

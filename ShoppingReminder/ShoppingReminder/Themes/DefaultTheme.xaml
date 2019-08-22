@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingReminder.Themes.DefaultTheme">
+    <Color x:Key="SidePanelColor">Red</Color>
+
+    <Style x:Key="ShellStyle" TargetType="Shell">
+        <Setter Property="BackgroundColor" Value="#067898"/>
+        <Setter Property="FlyoutBackgroundColor" Value="#39ABCC"/>
+    </Style>
+    
+    <Style x:Key="BGImage" TargetType="Image">
+        <Setter Property="Source" Value=""/>
+        <Setter Property="AbsoluteLayout.LayoutFlags" Value="All"/>
+        <Setter Property="AbsoluteLayout.LayoutBounds" Value="0,0,1,1"/>
+        <Setter Property="Aspect" Value="Fill"/>
+        <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+
+    </Style>
+    <!--//////////////////////////////////////////КНОПКИ////////////////////////////////////////////////-->
+    <Style x:Key="BackBtn" TargetType="Button">
+        <Setter Property="Text" Value="назад"/>
+        <Setter Property="ImageSource" Value="Default_Back48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="UpBtn" TargetType="Button">        
+        <Setter Property="ImageSource" Value="Default_Up48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="DownBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Down48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="ToPlanBtn" TargetType="Button">
+        <Setter Property="Text" Value="в планы"/>
+        <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="FromPlanBtn" TargetType="Button">
+        <Setter Property="Text" Value="к текущим"/>
+        <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="DeleteBtn" TargetType="Button">
+        <Setter Property="Text" Value="удалить"/>
+        <Setter Property="ImageSource" Value="Default_Delete48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="PhotoBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Photo48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="AddBtn" TargetType="Button">
+        <Setter Property="Text" Value="добавить"/>
+        <Setter Property="ImageSource" Value="Default_Add48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="OkBtn" TargetType="Button">
+        <Setter Property="Text" Value="готово"/>
+        <Setter Property="ImageSource" Value="Default_Ok48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <!--////////////////////////////////////////////-->
+    
+    
+
+</ResourceDictionary>

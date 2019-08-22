@@ -3,6 +3,7 @@ using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ShoppingReminder.Model;
+using ShoppingReminder.Themes;
 using ShoppingReminder.View;
 using ShoppingReminder.ViewModel;
 using System;
@@ -46,11 +47,6 @@ namespace ShoppingReminder
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
-
-            var cont = (ContentPage)(CurrentPurchasesStackLayout.Parent);
-            cont.BackgroundImageSource=
-
-            //testContent.
         }
 
         public async void TakePhoto()
@@ -217,10 +213,23 @@ namespace ShoppingReminder
         }
 
         private void Button_Clicked_5(object sender, EventArgs e)
-        {
-            //double x = Convert.ToDouble( xEntry.Text);
-            //DisplayAlert(x.ToString(),Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator+"  "+Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator, "Ок");
-            App.CurrentPurchases[0].Count = 5.6;
+        {            
+            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            DisplayAlert(mergedDictionaries.Count.ToString(), App.theme.ToString(), "Ok");
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+                if (App.theme == 0)
+                {
+                        mergedDictionaries.Add(new DefaultTheme());
+                        App.theme = Theme.Dark;
+                }
+                else
+                {
+                        mergedDictionaries.Add(new DarkTheme());
+                    App.theme = Theme.Default;
+                }
+            }
         }
         public void DeletePhotosHelper(string fullPath)
         {
@@ -231,8 +240,6 @@ namespace ShoppingReminder
             }
         }
     }
-    public class MyWebView : WebView
-    {
-        
-    }
+    
+    
 }

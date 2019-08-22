@@ -51,7 +51,7 @@ namespace ShoppingReminder.ViewModel
                 App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = false;
                 if (!App.CurrentPurchases.Any(p => p.Completed))
                 {                   
-                    var t = (Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent);
+                    var t = (Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent);
                     t.IsEnabled = false;
                     var fi = (FlyoutItem)(t.Parent);
                     fi.CurrentItem = fi.Items[0];
@@ -288,7 +288,7 @@ namespace ShoppingReminder.ViewModel
             if (purchase != null && purchase.isValid)
             {
                 App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = true;
-                ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent)).IsEnabled = true;
+                ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
             }
             Back();
         }

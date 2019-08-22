@@ -11,9 +11,9 @@
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label Text="{Binding Name}"/>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                                        
-                                        <Button Text="+" Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}"/>
-                                        <Button Text="X" Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource FromPlanBtn}"/>
+                                        <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
                                     </StackLayout>
                                 </StackLayout>
                             </ViewCell.View>
@@ -23,7 +23,7 @@
             </ListView>
             <StackLayout Orientation="Vertical">
                 <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry" HorizontalTextAlignment="Center"/>
-                <Button Text="Добавить" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End"/>
+                <Button Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

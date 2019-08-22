@@ -5,10 +5,10 @@
     <ContentView.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                <Button Text="Фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">                    
-                    <Button Text="X" Command="{Binding ClearPurchaseCommand}" />
-                        <Button Text="&#10003;" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End"/>
+                <Button HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Button  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button  Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
                 </StackLayout>
             </StackLayout>
 
@@ -54,11 +54,11 @@
                                         <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End"/>
                                         <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
 
-                                    <Button Text="&#10003;" Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3"/>
-                                    <Button Text="X" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4"/>
-                                    <Button Text="/\" Grid.Row="0" Grid.Column="5" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="\/" Grid.Row="1" Grid.Column="5" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="&lt;" Grid.Row="1" Grid.Column="2" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}"/>
+                                    <Button Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3" Style="{DynamicResource OkBtn}"/>
+                                    <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>
+                                    <Button Grid.Row="0" Grid.Column="5" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource UpBtn}"/>
+                                    <Button Grid.Row="1" Grid.Column="5" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DownBtn}"/>
+                                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" Style="{DynamicResource ToPlanBtn}"/>
                                 </Grid>                                
                             </ViewCell.View>
                         </ViewCell>
@@ -66,7 +66,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout >
-                <Button Text="+" TextColor="Red" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End"/>
+                <Button Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

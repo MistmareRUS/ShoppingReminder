@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using ShoppingReminder;
 using ShoppingReminder.Droid;
+using ShoppingReminder.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -22,13 +23,8 @@ namespace ShoppingReminder.Droid
         {
             public MyWebViewRenderer(Context context) : base(context)
             {
+
             }
-
-            //protected override void OnElementChanged(ElementChangedEventArgs<WebView> e)
-            //{
-            //    base.OnElementChanged(e);
-            //}
-
             public override bool DispatchTouchEvent(MotionEvent e)
             {
                 Parent.RequestDisallowInterceptTouchEvent(true);

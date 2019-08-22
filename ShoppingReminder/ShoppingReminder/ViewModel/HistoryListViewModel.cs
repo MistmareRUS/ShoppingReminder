@@ -107,7 +107,7 @@ namespace ShoppingReminder.ViewModel
                 item.ListVM = this;
             }
             Main.PhotoStackLayout.Children.Clear();
-            var t = (Tab)(Main.PhotoStackLayout.Parent.Parent.Parent);
+            var t = (Tab)(Main.PhotoStackLayout.Parent.Parent.Parent.Parent);
             t.IsEnabled = false;
             var fi = (FlyoutItem)(t.Parent);
             fi.CurrentItem = fi.Items[0];
@@ -161,7 +161,7 @@ namespace ShoppingReminder.ViewModel
                     tempHistory.ListVM = new HistoryListViewModel(Main);
                     selectedPurchaseList = null;
                     Main.PhotoStackLayout.Children.Clear();
-                    var t = (Tab)(Main.PhotoStackLayout.Parent.Parent.Parent);
+                    var t = (Tab)(Main.PhotoStackLayout.Parent.Parent.Parent.Parent);
                     t.IsEnabled = true;
                     if (string.IsNullOrEmpty(tempHistory.Check))
                     {
