@@ -5,10 +5,10 @@
   <ContentView.Content>
       <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Дата"/>
-                <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}"/>
+                <Label Text="Дата: " Style="{DynamicResource Discription}"/>
+                <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Header}"/>
             </StackLayout>
-            <ListView ItemsSource="{Binding PurchasesList}" x:Name="listView">
+            <ListView ItemsSource="{Binding PurchasesList}" x:Name="listView" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -20,11 +20,11 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="3*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                                    <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" />
-                                    <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <Label Text="{Binding Count}" Style="{DynamicResource Discription}" HorizontalTextAlignment="End" Grid.Row="1" Grid.Column="0" />
+                                    <Label Text="{Binding Units}" Style="{DynamicResource Discription}" Grid.Row="1" Grid.Column="1" />
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>
@@ -32,8 +32,8 @@
                 </ListView.ItemTemplate>
             </ListView>            
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
-                <Button Command="{Binding ListVM.BackCommand}" Style="{DynamicResource BackBtn}"/>
+                <Button Text="удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="назад" Command="{Binding ListVM.BackCommand}" Style="{DynamicResource BackBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

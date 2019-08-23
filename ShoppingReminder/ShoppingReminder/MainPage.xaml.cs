@@ -99,7 +99,7 @@ namespace ShoppingReminder
             {
                 HasUnevenRows = true,
                 ItemsSource = sourses,
-                Margin = 0,
+                Margin = 10,
 
                 ItemTemplate = new DataTemplate(() =>
                 {
@@ -117,6 +117,7 @@ namespace ShoppingReminder
                 {
                     WidthRequest = 1000,
                     HeightRequest = 1000,
+                    Margin=10,
                     Source = "File:///" + tempSrc,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand
@@ -127,20 +128,22 @@ namespace ShoppingReminder
                 layout.Children.Clear();
                 layout.Children.Add(wv);
 
-                var btnBack = new Button { Text = "<" };
-                btnBack.Clicked += (_s, _e) =>
+                var BackBtn = new Button { Text = "назад"};
+                BackBtn.SetDynamicResource(Button.StyleProperty, "BackBtn");
+                BackBtn.Clicked += (_s, _e) =>
                 {
                     GetPhotos(source, layout, back, deletePhoto, deletePhotos);
                 };
-
+                var DelBtn = new Button() { Command = deletePhoto, CommandParameter = tempSrc, Text = "удалить" };
+                DelBtn.SetDynamicResource(Button.StyleProperty, "DeleteBtn");
                 var btnStack = new StackLayout
                 {
                     HorizontalOptions = LayoutOptions.End,
                     Orientation = StackOrientation.Horizontal,
                     Children =
                     {
-                        new Button() { Command = deletePhoto, CommandParameter=tempSrc, Text = "X" },
-                        btnBack
+                        DelBtn,
+                        BackBtn
                     }
                 };
                 layout.Children.Add(btnStack);
@@ -148,19 +151,25 @@ namespace ShoppingReminder
 
             layout.Children.Clear();
             layout.Children.Add(lv);
+            var backBtn = new Button() { Command = back, Text = "назад" };
+            backBtn.SetDynamicResource(Button.StyleProperty, "BackBtn");
+            var delBtn= new Button() { Command = deletePhotos, CommandParameter = source, Text = "удалить все" };
+            delBtn.SetDynamicResource(Button.StyleProperty, "DeleteBtn");
             var listBtnStack = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.EndAndExpand,
                 Orientation = StackOrientation.Horizontal,
                 Children ={
-                    new Button() { Command=deletePhotos, CommandParameter=source, Text = "X" },
-                    new Button() { Command = back, Text = "<" }
+                    delBtn,
+                    backBtn
                 }
             };
+            var countLbl = new Label { Text = "Прикрепленных фото: " + sourses.Length.ToString(), VerticalTextAlignment = TextAlignment.Center };
+            countLbl.SetDynamicResource(Label.StyleProperty, "Discription");
             layout.Children.Add(new StackLayout {
                 Children =
                 {
-                    new Label{Text="Прикрепленных фото: "+sourses.Length.ToString(),VerticalTextAlignment=TextAlignment.Center},
+                    countLbl,
                     listBtnStack
                 },
                 Orientation=StackOrientation.Horizontal,
@@ -197,7 +206,7 @@ namespace ShoppingReminder
 
         private async void Button_Clicked_4(object sender, EventArgs e)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");
+            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
             var files = dir.GetFiles();
             var confirm = await DisplayAlert(files.Length.ToString(), "Удалить файлы?", "Да", "Нет");
             if (confirm)

@@ -2,14 +2,14 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder"
-             x:Class="ShoppingReminder.MainPage"
+             x:Class="ShoppingReminder.MainPage"       
              Style="{DynamicResource ShellStyle}">
 
     <FlyoutItem Title="Текущая покупка">
         <Tab Title="Активные покупки">
             <ShellContent Title="Текущее">
                 <ContentPage>
-                    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+                    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="CurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                             

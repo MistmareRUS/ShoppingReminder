@@ -4,13 +4,13 @@
              x:Class="ShoppingReminder.View.HistoryListPage">
   <ContentView.Content>
       <StackLayout>
-            <ListView ItemsSource="{Binding PurchaseList}" SelectedItem="{Binding SelectedPurchaseList, Mode=TwoWay}"   RowHeight="50">
+            <ListView ItemsSource="{Binding PurchaseList}" SelectedItem="{Binding SelectedPurchaseList, Mode=TwoWay}"   HasUnevenRows="True">
             <ListView.ItemTemplate>
               <DataTemplate>
                 <ViewCell>
                   <ViewCell.View>
                     <StackLayout Orientation="Horizontal">
-                      <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}"/>
+                                    <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Discription}"/>
                       <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                            <Button Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>                          
                       </StackLayout>

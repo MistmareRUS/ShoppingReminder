@@ -9,14 +9,25 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout>
-                                    <Label Text="{Binding Name}" FontSize="Medium"/>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Count}" FontSize="Small"/>
-                                        <Label Text="{Binding Units}" FontSize="Small"/>
-                                        <Button Text="Вернуть" Command="{Binding ListVM.UnmarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}"/>
-                                    </StackLayout>
-                                </StackLayout>
+                                <Grid ColumnSpacing="0" RowSpacing="0" Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{DynamicResource Header}"/>
+                                    <Label Text="{Binding Count}"  Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Style="{DynamicResource Discription}"/>
+                                    <Label Text="{Binding Units}"  Grid.Row="1" Grid.Column="2" Style="{DynamicResource Discription}"/>
+                                    <Button Command="{Binding ListVM.UnmarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource CancelBtn}"/>
+                                    <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="5" Style="{DynamicResource DeleteBtn}"/>                                
+                                </Grid>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>

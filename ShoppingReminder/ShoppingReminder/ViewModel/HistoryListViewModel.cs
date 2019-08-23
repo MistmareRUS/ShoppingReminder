@@ -165,9 +165,17 @@ namespace ShoppingReminder.ViewModel
                     t.IsEnabled = true;
                     if (string.IsNullOrEmpty(tempHistory.Check))
                     {
-                        Main.PhotoStackLayout.Children.Add(new Label { Text = "К данной покупке не прикреплено ни одного фото.",
-                            HorizontalTextAlignment =TextAlignment.Center, VerticalTextAlignment=TextAlignment.Center,
-                            HorizontalOptions =LayoutOptions.CenterAndExpand,VerticalOptions=LayoutOptions.CenterAndExpand});
+                        var lbl = new Label
+                        {
+                            Text = "К данной покупке не прикреплено ни одного фото.",
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            VerticalTextAlignment = TextAlignment.Center,
+                            HorizontalOptions = LayoutOptions.CenterAndExpand
+                        };
+                        lbl.SetDynamicResource(Label.StyleProperty, "Discription");
+                        Main.PhotoStackLayout.Children.Add(lbl);
+                        var btn = new Button() { Command = BackCommand, Text = "Back" };
+                        btn.SetDynamicResource(Button.StyleProperty, "BackBtn");
                         var btnStack = new StackLayout
                         {
                             HorizontalOptions = LayoutOptions.EndAndExpand,
@@ -175,8 +183,7 @@ namespace ShoppingReminder.ViewModel
                             Orientation = StackOrientation.Horizontal,
                             Children =
                             {
-                                new Button() { Command = BackCommand, Text = "Back" },
-                        
+                                btn                        
                             }
                         };
                         Main.PhotoStackLayout.Children.Add(btnStack);

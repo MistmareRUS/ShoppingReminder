@@ -2,7 +2,13 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingReminder.Themes.DefaultTheme">
-    <Color x:Key="SidePanelColor">Red</Color>
+    <!--https://colorscheme.ru/#3o11TvNuFw0w0-->    
+    
+    <Color x:Key="MainColor">#39ABCC</Color>
+    <Color x:Key="2thColor">#067898</Color>
+    <Color x:Key="3thColor">#206072</Color>
+    <Color x:Key="DarkColor">#024D63</Color>
+    <Color x:Key="LightColor">#60B4CC</Color>
 
     <Style x:Key="ShellStyle" TargetType="Shell">
         <Setter Property="BackgroundColor" Value="#067898"/>
@@ -10,17 +16,15 @@
     </Style>
     
     <Style x:Key="BGImage" TargetType="Image">
-        <Setter Property="Source" Value=""/>
+        <Setter Property="Source" Value="Default_BG300_1.png"/>
         <Setter Property="AbsoluteLayout.LayoutFlags" Value="All"/>
         <Setter Property="AbsoluteLayout.LayoutBounds" Value="0,0,1,1"/>
-        <Setter Property="Aspect" Value="Fill"/>
+        <Setter Property="Aspect" Value="AspectFill"/>
         <Setter Property="VerticalOptions" Value="FillAndExpand"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-
     </Style>
     <!--//////////////////////////////////////////КНОПКИ////////////////////////////////////////////////-->
     <Style x:Key="BackBtn" TargetType="Button">
-        <Setter Property="Text" Value="назад"/>
         <Setter Property="ImageSource" Value="Default_Back48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
@@ -39,21 +43,18 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="ToPlanBtn" TargetType="Button">
-        <Setter Property="Text" Value="в планы"/>
         <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="FromPlanBtn" TargetType="Button">
-        <Setter Property="Text" Value="к текущим"/>
         <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DeleteBtn" TargetType="Button">
-        <Setter Property="Text" Value="удалить"/>
         <Setter Property="ImageSource" Value="Default_Delete48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
@@ -66,21 +67,52 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="AddBtn" TargetType="Button">
-        <Setter Property="Text" Value="добавить"/>
         <Setter Property="ImageSource" Value="Default_Add48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="OkBtn" TargetType="Button">
-        <Setter Property="Text" Value="готово"/>
         <Setter Property="ImageSource" Value="Default_Ok48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <!--////////////////////////////////////////////-->
+    <Style x:Key="CancelBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Cancel48.png"/>
+        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <!--////////////////////Text////////////////////////-->
+    <Style x:Key="Header" TargetType="Label">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="Discription" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+    </Style>
+    <Style x:Key="Link" TargetType="Label">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        <Setter Property="TextDecorations" Value="Underline"/>
+    </Style>
     
+    <Style x:Key="Picker" TargetType="Picker">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+    </Style>
+    <Style x:Key="Entry" TargetType="Entry">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
     
 
 </ResourceDictionary>

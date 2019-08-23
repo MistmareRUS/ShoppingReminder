@@ -5,7 +5,7 @@
   <ContentView.Content>
       <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Чеки покупок от:"/>
+                <Label Text="Чеки покупок от:" Style="{DynamicResource Discription}"/>
                 <Label Text="{Binding }"/>
             </StackLayout>
             <ListView ItemsSource="{Binding }">
@@ -21,7 +21,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>                
             </ListView>
-            <Label x:Name="NoPhotos" Text="С данной покупкой не было сденано ни одной фотографии чеков" IsVisible="False"/>
+            <Label x:Name="NoPhotos" Text="С данной покупкой не было сденано ни одной фотографии чеков" IsVisible="False"
+                   Style="{DynamicResource Discription}"/>
         </StackLayout>
   </ContentView.Content>
 </ContentView>

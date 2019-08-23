@@ -4,13 +4,13 @@
              x:Class="ShoppingReminder.View.PlanListPage">
   <ContentView.Content>
       <StackLayout>
-            <ListView ItemsSource="{Binding PlanList}" x:Name="listView">
+            <ListView ItemsSource="{Binding PlanList}" HasUnevenRows="True" x:Name="listView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding Name}"/>
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}"/>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                                         <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource FromPlanBtn}"/>
                                         <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
@@ -22,8 +22,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Vertical">
-                <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry" HorizontalTextAlignment="Center"/>
-                <Button Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry" HorizontalTextAlignment="Center" Style="{DynamicResource Entry}"/>
+                <Button Text="добавить" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

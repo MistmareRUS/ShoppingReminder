@@ -5,28 +5,30 @@
     <ContentView.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                <Button HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
+                <Button Text="фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button  Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
+                    <Button Text="очистить"  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="завершить" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
                 </StackLayout>
             </StackLayout>
 
             <StackLayout x:Name="emptyListstack" IsVisible="False">
                 <Label/>
-                <Label Text="Список пуст. Дабавте новый товар." x:Name="emptyListLabel"  HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"/>
+                <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
+                <Label/>
+                <Label  Text="- добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
             
-            <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand" BackgroundColor="Aqua">
+            <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand">
                 <Label/>
-                <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text="- завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label  Text="- завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text="- добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label  Text="- добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text="- добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label  Text="- добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
             
@@ -36,7 +38,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>                                
-                                <Grid ColumnSpacing="1" RowSpacing="1">
+                                <Grid RowSpacing="0" Padding="0" Margin="0">
                                     <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>
@@ -48,12 +50,10 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                        
-                                        <Label Text="{Binding Name}" FontSize="Large" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                        <Label Text="{Binding Count}" FontSize="Small" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End"/>
-                                        <Label Text="{Binding Units}" FontSize="Small" Grid.Row="1" Grid.Column="1" />
-
+                                    </Grid.ColumnDefinitions>                                        
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Style="{DynamicResource Header}"/>
+                                    <Label Text="{Binding Count}" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End" Style="{DynamicResource Discription}"/>
+                                    <Label Text="{Binding Units}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource Discription}"/>
                                     <Button Command="{Binding ListVM.MarkAsCompletedPurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3" Style="{DynamicResource OkBtn}"/>
                                     <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>
                                     <Button Grid.Row="0" Grid.Column="5" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource UpBtn}"/>
@@ -66,7 +66,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout >
-                <Button Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Button Text="добавить" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

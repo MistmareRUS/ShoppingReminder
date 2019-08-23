@@ -5,19 +5,19 @@
   <ContentView.Content>
       <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Button Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" Style="{DynamicResource BackBtn}" />
+                <Button Text="назад" Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" Style="{DynamicResource BackBtn}" />
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
+                    <Button Text="удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="в планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout>
-                <Label Text="Название"/>
-                <Entry Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
-                <Label Text="Количество"/>
-                <Entry Text="{Binding Count}" Keyboard="Telephone"/>
-                <Label Text="Ед. измерения"/>
-                <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}">
+                <Label Text="Название:" Style="{DynamicResource Discription}"/>
+                <Entry Text="{Binding Name}" Style="{DynamicResource Entry}"/>
+                <Label Text="Количество:" Style="{DynamicResource Discription}"/>
+                <Entry Text="{Binding Count}" Style="{DynamicResource Entry}" Keyboard="Telephone"/>
+                <Label Text="Ед. измерения:" Style="{DynamicResource Discription}"/>
+                <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}">
                     <Picker.Items>
                         <x:String>Шт</x:String>
                         <x:String>Кг</x:String>
@@ -27,7 +27,7 @@
                 </Picker>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                <Button Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
+                <Button Text="ок" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
                         HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />                
             </StackLayout>
       </StackLayout>
