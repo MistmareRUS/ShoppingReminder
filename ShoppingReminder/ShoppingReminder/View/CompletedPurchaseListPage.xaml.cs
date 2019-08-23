@@ -25,7 +25,7 @@ namespace ShoppingReminder.View
 
             if (App.CurrentPurchases.Count < 1||!App.CurrentPurchases.Any(p=>p.Completed))
             {               
-                ((Tab)(vm.Main.CompletedPurchasesStackLayout.Parent.Parent.Parent)).IsEnabled = false;
+                ((Tab)(vm.Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = false;
             }
         }
     }

@@ -95,12 +95,12 @@ namespace ShoppingReminder.ViewModel
 
         private async void TakePhoto()
         {
-            var newOrNot = await Main.DisplayAlert("Внимание!", "Действия с фотографиями чеков...", "Добавить", "Просмотреть");
-            if (newOrNot)
+            var photoAction = await Main.DisplayActionSheet("Действия с фотографиями чеков...", "Отмена", null, "Добавить", "Просмотреть");
+            if (photoAction== "Добавить")
             {
                 Main.TakePhoto();
             }
-            else
+            else if(photoAction== "Просмотреть")
             {
                 string strPath = GetCurrentPhotoString();
                 if (strPath == null)
@@ -227,7 +227,6 @@ namespace ShoppingReminder.ViewModel
                 return;
             }
 
-
             if (App.CurrentPurchases.Count < 1)
             {
                 var photos = GetCurrentPhotoString();
@@ -242,6 +241,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     return;
                 }
+            var shopName=Promt
             while (App.HistoryOfPurchase.Count >= App.HistoryAbleToSaveCount)
             {
                 var haveToDeleteItem = (App.HistoryOfPurchase.FirstOrDefault(p => p.Date == App.HistoryOfPurchase.Min(h => h.Date)));

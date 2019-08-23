@@ -11,8 +11,26 @@
     <Color x:Key="LightColor">#60B4CC</Color>
 
     <Style x:Key="ShellStyle" TargetType="Shell">
-        <Setter Property="BackgroundColor" Value="#067898"/>
-        <Setter Property="FlyoutBackgroundColor" Value="#39ABCC"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>
+        <Setter Property="FlyoutBackgroundColor" Value="{StaticResource MainColor}"/>
+        <Setter Property="Shell.TitleColor" Value="{StaticResource LightColor}"/>
+        <Setter Property="Shell.DisabledColor" Value="{StaticResource 3thColor }"/>
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource DarkColor}"/>
+        <Setter Property="Shell.NavBarIsVisible" Value="False"/>
+        <Setter Property="FlyoutIcon" Value="test.png"/>
+    </Style>
+    
+    <Style x:Key="MainFI" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="Default_FIMain.png"/>
+    </Style>
+    <Style x:Key="PlanFI" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="Default_FIPlan.png"/>
+    </Style>
+    <Style x:Key="HistoryFI" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="Default_FIHistory.png"/>
+    </Style>
+    <Style x:Key="SettingsFI" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="Default_FISettings48.png"/>
     </Style>
     
     <Style x:Key="BGImage" TargetType="Image">
@@ -82,6 +100,10 @@
         <Setter Property="ImageSource" Value="Default_Cancel48.png"/>
         <Setter Property="TextColor" Value="#39ABCC"/>
         <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+    <Style x:Key="MenuBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Menu48.png"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <!--////////////////////Text////////////////////////-->

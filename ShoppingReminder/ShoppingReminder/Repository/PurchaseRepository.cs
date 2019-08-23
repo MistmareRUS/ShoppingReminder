@@ -161,7 +161,8 @@ namespace ShoppingReminder.Repository
                 Date = deser.Date,
                 PurchasesList = ObjectToByteArray(deser.PurchasesList),
                 Check = deser.Check,
-                Id=deser.Id
+                Id=deser.Id,
+                ShopName=deser.ShopName
             };
             return ser;
         }
@@ -172,7 +173,8 @@ namespace ShoppingReminder.Repository
                 Id = ser.Id,
                 Date = ser.Date,
                 PurchasesList = (List<Purchase>)(ByteArrayToObject(ser.PurchasesList)),
-                Check = ser.Check
+                Check = ser.Check,
+                ShopName=ser.ShopName
             };
             return deser;
         }

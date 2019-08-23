@@ -11,6 +11,7 @@
                   <ViewCell.View>
                     <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Discription}"/>
+                                    <Label Text="{Binding ShopName}" Style="{DynamicResource Discription}"/>
                       <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                            <Button Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>                          
                       </StackLayout>

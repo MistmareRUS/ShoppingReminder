@@ -248,6 +248,11 @@ namespace ShoppingReminder
                 File.Delete(item);
             }
         }
+
+        private void Button_Clicked_6(object sender, EventArgs e)
+        {
+            Shell.Current.FlyoutIsPresented = true;
+        }
     }
     
     

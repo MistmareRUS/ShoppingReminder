@@ -97,8 +97,13 @@ namespace ShoppingReminder.ViewModel
             Back();
         }
 
-        private void DeletePlanItem(object obj)
+        private async  void DeletePlanItem(object obj)
         {
+            var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот предмет из списка?", "Да", "Нет");
+            if (!confirm)
+            {
+                return;
+            }
             PlanViewModel temp = (PlanViewModel)obj;
             App.Database.DeletePlanItem(temp.Id);
             Back();

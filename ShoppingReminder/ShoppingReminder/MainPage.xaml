@@ -2,62 +2,72 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder"
-             x:Class="ShoppingReminder.MainPage"       
+             x:Class="ShoppingReminder.MainPage"
              Style="{DynamicResource ShellStyle}">
+    <Shell.FlyoutHeader>
+        <Image Source="test.png"/>
+    </Shell.FlyoutHeader>
 
-    <FlyoutItem Title="Текущая покупка">
+    <FlyoutItem Title="Текущая покупка" Style="{DynamicResource MainFI}">
         <Tab Title="Активные покупки">
-            <ShellContent Title="Текущее">
+            <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="CurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                             
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
         </Tab>
         <Tab Title="Купленные">
-            <ShellContent Title="Текущее">
+            <ShellContent>
                 <ContentPage >
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="CompletetCurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
-        </Tab>
+        </Tab>        
     </FlyoutItem>
-    
-    
-    <FlyoutItem Title="Запланированное">
-        <Tab Title="***">
-            <ShellContent Title="Текущее">
+
+
+    <FlyoutItem Title="Запланированное" Style="{DynamicResource PlanFI}">
+        <Tab>
+            <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="PlanStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
         </Tab>
     </FlyoutItem>
-    
-    
-    <FlyoutItem Title="История покупок">
+
+
+    <FlyoutItem Title="История покупок" Style="{DynamicResource HistoryFI}">
         <Tab Title="История покупок">
-            <ShellContent Title="Текущее">
+            <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="HistoryStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
@@ -70,16 +80,18 @@
                         <StackLayout x:Name="PhotoStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
         </Tab>
     </FlyoutItem>
-    
-    
-    <FlyoutItem Title="Настройки">
-        <Tab Title="***">
-            <ShellContent Title="Текущее">
+
+
+    <FlyoutItem Title="Настройки" Style="{DynamicResource SettingsFI}">
+        <Tab>
+            <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                         <Image  Style="{DynamicResource BGImage}"/>
@@ -91,9 +103,11 @@
                             <Button Text="Удаление фоток" Clicked="Button_Clicked_4"/>
                             <Button Text="Тема" Clicked="Button_Clicked_5"/>
                         </StackLayout>
+                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
                     </AbsoluteLayout>                    
                 </ContentPage>
             </ShellContent>
-        </Tab>
+        </Tab>        
     </FlyoutItem>
 </Shell>
