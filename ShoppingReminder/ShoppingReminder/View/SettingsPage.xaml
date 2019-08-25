@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:ShoppingReminder.View"
+             xmlns:themes="clr-namespace:ShoppingReminder.Themes"
+             x:Class="ShoppingReminder.View.SettingsPage">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Image Style="{DynamicResource SettingImg}"/>
+                <view:EnumPicker x:Name="ThemePicker" SelectedIndexChanged="ThemePicker_SelectedIndexChanged" Title="Выбрать тему оформления" 
+                             SelectedItem="{Binding CurrentTheme}" Style="{DynamicResource Picker}" HorizontalOptions="CenterAndExpand"
+                    EnumType="{x:Type themes:Theme}"/>
+            </StackLayout>
+            <Button Text="Очистить историю" Style="{DynamicResource SetBtn}" Command="{Binding ClearHistoryCommand}"/>
+            <Button Text="Очистить планы" Style="{DynamicResource SetBtn}" Command="{Binding ClearPlansCommand}"/>
+            <Button Text="Удалить фотограФии" Style="{DynamicResource SetBtn}" Command="{Binding ClearPhotosCommand}"/>
+            <!--<Label Text="размер текста"/>-->
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

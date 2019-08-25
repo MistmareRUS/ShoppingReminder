@@ -17,6 +17,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Plugin.InputKit.Shared.Controls;
+using Xam.FormsPlugin.Abstractions;
 
 
 namespace ShoppingReminder
@@ -29,24 +31,28 @@ namespace ShoppingReminder
         public StackLayout HistoryStackLayout { get; set; }
         public StackLayout PlanStackLayout { get; set; }
         public StackLayout PhotoStackLayout { get; set; }
+        public StackLayout SettingsStackLayout { get; set; }
         //вьюмодели для обращению к каждой из страниц приложения
         public PurchaseListViewModel activePurchases;
         public HistoryListViewModel history;
         public PlanListViewModel plan;
+        public SettingsViewModel settings;
 
         public MainPage()
         {
             InitializeComponent();
-
+            
             CurrentPurchasesStackLayout = CurrentStack;
             CompletedPurchasesStackLayout = CompletetCurrentStack;
             HistoryStackLayout = HistoryStack;
             PlanStackLayout = PlanStack;
             PhotoStackLayout = PhotoStack;
+            SettingsStackLayout = SettingsStack;
 
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
+            settings = new SettingsViewModel(this);
         }
 
         public async void TakePhoto()
@@ -75,7 +81,15 @@ namespace ShoppingReminder
                 });
                 if (file == null)
                     return;
-                App.Current.Properties["CurrentPhotos"] += file.Path + "&";
+                var ph=activePurchases.GetCurrentPhotoString();
+                if (ph == null)
+                {
+                    App.Current.Properties["CurrentPhotos"] = file.Path + "&";
+                }
+                else
+                {
+                    App.Current.Properties["CurrentPhotos"] += file.Path + "&";
+                }
             }
             else
             {
@@ -99,7 +113,7 @@ namespace ShoppingReminder
             {
                 HasUnevenRows = true,
                 ItemsSource = sourses,
-                Margin = 10,
+                Margin = 5,
 
                 ItemTemplate = new DataTemplate(() =>
                 {
@@ -117,7 +131,7 @@ namespace ShoppingReminder
                 {
                     WidthRequest = 1000,
                     HeightRequest = 1000,
-                    Margin=10,
+                    Margin=5,
                     Source = "File:///" + tempSrc,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand
@@ -164,8 +178,9 @@ namespace ShoppingReminder
                     backBtn
                 }
             };
-            var countLbl = new Label { Text = "Прикрепленных фото: " + sourses.Length.ToString(), VerticalTextAlignment = TextAlignment.Center };
+            var countLbl = new Label { Text = " Всего фото: " + sourses.Length.ToString(), VerticalTextAlignment = TextAlignment.End,VerticalOptions=LayoutOptions.End };
             countLbl.SetDynamicResource(Label.StyleProperty, "Discription");
+            countLbl.SetDynamicResource(Label.TextColorProperty, "MainColor");
             layout.Children.Add(new StackLayout {
                 Children =
                 {
@@ -178,70 +193,14 @@ namespace ShoppingReminder
             });
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            App.Database.ClearPurchases();
-            App.CurrentPurchases = new List<PurchaseViewModel>();
-            activePurchases.Back();
-        }
-
-        private void Button_Clicked_1(object sender, EventArgs e)
-        {
-            App.Database.ClearHistory();//не удаляет фотки
-            App.HistoryOfPurchase = App.Database.GetHistoryItems();
-            history.Back();
-        }
-
-        private void Button_Clicked_2(object sender, EventArgs e)
-        {
-            App.Database.ClearPlans();
-            App.LoadPlansFromDB();
-            plan.Back();
-        }
-
-        private void Button_Clicked_3(object sender, EventArgs e)
-        {
-            App.Current.Properties["CurrentPhotos"] = null;//удалить из хранилища
-        }
-
-        private async void Button_Clicked_4(object sender, EventArgs e)
-        {
-            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
-            var files = dir.GetFiles();
-            var confirm = await DisplayAlert(files.Length.ToString(), "Удалить файлы?", "Да", "Нет");
-            if (confirm)
-            {
-                foreach (var item in files)
-                {
-                    File.Delete(item.FullName);
-                }
-                return;
-            }
-            var l = new ListView { ItemsSource = dir.GetFiles() };
-            SettingsStack.Children.Add(l);
-        }
-
-        private void Button_Clicked_5(object sender, EventArgs e)
-        {            
-            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            DisplayAlert(mergedDictionaries.Count.ToString(), App.theme.ToString(), "Ok");
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
-                if (App.theme == 0)
-                {
-                        mergedDictionaries.Add(new DefaultTheme());
-                        App.theme = Theme.Dark;
-                }
-                else
-                {
-                        mergedDictionaries.Add(new DarkTheme());
-                    App.theme = Theme.Default;
-                }
-            }
-        }
+        
+      
         public void DeletePhotosHelper(string fullPath)
         {
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                return;
+            }
             var pathes = fullPath.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in pathes)
             {
@@ -249,9 +208,9 @@ namespace ShoppingReminder
             }
         }
 
-        private void Button_Clicked_6(object sender, EventArgs e)
+        private  void SideMenuActivate(object sender, EventArgs e)
         {
-            Shell.Current.FlyoutIsPresented = true;
+            Shell.Current.FlyoutIsPresented = true; 
         }
     }
     

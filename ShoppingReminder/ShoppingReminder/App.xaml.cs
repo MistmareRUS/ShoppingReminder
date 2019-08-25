@@ -16,7 +16,7 @@ namespace ShoppingReminder
     public partial class App : Application
     {
         public static int HistoryAbleToSaveCount = 10;
-        public static Theme theme = Theme.Default;
+        //public static Theme theme = Theme.Default;
 
         public const string DATABASE_NAME = "Purchase.db";
         public static PurchaseRepository database;
@@ -36,7 +36,7 @@ namespace ShoppingReminder
         public static List<PlanViewModel> Plans { get; set; }
         public static List<HistoryViewModel> HistoryOfPurchase { get; set; }
         MainPage MP;
-
+        
         public App()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace ShoppingReminder
 
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
-            HistoryOfPurchase = Database.GetHistoryItems();
+            HistoryOfPurchase = Database.GetHistoryItems();            
             MainPage = MP = new MainPage();
         }
 

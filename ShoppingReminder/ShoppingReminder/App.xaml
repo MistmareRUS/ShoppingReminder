@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:Xam.FormsPlugin.Abstractions;assembly=AdMobView.FormsPlugin.Abstractions"
              x:Class="ShoppingReminder.App">
     <Application.Resources>
         <StyleSheet Source="/Styles/DefaultStyle.css"/>
-        <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
+
         <ResourceDictionary Source="Themes/DefaultTheme.xaml"/>
 
+        <Style TargetType="abstractions:AdMobView" x:Key="AdMob">
+            <Setter Property="AdUnitId" Value="ca-app-pub-3940256099942544/6300978111"/>
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
     </Application.Resources>
 </Application>

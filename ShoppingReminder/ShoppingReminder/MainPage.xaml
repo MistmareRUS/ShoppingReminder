@@ -2,10 +2,11 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder"
-             x:Class="ShoppingReminder.MainPage"
+       xmlns:abstractions="clr-namespace:Xam.FormsPlugin.Abstractions;assembly=AdMobView.FormsPlugin.Abstractions"
+       x:Class="ShoppingReminder.MainPage"
              Style="{DynamicResource ShellStyle}">
     <Shell.FlyoutHeader>
-        <Image Source="test.png"/>
+        <Image Source="Icon100.png"/>
     </Shell.FlyoutHeader>
 
     <FlyoutItem Title="Текущая покупка" Style="{DynamicResource MainFI}">
@@ -17,7 +18,19 @@
                         <StackLayout x:Name="CurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                             
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+                        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" IsVisible="False">
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
+                        </StackLayout>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
@@ -30,9 +43,9 @@
                         <StackLayout x:Name="CompletetCurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
-
-                    </AbsoluteLayout>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+                        
+                    </AbsoluteLayout>                    
                 </ContentPage>
             </ShellContent>
         </Tab>        
@@ -48,14 +61,13 @@
                         <StackLayout x:Name="PlanStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
 
                     </AbsoluteLayout>
                 </ContentPage>
             </ShellContent>
         </Tab>
     </FlyoutItem>
-
 
     <FlyoutItem Title="История покупок" Style="{DynamicResource HistoryFI}">
         <Tab Title="История покупок">
@@ -66,7 +78,7 @@
                         <StackLayout x:Name="HistoryStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
 
                     </AbsoluteLayout>
                 </ContentPage>
@@ -80,7 +92,7 @@
                         <StackLayout x:Name="PhotoStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
 
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
 
                     </AbsoluteLayout>
                 </ContentPage>
@@ -95,19 +107,39 @@
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                         <Image  Style="{DynamicResource BGImage}"/>
-                        <StackLayout x:Name="SettingsStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                            <Button Text="Сброс текущих" Clicked="Button_Clicked" StyleClass="myBtn"/>
-                            <Button Text="Сброс истории" Clicked="Button_Clicked_1"/>
-                            <Button Text="Сброс планов" Clicked="Button_Clicked_2"/>
-                            <Button Text="Сброс фоток" Clicked="Button_Clicked_3"/>
-                            <Button Text="Удаление фоток" Clicked="Button_Clicked_4"/>
-                            <Button Text="Тема" Clicked="Button_Clicked_5"/>
+                        <StackLayout x:Name="SettingsStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">                           
+                            
                         </StackLayout>
-                        <Button  Clicked="Button_Clicked_6" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
-
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
                     </AbsoluteLayout>                    
                 </ContentPage>
             </ShellContent>
         </Tab>        
+    </FlyoutItem> 
+    
+    <!--<FlyoutItem Title="Тест рекламы">
+        <Tab>
+            <ShellContent>
+                <ContentPage>
+                    <StackLayout>
+                        <Label Text="мой текст"/>
+                        <abstractions:AdMobView Style="{DynamicResource AdMob}" />
+                          
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="*">
+        <Tab>
+            <ShellContent>
+                <ContentPage>
+                    <StackLayout>
+                        <abstractions:AdMobView AdUnitId="ca-app-pub-5542764698208489~2621881069" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/> 
+
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>-->    
 </Shell>

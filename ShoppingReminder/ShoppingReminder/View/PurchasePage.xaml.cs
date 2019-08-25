@@ -19,10 +19,15 @@ namespace ShoppingReminder.View
 		public PurchasePage (PurchaseViewModel vm)
 		{
 			InitializeComponent ();
+            UnitsPicker.Items.Add("Шт");//Обязательно выше привязки. Иначе не отображается в имеющихся элементах.
+            UnitsPicker.Items.Add("Кг");
+            UnitsPicker.Items.Add("Упак");
+            UnitsPicker.Items.Add("л");
+
             ViewModel = vm;
             BindingContext = ViewModel;
-        }
 
+        }
         private void UnitsPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             ViewModel.Units = UnitsPicker.Items[UnitsPicker.SelectedIndex];            

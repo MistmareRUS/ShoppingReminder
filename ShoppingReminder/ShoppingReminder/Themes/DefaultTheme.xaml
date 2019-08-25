@@ -2,14 +2,17 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingReminder.Themes.DefaultTheme">
-    <!--https://colorscheme.ru/#3o11TvNuFw0w0-->    
+    <!--https://colorscheme.ru/#3o11TvNuFw0w0-->  
     
+    
+    <!--//////////////////////Цвета////////////////////-->
     <Color x:Key="MainColor">#39ABCC</Color>
     <Color x:Key="2thColor">#067898</Color>
     <Color x:Key="3thColor">#206072</Color>
     <Color x:Key="DarkColor">#024D63</Color>
     <Color x:Key="LightColor">#60B4CC</Color>
 
+    <!--//////////////////////////Shell////////////////////////////-->
     <Style x:Key="ShellStyle" TargetType="Shell">
         <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>
         <Setter Property="FlyoutBackgroundColor" Value="{StaticResource MainColor}"/>
@@ -17,7 +20,7 @@
         <Setter Property="Shell.DisabledColor" Value="{StaticResource 3thColor }"/>
         <Setter Property="Shell.UnselectedColor" Value="{StaticResource DarkColor}"/>
         <Setter Property="Shell.NavBarIsVisible" Value="False"/>
-        <Setter Property="FlyoutIcon" Value="test.png"/>
+        <Setter Property="FlyoutIcon" Value="Icon100.png"/>
     </Style>
     
     <Style x:Key="MainFI" TargetType="FlyoutItem">
@@ -42,63 +45,68 @@
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
     </Style>
     <!--//////////////////////////////////////////КНОПКИ////////////////////////////////////////////////-->
+    <Style x:Key="SetBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_SetItem48.png"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
     <Style x:Key="BackBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Back48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="UpBtn" TargetType="Button">        
         <Setter Property="ImageSource" Value="Default_Up48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DownBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Down48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="ToPlanBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="FromPlanBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DeleteBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Delete48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="PhotoBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Photo48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="AddBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Add48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="OkBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Ok48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="CancelBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Cancel48.png"/>
-        <Setter Property="TextColor" Value="#39ABCC"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
@@ -129,12 +137,17 @@
     <Style x:Key="Picker" TargetType="Picker">
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TitleColor" Value="{DynamicResource DarkColor}"/>
     </Style>
     <Style x:Key="Entry" TargetType="Entry">
         <Setter Property="FontSize" Value="Large"/>
         <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="PlaceholderColor" Value="{DynamicResource DarkColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
-    
+    <!--////////////////////////Прочее//////////////////////////////-->
+    <Style x:Key="SettingImg" TargetType="Image">
+        <Setter Property="Source" Value="Default_SetList48.png"/>
+    </Style>
 
 </ResourceDictionary>

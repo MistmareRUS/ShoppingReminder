@@ -17,14 +17,7 @@
                 <Label Text="Количество:" Style="{DynamicResource Discription}"/>
                 <Entry Text="{Binding Count}" Style="{DynamicResource Entry}" Keyboard="Telephone"/>
                 <Label Text="Ед. измерения:" Style="{DynamicResource Discription}"/>
-                <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}">
-                    <Picker.Items>
-                        <x:String>Шт</x:String>
-                        <x:String>Кг</x:String>
-                        <x:String>Упак</x:String>
-                        <x:String>л</x:String>
-                    </Picker.Items>
-                </Picker>
+                <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="ок" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 

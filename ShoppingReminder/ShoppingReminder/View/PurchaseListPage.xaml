@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:Xam.FormsPlugin.Abstractions;assembly=AdMobView.FormsPlugin.Abstractions"
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
         <StackLayout>
@@ -16,7 +17,7 @@
                 <Label/>
                 <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text="- добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text=" - добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
             
@@ -24,11 +25,11 @@
                 <Label/>
                 <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text="- завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text=" - завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text="- добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text=" - добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text="- добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text=" - добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
             
@@ -65,7 +66,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout >
+            <StackLayout>
                 <Button Text="добавить" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>

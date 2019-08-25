@@ -19,7 +19,6 @@ namespace ShoppingReminder.ViewModel
             Main = mp;
             BackCommand = new Command(Back);
             DeleteHistoryItemCommand = new Command(DeleteHistoryItem);
-            //ClearHistoryCommand = new Command(ClearHistory);
             GetPhotosCommand = new Command(GetPhotos);
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
@@ -92,7 +91,6 @@ namespace ShoppingReminder.ViewModel
 
         public ICommand DeleteHistoryItemCommand { get; private set; }
         public ICommand BackCommand { get; private set; }
-        //public ICommand ClearHistoryCommand { get; protected set; }
 
         public ICommand GetPhotosCommand { get; protected set; }
         public ICommand DeletePhotosCommand { get; protected set; }
@@ -114,18 +112,7 @@ namespace ShoppingReminder.ViewModel
             Main.HistoryStackLayout.Children.Clear();
             Main.HistoryStackLayout.Children.Add(new HistoryListPage(this));
         }
-        //private async void ClearHistory()
-        //{
-        //    var confirm = await Main.DisplayAlert("Внимание", "Очистить сохраненную историю?", "Да", "Нет");
-        //    if (!confirm)
-        //    {
-        //        return;
-        //    }
-        //    App.Database.ClearHistory();
-        //    App.HistoryOfPurchase = App.Database.GetHistoryItems();
-        //    Back();
-        //}
-
+        
         private async void DeleteHistoryItem(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить данный список из истории покупок?", "Да", "Нет");
@@ -141,6 +128,11 @@ namespace ShoppingReminder.ViewModel
             {
                 await Main.DisplayAlert("Внимание!","Произошла ошибка при удалении","ОК");
             }
+            Back();
+        }
+        public void ClearHistory()
+        {
+            App.Database.ClearHistory();//TODO:не удаляет фотки - подтверждение
             Back();
         }
         

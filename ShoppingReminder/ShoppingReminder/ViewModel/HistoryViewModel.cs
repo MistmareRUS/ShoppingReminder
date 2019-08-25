@@ -26,6 +26,17 @@ namespace ShoppingReminder.ViewModel
                 ListOfPurchase.Check = value;
             }
         }
+        public string ShopName
+        {
+            get
+            {
+                return ListOfPurchase.ShopName;
+            }
+            set
+            {
+                ListOfPurchase.ShopName = value;
+            }
+        }
         public DateTime Date
         {
             get

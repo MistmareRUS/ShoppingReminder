@@ -4,11 +4,15 @@
              x:Class="ShoppingReminder.View.HistoryItemPage">
   <ContentView.Content>
       <StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Дата: " Style="{DynamicResource Discription}"/>
-                <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Header}"/>
-                <Label Text="Магазин: " Style="{DynamicResource Discription}"/>
-                <Label Text="{Binding ShopName}" Style="{DynamicResource Header}"/>
+            <StackLayout>                
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Дата: " Style="{DynamicResource Discription}"/>
+                    <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Header}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Магазин: " Style="{DynamicResource Discription}"/>
+                    <Label Text="{Binding ShopName}" Style="{DynamicResource Header}"/>                    
+                </StackLayout>
             </StackLayout>
             <ListView ItemsSource="{Binding PurchasesList}" x:Name="listView" HasUnevenRows="True">
                 <ListView.ItemTemplate>

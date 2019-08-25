@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Plugin.InputKit.Shared.Controls;
 
 namespace ShoppingReminder.ViewModel
 {
@@ -111,7 +112,7 @@ namespace ShoppingReminder.ViewModel
                 Main.GetPhotos(strPath, Main.CurrentPurchasesStackLayout,BackCommand,DeletePhotoCommand,DeletePhotosCommand);                
             }
         }
-        string GetCurrentPhotoString()
+        public string GetCurrentPhotoString()
         {
             object savedPath;
             try
@@ -217,6 +218,7 @@ namespace ShoppingReminder.ViewModel
                 return;
             }
             App.CurrentPurchases = new List<PurchaseViewModel>();
+            DeletePhotos();
             Back();
         }
         private async void CompletePurchase()
@@ -226,7 +228,6 @@ namespace ShoppingReminder.ViewModel
             {
                 return;
             }
-
             if (App.CurrentPurchases.Count < 1)
             {
                 var photos = GetCurrentPhotoString();
@@ -235,13 +236,22 @@ namespace ShoppingReminder.ViewModel
                     await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков. Сохранение не возможно.", "Ок");
                     return;
                 }
-                confirm = await Main.DisplayAlert("Внимание!", "В списке нет ни одного товара. Всё равно сохранить?", "Да", "Нет");
+                confirm = await Main.DisplayAlert("Внимание!", "В списке нет ни одного товара. Сохранить только фото?", "Да", "Нет");
             }
             if (!confirm)
-                {
-                    return;
-                }
-            var shopName=Promt
+            {
+                return;
+            }
+            string notAllCompleted=string.Empty;
+            if (App.CurrentPurchases.Any(p => !p.Completed))
+            {
+                notAllCompleted = await Main.DisplayActionSheet("Не все покупки отмечены как завершенные. Какие из них сохранить?", "Отмена",null,
+                                                                    "Сохранить только завершенные","Сохранить все","Сохранить завершенные, а оставшиеся перенести на следующую покупку.");
+            }
+            if (notAllCompleted=="Отмена")
+            {
+                return;
+            }
             while (App.HistoryOfPurchase.Count >= App.HistoryAbleToSaveCount)
             {
                 var haveToDeleteItem = (App.HistoryOfPurchase.FirstOrDefault(p => p.Date == App.HistoryOfPurchase.Min(h => h.Date)));
@@ -249,36 +259,57 @@ namespace ShoppingReminder.ViewModel
                 App.Database.DeleteHistoryItem(haveToDeleteItem.Id);
                 Main.history.Back();
             }
-            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check= GetCurrentPhotoString() };
+
+            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
+            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
+            var shopName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название магазина:");
+
+            var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check= GetCurrentPhotoString(),ShopName=shopName??"не указано" };
+
+
             App.Current.Properties["CurrentPhotos"] = null;
-            if (App.CurrentPurchases.Any(p => !p.Completed))
+
+
+            if(notAllCompleted == "Сохранить завершенные, а оставшиеся перенести на следующую покупку.")
             {
-                confirm = await Main.DisplayAlert("Внимание!", "Не все покупки отмечены как завершенные. Какие из них сохранить?", "Все", "Только завершенные");
-            }
-            if (confirm)
-            {
-                foreach (var item in App.CurrentPurchases)
-                {
-                    var temp = new Purchase();
-                    temp.Name = item.Name;
-                    temp.Count = item.Count;
-                    temp.Units = item.Units;                            
-                    currentList.PurchasesList.Add(temp);
-                }
-            }
-            else
-            {
-                foreach (var item in App.CurrentPurchases.Where(p=>p.Completed))
+                foreach (var item in App.CurrentPurchases.Where(p => p.Completed))
                 {
                     var temp = new Purchase();
                     temp.Name = item.Name;
                     temp.Count = item.Count;
                     temp.Units = item.Units;
                     currentList.PurchasesList.Add(temp);
+                    //App.CurrentPurchases.Remove(item);
                 }
+                App.CurrentPurchases.RemoveAll(p => p.Completed);
+            }
+            else
+            {
+                if (notAllCompleted== "Сохранить все")
+                {
+                    foreach (var item in App.CurrentPurchases)
+                    {
+                        var temp = new Purchase();
+                        temp.Name = item.Name;
+                        temp.Count = item.Count;
+                        temp.Units = item.Units;                            
+                        currentList.PurchasesList.Add(temp);
+                    }
+                }
+                else
+                {
+                    foreach (var item in App.CurrentPurchases.Where(p=>p.Completed))
+                    {
+                        var temp = new Purchase();
+                        temp.Name = item.Name;
+                        temp.Count = item.Count;
+                        temp.Units = item.Units;
+                        currentList.PurchasesList.Add(temp);
+                    }
+                }
+                App.CurrentPurchases.Clear();
             }
             App.Database.SaveHistoryItem(currentList);            
-            App.CurrentPurchases.Clear();
             Main.history.Back();
             Back();
         }
