@@ -19,12 +19,14 @@ namespace ShoppingReminder.Droid
     class BarStyle : IBarStyle
     {
         
-        public  bool SetColor(string color)
+        public  void SetColor(string color)
         {            
-            ma.Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
-            ma.Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
-            ma.Window.SetStatusBarColor( Android.Graphics.Color.ParseColor(color));
-            return true;
+            if(Android.OS.Build.VERSION.SdkInt>= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                ma.Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
+                ma.Window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+                ma.Window.SetStatusBarColor( Android.Graphics.Color.ParseColor(color));
+            }
         }
         public static MainActivity ma;
     }

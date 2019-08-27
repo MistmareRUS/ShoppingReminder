@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Plugin.InputKit.Shared.Controls;
-using Xam.FormsPlugin.Abstractions;
 
 
 namespace ShoppingReminder
@@ -53,6 +52,31 @@ namespace ShoppingReminder
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
             settings = new SettingsViewModel(this);
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            if (Shell.Current.CurrentItem.Title == "Текущая покупка")
+            {
+                activePurchases.Back();
+            }
+            else if (Shell.Current.CurrentItem.Title == "Запланированное")
+            {
+                plan.Back();
+            }
+            else if (Shell.Current.CurrentItem.Title == "История покупок")
+            {
+                history.Back();
+            }
+            else if (Shell.Current.CurrentItem.Title == "Настройки")
+            {
+                settings.Back();
+            }
+            else
+            {
+                DisplayAlert("Необратотанная страница", Shell.Current.CurrentItem.Title, "Ok");
+            }
+            return true;
+            //return base.OnBackButtonPressed();
         }
 
         public async void TakePhoto()
@@ -142,8 +166,8 @@ namespace ShoppingReminder
                 layout.Children.Clear();
                 layout.Children.Add(wv);
 
-                var BackBtn = new Button { Text = "назад"};
-                BackBtn.SetDynamicResource(Button.StyleProperty, "BackBtn");
+                var BackBtn = new Button { Text = "все фото"};
+                BackBtn.SetDynamicResource(Button.StyleProperty, "ListBtn");
                 BackBtn.Clicked += (_s, _e) =>
                 {
                     GetPhotos(source, layout, back, deletePhoto, deletePhotos);
@@ -156,8 +180,8 @@ namespace ShoppingReminder
                     Orientation = StackOrientation.Horizontal,
                     Children =
                     {
-                        DelBtn,
-                        BackBtn
+                        BackBtn,
+                        DelBtn
                     }
                 };
                 layout.Children.Add(btnStack);
@@ -165,20 +189,18 @@ namespace ShoppingReminder
 
             layout.Children.Clear();
             layout.Children.Add(lv);
-            var backBtn = new Button() { Command = back, Text = "назад" };
-            backBtn.SetDynamicResource(Button.StyleProperty, "BackBtn");
+            
             var delBtn= new Button() { Command = deletePhotos, CommandParameter = source, Text = "удалить все" };
             delBtn.SetDynamicResource(Button.StyleProperty, "DeleteBtn");
             var listBtnStack = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.EndAndExpand,
+                HorizontalOptions = LayoutOptions.End,
                 Orientation = StackOrientation.Horizontal,
                 Children ={
-                    delBtn,
-                    backBtn
+                    delBtn
                 }
             };
-            var countLbl = new Label { Text = " Всего фото: " + sourses.Length.ToString(), VerticalTextAlignment = TextAlignment.End,VerticalOptions=LayoutOptions.End };
+            var countLbl = new Label { Text = " Всего фото: " + sourses.Length.ToString()+" ", VerticalTextAlignment = TextAlignment.End, VerticalOptions=LayoutOptions.End, HorizontalOptions=LayoutOptions.EndAndExpand};
             countLbl.SetDynamicResource(Label.StyleProperty, "Discription");
             countLbl.SetDynamicResource(Label.TextColorProperty, "MainColor");
             layout.Children.Add(new StackLayout {
@@ -212,6 +234,7 @@ namespace ShoppingReminder
         {
             Shell.Current.FlyoutIsPresented = true; 
         }
+        
     }
     
     

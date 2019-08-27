@@ -16,7 +16,6 @@ namespace ShoppingReminder
     public partial class App : Application
     {
         public static int HistoryAbleToSaveCount = 10;
-        //public static Theme theme = Theme.Default;
 
         public const string DATABASE_NAME = "Purchase.db";
         public static PurchaseRepository database;
@@ -59,7 +58,7 @@ namespace ShoppingReminder
         }
         protected override void OnResume()
         {
-            LoadCurrentPurchasesFromDB();
+            //LoadCurrentPurchasesFromDB();//без BackBtn не нужно
             foreach (var item in CurrentPurchases)
             {
                 item.ListVM = MP.activePurchases;
@@ -81,12 +80,12 @@ namespace ShoppingReminder
                 };
                 Database.SavePurchaseItem(temp);
             }
-            CurrentPurchases.Clear();
+            //CurrentPurchases.Clear();//без BackBtn не нужно
         }
         void  LoadCurrentPurchasesFromDB()
         {
             var purchases = Database.GetPurchaseItems();
-            CurrentPurchases.Clear();
+            //CurrentPurchases.Clear();//без BackBtn не нужно
             foreach (var item in purchases)
             {
                 PurchaseViewModel temp = new PurchaseViewModel()

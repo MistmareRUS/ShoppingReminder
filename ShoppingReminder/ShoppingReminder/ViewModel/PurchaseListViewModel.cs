@@ -230,10 +230,9 @@ namespace ShoppingReminder.ViewModel
             }
             if (App.CurrentPurchases.Count < 1)
             {
-                var photos = GetCurrentPhotoString();
-                if (photos==null)
+                if (GetCurrentPhotoString() == null)
                 {
-                    await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков. Сохранение не возможно.", "Ок");
+                    await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков. Сохранение невозможно.", "Ок");
                     return;
                 }
                 confirm = await Main.DisplayAlert("Внимание!", "В списке нет ни одного товара. Сохранить только фото?", "Да", "Нет");
@@ -272,14 +271,20 @@ namespace ShoppingReminder.ViewModel
 
             if(notAllCompleted == "Сохранить завершенные, а оставшиеся перенести на следующую покупку.")
             {
-                foreach (var item in App.CurrentPurchases.Where(p => p.Completed))
+                if(!App.CurrentPurchases.Any(p=>p.Completed)&&GetCurrentPhotoString()==null)
                 {
-                    var temp = new Purchase();
-                    temp.Name = item.Name;
-                    temp.Count = item.Count;
-                    temp.Units = item.Units;
+                    await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков. Сохранение не возможно.", "Ок");
+                    return;
+                }
+                foreach (var item in CompletedPurchases)
+                {
+                    var temp = new Purchase
+                    {
+                        Name = item.Name,
+                        Count = item.Count,
+                        Units = item.Units
+                    };
                     currentList.PurchasesList.Add(temp);
-                    //App.CurrentPurchases.Remove(item);
                 }
                 App.CurrentPurchases.RemoveAll(p => p.Completed);
             }
@@ -289,10 +294,12 @@ namespace ShoppingReminder.ViewModel
                 {
                     foreach (var item in App.CurrentPurchases)
                     {
-                        var temp = new Purchase();
-                        temp.Name = item.Name;
-                        temp.Count = item.Count;
-                        temp.Units = item.Units;                            
+                        var temp = new Purchase
+                        {
+                            Name = item.Name,
+                            Count = item.Count,
+                            Units = item.Units
+                        };
                         currentList.PurchasesList.Add(temp);
                     }
                 }
@@ -300,10 +307,12 @@ namespace ShoppingReminder.ViewModel
                 {
                     foreach (var item in App.CurrentPurchases.Where(p=>p.Completed))
                     {
-                        var temp = new Purchase();
-                        temp.Name = item.Name;
-                        temp.Count = item.Count;
-                        temp.Units = item.Units;
+                        var temp = new Purchase
+                        {
+                            Name = item.Name,
+                            Count = item.Count,
+                            Units = item.Units
+                        };
                         currentList.PurchasesList.Add(temp);
                     }
                 }
@@ -354,8 +363,12 @@ namespace ShoppingReminder.ViewModel
                 }
                 else
                 {
+                    if(purchase.Name.Length < 1)
+                    {
+                        Main.DisplayAlert("Внимание!", "Название не может быть пустым.", "Ok");
+                        return;
+                    }
                     var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
-
                 }
             }
             Back();

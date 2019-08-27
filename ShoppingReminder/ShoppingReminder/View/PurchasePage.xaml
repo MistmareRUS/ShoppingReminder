@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingReminder.Ad"
              x:Class="ShoppingReminder.View.PurchasePage">
   <ContentView.Content>
       <StackLayout>
+            <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Orientation="Horizontal">
-                <Button Text="назад" Command="{Binding ListVM.BackCommand}" HorizontalOptions="Start" Style="{DynamicResource BackBtn}" />
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button Text="удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
                     <Button Text="в планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>

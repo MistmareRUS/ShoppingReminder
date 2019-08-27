@@ -8,5 +8,6 @@ namespace ShoppingReminder.Themes
     {
         Default,
         Dark,
+        Lavender
     }
 }

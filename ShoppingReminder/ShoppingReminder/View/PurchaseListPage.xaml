@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:abstractions="clr-namespace:Xam.FormsPlugin.Abstractions;assembly=AdMobView.FormsPlugin.Abstractions"
+             xmlns:local="clr-namespace:ShoppingReminder.Ad"
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+        <StackLayout Spacing="0" Margin="0" Padding="0">
+            <local:AdMobView Style="{StaticResource AdBlock}"/>
+            <!--<local:AdMobView AdUnitId="ca-app-pub-3940256099942544/6300978111"  Style="{StaticResource AdBlock}"/>-->  <!--тестовый баннер-->
+            <local:AdMobView AdUnitId="ca-app-pub-5542764698208489/3929387019"  Style="{StaticResource AdBlock}" IsVisible="False"/>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="0" Margin="0" Padding="0">
                 <Button Text="фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button Text="очистить"  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
                     <Button Text="завершить" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
                 </StackLayout>
             </StackLayout>
-
-            <StackLayout x:Name="emptyListstack" IsVisible="False">
+            <BoxView Style="{DynamicResource Separator}"/>
+            <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
                 <Label/>
                 <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
                 <Label  Text=" - добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
-            
-            <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand">
+
+            <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand" Spacing="0" Margin="0" Padding="0">
                 <Label/>
                 <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
@@ -34,7 +37,8 @@
             </StackLayout>
             
             
-            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}" HasUnevenRows="True" VerticalOptions="CenterAndExpand">
+            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase, Mode=TwoWay}"  VerticalScrollBarVisibility="Always"
+                      HasUnevenRows="True" VerticalOptions="CenterAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -66,7 +70,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout>
+            <BoxView Style="{DynamicResource Separator}"/>
+            <StackLayout Spacing="0" Margin="0" Padding="0">
                 <Button Text="добавить" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>

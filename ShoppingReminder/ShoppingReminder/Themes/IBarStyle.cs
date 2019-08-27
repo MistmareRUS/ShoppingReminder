@@ -7,6 +7,6 @@ namespace ShoppingReminder.Themes
 {
     public interface IBarStyle
     {
-        bool SetColor(string color);
+        void SetColor(string color);
     }
 }

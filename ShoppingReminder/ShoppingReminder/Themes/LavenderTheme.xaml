@@ -1,52 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShoppingReminder.Themes.DefaultTheme">
-    <!--https://colorscheme.ru/#3o11TvNuFw0w0-->  
-    
-    
+             x:Class="ShoppingReminder.Themes.LavenderTheme">
+
     <!--//////////////////////Цвета////////////////////-->
-    <Color x:Key="MainColor">#39ABCC</Color>
-    <Color x:Key="2thColor">#067898</Color>
-    <Color x:Key="3thColor">#206072</Color>
-    <Color x:Key="DarkColor">#024D63</Color>
-    <Color x:Key="LightColor">#60B4CC</Color>
+    <Color x:Key="MainColor">#43286F</Color>
+    <Color x:Key="2thColor">#6F6580</Color>
+    <Color x:Key="3thColor">#B9A8D5</Color>
+    <Color x:Key="DarkColor">#8D7BAB</Color>
+    <Color x:Key="LightColor">#C1B4D5</Color>
 
     <!--//////////////////////////Shell////////////////////////////-->
     <Style x:Key="ShellStyle" TargetType="Shell">
-        
-        <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>                  <!--нижняя панель-->
-        <Setter Property="FlyoutBackgroundColor" Value="{StaticResource MainColor}"/>           <!--боковая панель-->
-        <Setter Property="Shell.TitleColor" Value="{StaticResource LightColor}"/>               <!--надписи в активной вкладке-->
+        <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>
+        <Setter Property="FlyoutBackgroundColor" Value="{StaticResource 3thColor}"/>
+        <Setter Property="Shell.TitleColor" Value="{StaticResource LightColor}"/>
         <Setter Property="Shell.DisabledColor" Value="{StaticResource 3thColor }"/>
         <Setter Property="Shell.UnselectedColor" Value="{StaticResource DarkColor}"/>
         <Setter Property="Shell.NavBarIsVisible" Value="False"/>
         <Setter Property="FlyoutIcon" Value="Icon100.png"/>
     </Style>
     
-    <Style x:Key="MainFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIMain.png"/>
+    <Style x:Key="FlyoutHeader" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>
     </Style>
-    <Style x:Key="PlanFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIPlan.png"/>
-    </Style>
-    <Style x:Key="HistoryFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIHistory.png"/>
-    </Style>
-    <Style x:Key="SettingsFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FISettings48.png"/>
-    </Style>
-    
+
     <Style x:Key="BGImage" TargetType="Image">
-        <Setter Property="Source" Value="Default_BG300_1.png"/>
+        <Setter Property="Source" Value="Lavender_BG300.png"/>
         <Setter Property="AbsoluteLayout.LayoutFlags" Value="All"/>
         <Setter Property="AbsoluteLayout.LayoutBounds" Value="0,0,1,1"/>
         <Setter Property="Aspect" Value="AspectFill"/>
         <Setter Property="VerticalOptions" Value="FillAndExpand"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-    </Style>
-    <Style x:Key="FlyoutHeader" TargetType="StackLayout">
-        <Setter Property="BackgroundColor" Value="{StaticResource 2thColor}"/>
     </Style>
     <Style x:Key="Separator" TargetType="BoxView">
         <Setter Property="HeightRequest" Value="3"/>
@@ -54,108 +39,107 @@
     </Style>
     <!--//////////////////////////////////////////КНОПКИ////////////////////////////////////////////////-->
     <Style x:Key="SetBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_SetItem48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_SetItem48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="ListBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_List48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_List48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <Style x:Key="UpBtn" TargetType="Button">        
-        <Setter Property="ImageSource" Value="Default_Up48.png"/>
+    <Style x:Key="UpBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Lavender_Up48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DownBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Down48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Down48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="ToPlanBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Calendar48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="FromPlanBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Calendar48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DeleteBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Delete48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Delete48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="PhotoBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Photo48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Photo48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="AddBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Add48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Add48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="OkBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Ok48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Ok48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="CancelBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Cancel48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Cancel48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="MenuBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Menu48.png"/>
+        <Setter Property="ImageSource" Value="Lavender_Menu48.png"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <!--////////////////////Text////////////////////////-->
     <Style x:Key="Header" TargetType="Label">
         <Setter Property="FontSize" Value="Large"/>
-        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
     </Style>
     <Style x:Key="Discription" TargetType="Label">
         <Setter Property="FontSize" Value="Medium"/>
-        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
         <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
     </Style>
     <Style x:Key="Link" TargetType="Label">
         <Setter Property="FontSize" Value="Large"/>
-        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
         <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
         <Setter Property="TextDecorations" Value="Underline"/>
     </Style>
-    
+
     <Style x:Key="Picker" TargetType="Picker">
         <Setter Property="FontAttributes" Value="Bold"/>
-        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
-        <Setter Property="TitleColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
+        <Setter Property="TitleColor" Value="{DynamicResource MainColor}"/>
     </Style>
     <Style x:Key="Entry" TargetType="Entry">
         <Setter Property="FontSize" Value="Large"/>
-        <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
-        <Setter Property="PlaceholderColor" Value="{DynamicResource DarkColor}"/>
+        <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
+        <Setter Property="PlaceholderColor" Value="{DynamicResource MainColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
     <!--////////////////////////Прочее//////////////////////////////-->
     <Style x:Key="SettingImg" TargetType="Image">
-        <Setter Property="Source" Value="Default_SetList48.png"/>
+        <Setter Property="Source" Value="Lavender_SetList48.png"/>
     </Style>
-
 </ResourceDictionary>

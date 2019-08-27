@@ -33,13 +33,23 @@ namespace ShoppingReminder.ViewModel
         private async void ClearPhotos()
         {
             DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
-            var files = dir.GetFiles();
-
-            var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {files.Length}."), "Да", "Нет");
+            FileInfo[] files;
+            try
+            {
+                files = dir.GetFiles();                 
+            }
+            catch
+            {
+                await Main.DisplayAlert("Внимание!", "Фотографий не обнаружено.", "Ок");
+                return;
+            }
+            int photoCount = files.Length > 0 ? files.Length : 0;
+            var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {photoCount}."), "Да", "Нет");
             if (!confirm)
             {
                 return;
-            }           
+            }
+            
             foreach (var item in files)
             {
                 File.Delete(item.FullName);
@@ -117,14 +127,18 @@ namespace ShoppingReminder.ViewModel
                 {
                     //TODO:Новые темы сюда и в перечисление.
                     //передавать цвет как BGColor
+                    case Theme.Lavender:
+                        mergedDictionaries.Add(new LavenderTheme());
+                        DependencyService.Get<IBarStyle>().SetColor("#B9A8D5");
+                        break;
                     case Theme.Dark:
                         mergedDictionaries.Add(new DarkTheme());
-                        bool dbPath0 = DependencyService.Get<IBarStyle>().SetColor("#206072");
+                        DependencyService.Get<IBarStyle>().SetColor("#206072");
                         break;
                     case Theme.Default:
                     default:
                         mergedDictionaries.Add(new DefaultTheme());
-                        bool dbPath1 = DependencyService.Get<IBarStyle>().SetColor("#067898");
+                        DependencyService.Get<IBarStyle>().SetColor("#067898");
                         break;
                 }
                 App.Current.Properties["CurrentTheme"] = (int)theme;

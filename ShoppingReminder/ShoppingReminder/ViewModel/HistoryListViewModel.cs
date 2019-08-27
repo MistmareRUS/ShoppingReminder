@@ -165,20 +165,7 @@ namespace ShoppingReminder.ViewModel
                             HorizontalOptions = LayoutOptions.CenterAndExpand
                         };
                         lbl.SetDynamicResource(Label.StyleProperty, "Discription");
-                        Main.PhotoStackLayout.Children.Add(lbl);
-                        var btn = new Button() { Command = BackCommand, Text = "Back" };
-                        btn.SetDynamicResource(Button.StyleProperty, "BackBtn");
-                        var btnStack = new StackLayout
-                        {
-                            HorizontalOptions = LayoutOptions.EndAndExpand,
-                            VerticalOptions =LayoutOptions.EndAndExpand,
-                            Orientation = StackOrientation.Horizontal,
-                            Children =
-                            {
-                                btn                        
-                            }
-                        };
-                        Main.PhotoStackLayout.Children.Add(btnStack);
+                        Main.PhotoStackLayout.Children.Add(lbl);                        
                     }
                     else
                     {

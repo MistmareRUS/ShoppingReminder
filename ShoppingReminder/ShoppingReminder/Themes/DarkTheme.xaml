@@ -20,20 +20,7 @@
         <Setter Property="Shell.NavBarIsVisible" Value="False"/>
         <Setter Property="FlyoutIcon" Value="Icon100.png"/>
     </Style>
-
-    <Style x:Key="MainFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIMain.png"/>
-    </Style>
-    <Style x:Key="PlanFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIPlan.png"/>
-    </Style>
-    <Style x:Key="HistoryFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FIHistory.png"/>
-    </Style>
-    <Style x:Key="SettingsFI" TargetType="FlyoutItem">
-        <Setter Property="Icon" Value="Default_FISettings48.png"/>
-    </Style>
-
+   
     <Style x:Key="BGImage" TargetType="Image">
         <Setter Property="Source" Value="Default_BG300Dark_1.png"/>
         <Setter Property="AbsoluteLayout.LayoutFlags" Value="All"/>
@@ -42,70 +29,77 @@
         <Setter Property="VerticalOptions" Value="FillAndExpand"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
     </Style>
+    <Style x:Key="FlyoutHeader" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="{StaticResource 3thColor}"/>
+    </Style>
+    <Style x:Key="Separator" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="3"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource 3thColor}"/>
+    </Style>
     <!--//////////////////////////////////////////КНОПКИ////////////////////////////////////////////////-->
     <Style x:Key="SetBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_SetItem48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <Style x:Key="BackBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_Back48.png"/>
+    <Style x:Key="ListBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_List48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="UpBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Up48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DownBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Down48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="ToPlanBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="FromPlanBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="DeleteBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Delete48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="PhotoBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Photo48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="AddBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Add48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="OkBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Ok48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="CancelBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Cancel48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style x:Key="MenuBtn" TargetType="Button">
@@ -146,7 +140,6 @@
     <!--////////////////////////Прочее//////////////////////////////-->
     <Style x:Key="SettingImg" TargetType="Image">
         <Setter Property="Source" Value="Default_SetList48.png"/>
-    </Style>
-    
+    </Style>    
 
 </ResourceDictionary>

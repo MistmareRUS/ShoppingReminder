@@ -2,34 +2,26 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder"
-       xmlns:abstractions="clr-namespace:Xam.FormsPlugin.Abstractions;assembly=AdMobView.FormsPlugin.Abstractions"
        x:Class="ShoppingReminder.MainPage"
              Style="{DynamicResource ShellStyle}">
     <Shell.FlyoutHeader>
-        <Image Source="Icon100.png"/>
+        <StackLayout Orientation="Horizontal" Style="{DynamicResource FlyoutHeader}">
+            <Image Source="Icon100.png"/>
+            <Label Text="Название" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+       
+        
     </Shell.FlyoutHeader>
 
     <FlyoutItem Title="Текущая покупка" Style="{DynamicResource MainFI}">
         <Tab Title="Активные покупки">
             <ShellContent>
                 <ContentPage>
-                    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">                       
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="CurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                             
-                        </StackLayout>
-                        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" IsVisible="False">
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                            <abstractions:AdMobView Style="{DynamicResource AdMob}" />                          
-                        </StackLayout>
+                        </StackLayout>                        
                         <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
                     </AbsoluteLayout>
                 </ContentPage>
@@ -39,9 +31,10 @@
             <ShellContent>
                 <ContentPage >
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+                        
                         <Image  Style="{DynamicResource BGImage}"/>
                         <StackLayout x:Name="CompletetCurrentStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-
+                            
                         </StackLayout>
                         <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
                         
@@ -115,31 +108,5 @@
                 </ContentPage>
             </ShellContent>
         </Tab>        
-    </FlyoutItem> 
-    
-    <!--<FlyoutItem Title="Тест рекламы">
-        <Tab>
-            <ShellContent>
-                <ContentPage>
-                    <StackLayout>
-                        <Label Text="мой текст"/>
-                        <abstractions:AdMobView Style="{DynamicResource AdMob}" />
-                          
-                    </StackLayout>
-                </ContentPage>
-            </ShellContent>
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="*">
-        <Tab>
-            <ShellContent>
-                <ContentPage>
-                    <StackLayout>
-                        <abstractions:AdMobView AdUnitId="ca-app-pub-5542764698208489~2621881069" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/> 
-
-                    </StackLayout>
-                </ContentPage>
-            </ShellContent>
-        </Tab>
-    </FlyoutItem>-->    
+    </FlyoutItem>    
 </Shell>

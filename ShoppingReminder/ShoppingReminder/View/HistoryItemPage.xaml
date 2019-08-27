@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingReminder.Ad"
              x:Class="ShoppingReminder.View.HistoryItemPage">
   <ContentView.Content>
-      <StackLayout>
-            <StackLayout>                
-                <StackLayout Orientation="Horizontal">
+        <StackLayout Spacing="0" Margin="0" Padding="0">
+            <local:AdMobView Style="{StaticResource AdBlock}"/>
+            <StackLayout Spacing="0" Margin="0" Padding="0">
+                <StackLayout Orientation="Horizontal" Spacing="0" Margin="0" Padding="0">
                     <Label Text="Дата: " Style="{DynamicResource Discription}"/>
                     <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Header}"/>
                 </StackLayout>
@@ -14,6 +16,7 @@
                     <Label Text="{Binding ShopName}" Style="{DynamicResource Header}"/>                    
                 </StackLayout>
             </StackLayout>
+            <BoxView Style="{DynamicResource Separator}"/>
             <ListView ItemsSource="{Binding PurchasesList}" x:Name="listView" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -36,10 +39,10 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>            
-            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            </ListView>
+            <BoxView Style="{DynamicResource Separator}"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="0" Margin="0" Padding="0">
                 <Button Text="удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
-                <Button Text="назад" Command="{Binding ListVM.BackCommand}" Style="{DynamicResource BackBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

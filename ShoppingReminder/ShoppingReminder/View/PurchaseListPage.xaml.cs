@@ -1,11 +1,11 @@
-﻿using ShoppingReminder.ViewModel;
+﻿using ShoppingReminder.Ad;
+using ShoppingReminder.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -30,7 +30,7 @@ namespace ShoppingReminder.View
             {
                 CreateButtonsCommand();
                 allCompliteListStack.IsVisible = true;
-            }
+            }            
         }
         void CreateButtonCommand()
         {
@@ -62,5 +62,5 @@ namespace ShoppingReminder.View
             photoLbl.GestureRecognizers.Add(photoTap);
             addNewLbl.GestureRecognizers.Add(addNewTap);
         }
-	}
+    }
 }
