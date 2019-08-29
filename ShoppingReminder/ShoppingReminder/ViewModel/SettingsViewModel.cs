@@ -12,16 +12,16 @@ namespace ShoppingReminder.ViewModel
 {
     public class SettingsViewModel
     {
-        public MainPage Main;
-
-        
+        public ICommand ClearHistoryCommand { get; private set; }
+        public ICommand ClearPhotosCommand { get; private set; }
+        public ICommand ClearPlansCommand { get; private set; }
+        public MainPage Main;        
         public SettingsViewModel(MainPage mp)
         {
             Main = mp;
             ClearHistoryCommand = new Command(ClearHistory);
             ClearPlansCommand = new Command(ClearPlans);
             ClearPhotosCommand = new Command(ClearPhotos);
-
             var themeNumber = GetUserSavedTheme();
             if (themeNumber != null)
             {
@@ -29,10 +29,9 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
-
         private async void ClearPhotos()
         {
-            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
+            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.ArtMaryGames.ShoppingReminder/files/Pictures/ShoppingReminder");
             FileInfo[] files;
             try
             {
@@ -48,8 +47,7 @@ namespace ShoppingReminder.ViewModel
             if (!confirm)
             {
                 return;
-            }
-            
+            }            
             foreach (var item in files)
             {
                 File.Delete(item.FullName);
@@ -65,7 +63,6 @@ namespace ShoppingReminder.ViewModel
             Main.history.Back();
             Main.activePurchases.Back();
         }
-
         private async void ClearPlans()
         {
             var confirm =await Main.DisplayAlert("Внимание!", "Очистить список запланированных покупок?", "Да", "Нет");
@@ -77,7 +74,6 @@ namespace ShoppingReminder.ViewModel
             App.LoadPlansFromDB();
             Main.plan.Back();
         }
-
         private async void ClearHistory()
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки истории?", "Да", "Нет");
@@ -93,11 +89,6 @@ namespace ShoppingReminder.ViewModel
             App.HistoryOfPurchase.Clear();
             Main.history.Back();
         }
-
-        public ICommand ClearHistoryCommand { get; private set; }
-        public ICommand ClearPhotosCommand { get; private set; }
-        public ICommand ClearPlansCommand { get; private set; }
-
         public void Back()
         {
             Main.SettingsStackLayout.Children.Clear();

@@ -1,12 +1,7 @@
 ﻿using ShoppingReminder.Model;
 using ShoppingReminder.Repository;
-using ShoppingReminder.Themes;
 using ShoppingReminder.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +13,7 @@ namespace ShoppingReminder
         public static int HistoryAbleToSaveCount = 10;
 
         public const string DATABASE_NAME = "Purchase.db";
-        public static PurchaseRepository database;
+        private static PurchaseRepository database;
         public static PurchaseRepository Database
         {
             get
@@ -39,9 +34,6 @@ namespace ShoppingReminder
         public App()
         {
             InitializeComponent();
-            CurrentPurchases = new List<PurchaseViewModel>();
-            Plans = new List<PlanViewModel>();
-
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
             HistoryOfPurchase = Database.GetHistoryItems();            
@@ -51,19 +43,32 @@ namespace ShoppingReminder
         protected override void OnStart()
         {
         }
-
         protected override void OnSleep()
         {
             SaveCurrentPurchasesToDB();            
         }
         protected override void OnResume()
         {
-            //LoadCurrentPurchasesFromDB();//без BackBtn не нужно
             foreach (var item in CurrentPurchases)
             {
                 item.ListVM = MP.activePurchases;
             }
             MP.activePurchases.Back();
+        }
+        public static void LoadPlansFromDB()
+        {
+            Plans = new List<PlanViewModel>();
+            var plans = Database.GetPlanItems();
+            Plans.Clear();
+            foreach (var item in plans)
+            {
+                PlanViewModel temp = new PlanViewModel()
+                {
+                    Name = item.Name,
+                    Id=item.Id
+                };
+                Plans.Add(temp);
+            }
         }
         void SaveCurrentPurchasesToDB()
         {
@@ -76,16 +81,14 @@ namespace ShoppingReminder
                     Count = item.Count,
                     Units = item.Units,
                     Completed = item.Completed
-
                 };
                 Database.SavePurchaseItem(temp);
             }
-            //CurrentPurchases.Clear();//без BackBtn не нужно
         }
         void  LoadCurrentPurchasesFromDB()
         {
+            CurrentPurchases = new List<PurchaseViewModel>();
             var purchases = Database.GetPurchaseItems();
-            //CurrentPurchases.Clear();//без BackBtn не нужно
             foreach (var item in purchases)
             {
                 PurchaseViewModel temp = new PurchaseViewModel()
@@ -96,20 +99,6 @@ namespace ShoppingReminder
                     Completed = item.Completed
                 };
                 CurrentPurchases.Add(temp);
-            }
-        }
-        public static void LoadPlansFromDB()
-        {
-            var plans = Database.GetPlanItems();
-            Plans.Clear();
-            foreach (var item in plans)
-            {
-                PlanViewModel temp = new PlanViewModel()
-                {
-                    Name = item.Name,
-                    Id=item.Id
-                };
-                Plans.Add(temp);
             }
         }
         

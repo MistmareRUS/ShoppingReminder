@@ -1,7 +1,6 @@
 ﻿using ShoppingReminder.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ShoppingReminder.ViewModel
 {
@@ -9,12 +8,10 @@ namespace ShoppingReminder.ViewModel
     {
         public ListOfPurchase ListOfPurchase { get; set; }
         public HistoryListViewModel ListVM { get; set; }
-
         public HistoryViewModel()
         {
             ListOfPurchase = new ListOfPurchase();
         }
-
         public string Check
         {
             get

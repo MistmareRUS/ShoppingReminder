@@ -1,11 +1,5 @@
-﻿using ShoppingReminder.Ad;
-using ShoppingReminder.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using ShoppingReminder.ViewModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,16 +17,16 @@ namespace ShoppingReminder.View
             
             if (App.CurrentPurchases.Count < 1)
             {
-                CreateButtonCommand();
+                CreateButton();
                 emptyListstack.IsVisible = true;
             }
             else if (App.CurrentPurchases.All(p => p.Completed))
             {
-                CreateButtonsCommand();
+                CreateButtons();
                 allCompliteListStack.IsVisible = true;
             }            
         }
-        void CreateButtonCommand()
+        void CreateButton()
         {
             TapGestureRecognizer addNewTap = new TapGestureRecognizer
             {
@@ -41,7 +35,7 @@ namespace ShoppingReminder.View
             };
             emptyListLabel.GestureRecognizers.Add(addNewTap);
         }
-        void CreateButtonsCommand()
+        void CreateButtons()
         {
             TapGestureRecognizer completeTap = new TapGestureRecognizer
             {

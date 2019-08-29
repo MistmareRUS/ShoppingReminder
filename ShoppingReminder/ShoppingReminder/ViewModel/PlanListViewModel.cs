@@ -10,22 +10,6 @@ namespace ShoppingReminder.ViewModel
 {
     public class PlanListViewModel
     {
-        public IEnumerable<PlanViewModel> PlanList => App.Plans;
-        public MainPage Main;
-        public PlanListViewModel(MainPage mp)
-        {
-            Main = mp;
-            AddToCurrentPurchaseCommand = new Command(AddToCurrentPurchase);
-            DeletePlanItemCommand = new Command(DeletePlanItem);
-            BackCommand = new Command(Back);
-            CreateCommand = new Command(Create);
-
-            foreach (var item in App.Plans)
-            {
-                item.ListVM = this;
-            }
-            Back();
-        }
         private ICommand addToCurrentPurchaseCommand;
         public ICommand AddToCurrentPurchaseCommand
         {
@@ -74,7 +58,22 @@ namespace ShoppingReminder.ViewModel
                 this.createCommand = value;
             }
         }
+        public IEnumerable<PlanViewModel> PlanList => App.Plans;
+        public MainPage Main;
+        public PlanListViewModel(MainPage mp)
+        {
+            Main = mp;
+            AddToCurrentPurchaseCommand = new Command(AddToCurrentPurchase);
+            DeletePlanItemCommand = new Command(DeletePlanItem);
+            BackCommand = new Command(Back);
+            CreateCommand = new Command(Create);
 
+            foreach (var item in App.Plans)
+            {
+                item.ListVM = this;
+            }
+            Back();
+        }
         public void Back()
         {
             App.LoadPlansFromDB();
@@ -85,7 +84,6 @@ namespace ShoppingReminder.ViewModel
             Main.PlanStackLayout.Children.Clear();
             Main.PlanStackLayout.Children.Add(new PlanListPage(this));
         }
-
         private void Create(object obj)
         {
             var text = (Entry)obj;
@@ -96,7 +94,6 @@ namespace ShoppingReminder.ViewModel
             App.Database.SavePlanItem(new Plan(){ Name = text.Text });
             Back();
         }
-
         private async  void DeletePlanItem(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот предмет из списка?", "Да", "Нет");
@@ -108,7 +105,6 @@ namespace ShoppingReminder.ViewModel
             App.Database.DeletePlanItem(temp.Id);
             Back();
         }
-
         private void AddToCurrentPurchase(object obj)
         {
             PlanViewModel temp = (PlanViewModel)obj;
@@ -121,7 +117,6 @@ namespace ShoppingReminder.ViewModel
             App.Database.DeletePlanItem(temp.Id);
             Main.activePurchases.Back();
             Main.plan.Back();
-
         }
     }
 }

@@ -3,7 +3,6 @@ using SQLite;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -27,9 +26,7 @@ namespace ShoppingReminder.Repository
         {            
             db.DropTable<Purchase>();
             db.CreateTable<Purchase>();
-        }
-        
-
+        }  
         public IEnumerable<Purchase> GetPurchaseItems()
         {
             return (from i in db.Table<Purchase>() select i).ToList();
@@ -61,8 +58,6 @@ namespace ShoppingReminder.Repository
             db.DropTable<Plan>();
             db.CreateTable<Plan>();
         }
-
-
         public IEnumerable<Plan> GetPlanItems()
         {
             return (from i in db.Table<Plan>() select i).ToList();
@@ -88,15 +83,12 @@ namespace ShoppingReminder.Repository
                 return db.Insert(item);
             }
         }
-
         ///******************история*********************//
-
         public void ClearHistory()
         {
             db.DropTable<SerializedHistoryItem>();
             db.CreateTable<SerializedHistoryItem>();
         }
-
         public List<HistoryViewModel> GetHistoryItems()
         {
             var sh= (from i in db.Table<SerializedHistoryItem>() select i).ToList();
@@ -109,7 +101,6 @@ namespace ShoppingReminder.Repository
             }
             return tempList;
         }
-
         public ListOfPurchase GetHistoryItem(int id)
         {
             var sh= db.Get<SerializedHistoryItem>(id);

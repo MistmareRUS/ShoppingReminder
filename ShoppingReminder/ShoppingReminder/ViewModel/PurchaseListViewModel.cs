@@ -2,19 +2,29 @@
 using ShoppingReminder.View;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Plugin.InputKit.Shared.Controls;
 
 namespace ShoppingReminder.ViewModel
 {
     public class PurchaseListViewModel
     {
+        public ICommand CreatePurchaseCommand { get; protected set; }
+        public ICommand DeletePurchaseCommand { get; protected set; }
+        public ICommand SavePurchaseCommand { get; protected set; }
+        public ICommand MarkAsCompletedPurchaseCommand { get; protected set; }
+        public ICommand UnmarkAsCompletedPurchaseCommand { get; protected set; }
+        public ICommand BackCommand { get; protected set; }
+        public ICommand CompletePurchaseCommand { get; protected set; }
+        public ICommand ClearPurchaseCommand { get; protected set; }
+        public ICommand UpPurchaseCommand { get; protected set; }
+        public ICommand DownPurchaseCommand { get; protected set; }
+        public ICommand ToPlansCommand { get; protected set; }
+        public ICommand TakePhotoCommand { get; protected set; }
+        public ICommand DeletePhotoCommand { get; protected set; }
+        public ICommand DeletePhotosCommand { get; protected set; }
         public IEnumerable<PurchaseViewModel> Purchases => App.CurrentPurchases.Where(p => !p.Completed);
         public IEnumerable<PurchaseViewModel> CompletedPurchases => App.CurrentPurchases.Where(p => p.Completed);
         public MainPage Main;
@@ -43,7 +53,6 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
-
         private void UnmarkAsCompletedPurchase(object obj)
         {
             PurchaseViewModel purchase = obj as PurchaseViewModel;
@@ -60,7 +69,6 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
-
         private async void DeletePhotos()
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить текущие фотографии?", "Да","Нет");
@@ -78,7 +86,6 @@ namespace ShoppingReminder.ViewModel
             await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
             Back();
         }
-
         private async void DeletePhoto(object obj)
         {
             var confirm= await Main.DisplayAlert("Внимание!", "Удалить фотографию?", "Да","Нет");
@@ -93,7 +100,6 @@ namespace ShoppingReminder.ViewModel
             await Main.DisplayAlert("", "Фото удалено.", "Ок");
             Main.GetPhotos(newFullPath, Main.CurrentPurchasesStackLayout, BackCommand, DeletePhotoCommand, DeletePhotosCommand);
         }       
-
         private async void TakePhoto()
         {
             var photoAction = await Main.DisplayActionSheet("Действия с фотографиями чеков...", "Отмена", null, "Добавить", "Просмотреть");
@@ -125,7 +131,6 @@ namespace ShoppingReminder.ViewModel
                 return null;
             }
         }
-
         private async void ToPlans(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание", "Переместить в планы?", "Да", "Нет");
@@ -142,7 +147,6 @@ namespace ShoppingReminder.ViewModel
                 Back();
             }            
         }
-
         private void UpPurchase(object obj)
         {
             var listIndex = App.CurrentPurchases.IndexOf(obj as PurchaseViewModel);
@@ -172,28 +176,10 @@ namespace ShoppingReminder.ViewModel
         }
         private void Swap(int a,int b)
         {
-            PurchaseViewModel temp;
-            temp = App.CurrentPurchases[a];
+            PurchaseViewModel temp = App.CurrentPurchases[a];
             App.CurrentPurchases[a] = App.CurrentPurchases[b];
             App.CurrentPurchases[b] = temp;
         }
-
-
-        public ICommand CreatePurchaseCommand { get; protected set; }
-        public ICommand DeletePurchaseCommand { get; protected set; }
-        public ICommand SavePurchaseCommand { get; protected set; }
-        public ICommand MarkAsCompletedPurchaseCommand { get; protected set; }
-        public ICommand UnmarkAsCompletedPurchaseCommand { get; protected set; }
-        public ICommand BackCommand { get; protected set; }
-        public ICommand CompletePurchaseCommand { get; protected set; }
-        public ICommand ClearPurchaseCommand { get; protected set; }
-        public ICommand UpPurchaseCommand { get; protected set; }
-        public ICommand DownPurchaseCommand { get; protected set; }
-        public ICommand ToPlansCommand { get; protected set; }
-        public ICommand TakePhotoCommand { get; protected set; }
-        public ICommand DeletePhotoCommand { get; protected set; }
-        public ICommand DeletePhotosCommand { get; protected set; }
-
         public void Back()
         {
             Main.CurrentPurchasesStackLayout.Children.Clear();
@@ -258,17 +244,11 @@ namespace ShoppingReminder.ViewModel
                 App.Database.DeleteHistoryItem(haveToDeleteItem.Id);
                 Main.history.Back();
             }
-
             Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
             Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
             var shopName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название магазина:");
-
             var currentList = new ListOfPurchase { PurchasesList = new List<Purchase>(), Date = DateTime.Now, Check= GetCurrentPhotoString(),ShopName=shopName??"не указано" };
-
-
             App.Current.Properties["CurrentPhotos"] = null;
-
-
             if(notAllCompleted == "Сохранить завершенные, а оставшиеся перенести на следующую покупку.")
             {
                 if(!App.CurrentPurchases.Any(p=>p.Completed)&&GetCurrentPhotoString()==null)
@@ -346,7 +326,6 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
-
         private void SavePurchase(object obj)
         {
             PurchaseViewModel purchase = obj as PurchaseViewModel;
@@ -372,8 +351,7 @@ namespace ShoppingReminder.ViewModel
                 }
             }
             Back();
-        }
-        
+        }        
         PurchaseViewModel selectedPurchase; 
         public PurchaseViewModel SelectedPurchase
         {

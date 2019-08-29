@@ -3,21 +3,11 @@ using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ShoppingReminder.Model;
-using ShoppingReminder.Themes;
-using ShoppingReminder.View;
 using ShoppingReminder.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Plugin.InputKit.Shared.Controls;
 
 
 namespace ShoppingReminder
@@ -76,9 +66,7 @@ namespace ShoppingReminder
                 DisplayAlert("Необратотанная страница", Shell.Current.CurrentItem.Title, "Ok");
             }
             return true;
-            //return base.OnBackButtonPressed();
         }
-
         public async void TakePhoto()
         {
             if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
@@ -123,9 +111,9 @@ namespace ShoppingReminder
         }
         public void GetPhotos(string source, StackLayout layout, ICommand back, ICommand deletePhoto, ICommand deletePhotos)
         {
-            string[] pathes = source.Split('&');
-            var sourses = new Photo[pathes.Length - 1];
-            for (int i = 0; i < pathes.Length - 1; i++)
+            string[] pathes = source.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var sourses = new Photo[pathes.Length];
+            for (int i = 0; i < pathes.Length; i++)
             {
                 var temp = new Photo
                 {
@@ -138,14 +126,11 @@ namespace ShoppingReminder
                 HasUnevenRows = true,
                 ItemsSource = sourses,
                 Margin = 5,
-
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    var stackForTemplate = new StackLayout();
                     var img = new Image();
                     img.SetBinding(Image.SourceProperty, "ImgSrc");
-                    stackForTemplate.Children.Add(img);
-                    return new ViewCell { View = stackForTemplate };
+                    return new ViewCell { View = new StackLayout { Children = { img } } };
                 })
             };
             lv.ItemSelected += (s, e) =>
@@ -161,7 +146,7 @@ namespace ShoppingReminder
                     HorizontalOptions = LayoutOptions.FillAndExpand
                     
                 };
-                Xamarin.Forms.PlatformConfiguration.AndroidSpecific.WebView.SetDisplayZoomControls(wv, true);
+                Xamarin.Forms.PlatformConfiguration.AndroidSpecific.WebView.SetDisplayZoomControls(wv, true);//TODO: не отображается
                 Xamarin.Forms.PlatformConfiguration.AndroidSpecific.WebView.SetEnableZoomControls(wv, true);
                 layout.Children.Clear();
                 layout.Children.Add(wv);
@@ -213,10 +198,7 @@ namespace ShoppingReminder
                 HorizontalOptions=LayoutOptions.FillAndExpand,
                 VerticalOptions=LayoutOptions.Center
             });
-        }
-
-        
-      
+        }      
         public void DeletePhotosHelper(string fullPath)
         {
             if (string.IsNullOrEmpty(fullPath))
@@ -229,12 +211,10 @@ namespace ShoppingReminder
                 File.Delete(item);
             }
         }
-
         private  void SideMenuActivate(object sender, EventArgs e)
         {
             Shell.Current.FlyoutIsPresented = true; 
-        }
-        
+        }        
     }
     
     

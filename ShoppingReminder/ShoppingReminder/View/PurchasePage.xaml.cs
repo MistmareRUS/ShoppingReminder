@@ -19,7 +19,8 @@ namespace ShoppingReminder.View
 		public PurchasePage (PurchaseViewModel vm)
 		{
 			InitializeComponent ();
-            UnitsPicker.Items.Add("Шт");//Обязательно выше привязки. Иначе не отображается в имеющихся элементах.
+            //Обязательно выше привязки. Иначе не отображается в имеющихся элементах.
+            UnitsPicker.Items.Add("Шт");
             UnitsPicker.Items.Add("Кг");
             UnitsPicker.Items.Add("Упак");
             UnitsPicker.Items.Add("л");

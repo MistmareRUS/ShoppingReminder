@@ -1,10 +1,8 @@
 ﻿using ShoppingReminder.Model;
 using ShoppingReminder.View;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -12,6 +10,11 @@ namespace ShoppingReminder.ViewModel
 {
     public class HistoryListViewModel
     {
+        public ICommand DeleteHistoryItemCommand { get; private set; }
+        public ICommand BackCommand { get; private set; }
+        public ICommand GetPhotosCommand { get; protected set; }
+        public ICommand DeletePhotosCommand { get; protected set; }
+        public ICommand DeletePhotoCommand { get; protected set; }
         public List<HistoryViewModel> PurchaseList => App.HistoryOfPurchase.OrderByDescending(h=>h.Date).ToList();
         public MainPage Main;
         public HistoryListViewModel(MainPage mp)
@@ -22,13 +25,10 @@ namespace ShoppingReminder.ViewModel
             GetPhotosCommand = new Command(GetPhotos);
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
-
-
             foreach (var item in App.HistoryOfPurchase)
             {
                 item.ListVM = this;
             }
-
             Back();
         }
 
@@ -56,7 +56,6 @@ namespace ShoppingReminder.ViewModel
             await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
             Back();
         }
-
         private async void DeletePhoto(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить фотографию?", "Да", "Нет");
@@ -80,7 +79,6 @@ namespace ShoppingReminder.ViewModel
             await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
             Back();
         }
-
         public void GetPhotos(object obj)
         {
             string path = (string)obj;
@@ -88,15 +86,6 @@ namespace ShoppingReminder.ViewModel
                 return;
             Main.GetPhotos(path, Main.PhotoStackLayout, BackCommand, DeletePhotoCommand, DeletePhotosCommand);
         }
-
-        public ICommand DeleteHistoryItemCommand { get; private set; }
-        public ICommand BackCommand { get; private set; }
-
-        public ICommand GetPhotosCommand { get; protected set; }
-        public ICommand DeletePhotosCommand { get; protected set; }
-        public ICommand DeletePhotoCommand { get; protected set; }
-
-
         public void Back()
         {
             App.HistoryOfPurchase = App.Database.GetHistoryItems();
@@ -111,8 +100,7 @@ namespace ShoppingReminder.ViewModel
             fi.CurrentItem = fi.Items[0];
             Main.HistoryStackLayout.Children.Clear();
             Main.HistoryStackLayout.Children.Add(new HistoryListPage(this));
-        }
-        
+        }        
         private async void DeleteHistoryItem(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить данный список из истории покупок?", "Да", "Нет");
@@ -130,14 +118,6 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
-        public void ClearHistory()
-        {
-            App.Database.ClearHistory();//TODO:не удаляет фотки - подтверждение
-            Back();
-        }
-        
-
-
         HistoryViewModel selectedPurchaseList;
         public HistoryViewModel SelectedPurchaseList
         {

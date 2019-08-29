@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace ShoppingReminder.Ad
 {
@@ -12,7 +9,6 @@ namespace ShoppingReminder.Ad
                   typeof(string),
                   typeof(AdMobView),
                   string.Empty);
-
         public string AdUnitId
         {
             get => (string)GetValue(AdUnitIdProperty);

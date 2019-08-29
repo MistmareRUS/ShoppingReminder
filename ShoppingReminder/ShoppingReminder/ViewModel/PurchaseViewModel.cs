@@ -11,13 +11,10 @@ namespace ShoppingReminder.ViewModel
         public Purchase Purchase { get; private set; }
         public PurchaseListViewModel ListVM { get; set; }
         public string VaiableName;
-
-   
         public PurchaseViewModel()
         {
             Purchase = new Purchase();
         }
-
         public string Name
         {
             get
@@ -74,7 +71,6 @@ namespace ShoppingReminder.ViewModel
                 Purchase.Id = value;
             }
         }
-
         public bool isValid
         {
             get

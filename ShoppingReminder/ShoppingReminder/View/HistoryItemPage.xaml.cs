@@ -1,11 +1,4 @@
-﻿using ShoppingReminder.Model;
-using ShoppingReminder.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ShoppingReminder.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
