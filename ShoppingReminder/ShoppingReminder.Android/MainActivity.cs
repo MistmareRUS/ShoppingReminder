@@ -15,7 +15,7 @@ using Android.Gms.Ads;
 [assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
 namespace ShoppingReminder.Droid
 {
-    [Activity(Label = "Shopping Reminder", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Shopping Reminder", Icon = "@drawable/icon100", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {        
         protected override void OnCreate(Bundle savedInstanceState)

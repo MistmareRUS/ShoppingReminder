@@ -32,7 +32,7 @@ namespace ShoppingReminder.ViewModel
 
         private async void ClearPhotos()
         {
-            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.companyname.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
+            DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.ArtMaryGames.ShoppingReminder/files/Pictures/ShoppingReminder");//TODO: изменить адрес при смене компании.
             FileInfo[] files;
             try
             {
