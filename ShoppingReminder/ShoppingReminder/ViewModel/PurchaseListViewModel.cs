@@ -15,18 +15,35 @@ namespace ShoppingReminder.ViewModel
 {
     public class PurchaseListViewModel
     {
-        public IEnumerable<PurchaseViewModel> Purchases => App.CurrentPurchases.Where(p => !p.Completed);
-        public IEnumerable<PurchaseViewModel> CompletedPurchases => App.CurrentPurchases.Where(p => p.Completed);
+        public ICommand CreatePurchaseCommand { get; protected set; }
+        public ICommand DeletePurchaseCommand { get; protected set; }
+        public ICommand SavePurchaseCommand { get; protected set; }
+        public ICommand MarkAsCompletedPurchaseCommand { get; protected set; }
+        public ICommand UnmarkAsCompletedPurchaseCommand { get; protected set; }
+        public ICommand BackCommand { get; protected set; }
+        public ICommand CompletePurchaseCommand { get; protected set; }
+        public ICommand ClearPurchaseCommand { get; protected set; }
+        public ICommand UpPurchaseCommand { get; protected set; }
+        public ICommand DownPurchaseCommand { get; protected set; }
+        public ICommand ToPlansCommand { get; protected set; }
+        public ICommand TakePhotoCommand { get; protected set; }
+        public ICommand DeletePhotoCommand { get; protected set; }
+        public ICommand DeletePhotosCommand { get; protected set; }
+        public ObservableCollection<PurchaseViewModel> Purchases => App.CurrentPurchases;
+        public ObservableCollection<PurchaseViewModel> CompletedPurchases => App.CompletedPurchases;
         public MainPage Main;
 
         public PurchaseListViewModel(MainPage mp)
         {
             Main = mp;
-            CreatePurchaseCommand = new Command(CreatePurchase);
-            DeletePurchaseCommand = new Command(DeletePurchase);
-            SavePurchaseCommand = new Command(SavePurchase);
+
+            UnmarkAsCompletedPurchaseCommand = new Command(UnmarkAsCompletedPurchase);
             MarkAsCompletedPurchaseCommand = new Command(MarkAsCompletedPurchase);
+            CreatePurchaseCommand = new Command(CreatePurchase);
             BackCommand = new Command(Back);
+            SavePurchaseCommand = new Command(SavePurchase);
+
+            DeletePurchaseCommand = new Command(DeletePurchase);
             CompletePurchaseCommand = new Command(CompletePurchase);
             ClearPurchaseCommand = new Command(ClearPurchase);
             UpPurchaseCommand = new Command(UpPurchase);
@@ -35,28 +52,127 @@ namespace ShoppingReminder.ViewModel
             TakePhotoCommand = new Command(TakePhoto);
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
-            UnmarkAsCompletedPurchaseCommand = new Command(UnmarkAsCompletedPurchase);
 
             foreach (var item in App.CurrentPurchases)
+            {
+                item.ListVM = this;
+            }
+            foreach (var item in App.CompletedPurchases)
             {
                 item.ListVM = this;
             }
             Back();
         }
 
+
         private void UnmarkAsCompletedPurchase(object obj)
         {
             PurchaseViewModel purchase = obj as PurchaseViewModel;
             if (purchase != null && purchase.isValid)
             {
-                App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = false;
-                if (!App.CurrentPurchases.Any(p => p.Completed))
+                int index = App.CompletedPurchases.IndexOf(App.CompletedPurchases.FirstOrDefault(p => p.Id == purchase.Id));
+                Purchase purch = App.Database.GetPurchaseItem(purchase.Id);
+                purch.Completed = false;
+                App.Database.SavePurchaseItem(purch);
+                App.CompletedPurchases.RemoveAt(index);
+                App.CurrentPurchases.Add(purchase);
+             
+                if (App.CompletedPurchases.Count<=0)
                 {                   
                     var t = (Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent);
                     t.IsEnabled = false;
                     var fi = (FlyoutItem)(t.Parent);
                     fi.CurrentItem = fi.Items[0];
                 }
+            }
+        }
+        private void MarkAsCompletedPurchase(object obj)
+        {
+            PurchaseViewModel purchase = obj as PurchaseViewModel;
+            if (purchase != null && purchase.isValid)
+            {
+                int index = App.CurrentPurchases.IndexOf(App.CurrentPurchases.FirstOrDefault(p => p.Id == purchase.Id));
+                Purchase purch = App.Database.GetPurchaseItem(purchase.Id);
+                purch.Completed = true;
+                App.CurrentPurchases.RemoveAt(index);
+                App.Database.SavePurchaseItem(purch);
+                App.CompletedPurchases.Add(purchase);
+
+                ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
+            }
+        }
+        private void SavePurchase(object obj)
+        {
+            PurchaseViewModel purchase = obj as PurchaseViewModel;
+            if (purchase != null && purchase.isValid)
+            {
+                if (string.IsNullOrEmpty(purchase.VaiableName))
+                {
+                    if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower())|| App.CompletedPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
+                    {
+                        Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                        return;
+                    }
+                    if (purchase.Completed)
+                    {
+                        App.CompletedPurchases.Add(purchase);
+                    }
+                    else
+                    {
+                        App.CurrentPurchases.Add(purchase);
+                    }
+                    App.Database.SavePurchaseItem(new Purchase { Name=purchase.Name
+                                                                 ,Count=purchase.Count
+                                                                 ,Units=purchase.Units
+                                                                 ,Completed=purchase.Completed
+                                                                 ,Id=purchase.Id});
+                }
+                else
+                {
+                    if(purchase.Name.Length < 1)
+                    {
+                        Main.DisplayAlert("Внимание!", "Название не может быть пустым.", "Ok");
+                        return;
+                    }
+                }
+            }
+            Back();
+        }
+        private void CreatePurchase()
+        {
+            Main.CurrentPurchasesStackLayout.Children.Clear();
+            var creatingPage = new PurchasePage(new PurchaseViewModel()
+            {
+                ListVM=this
+            });
+            Main.CurrentPurchasesStackLayout.Children.Add(creatingPage);
+        }
+        public void Back()
+        {
+            Main.CurrentPurchasesStackLayout.Children.Clear();
+            Main.CompletedPurchasesStackLayout.Children.Clear();
+            Main.CurrentPurchasesStackLayout.Children.Add(new PurchaseListPage(this));
+            Main.CompletedPurchasesStackLayout.Children.Add(new CompletedPurchaseListPage(this));
+        }
+        private async void DeletePurchase(object obj)
+        {
+            var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот элемент из списка?", "Да", "Нет");
+            if (!confirm)
+            {
+                return;
+            }
+            PurchaseViewModel purchase = obj as PurchaseViewModel;
+            if (purchase != null)
+            {
+                if (purchase.Completed)
+                {
+                    App.CompletedPurchases.Remove(purchase);
+                }
+                else
+                {
+                   App.CurrentPurchases.Remove(purchase);
+                }
+                App.Database.DeletePurchaseItem(purchase.Id);
             }
             Back();
         }
@@ -179,37 +295,8 @@ namespace ShoppingReminder.ViewModel
         }
 
 
-        public ICommand CreatePurchaseCommand { get; protected set; }
-        public ICommand DeletePurchaseCommand { get; protected set; }
-        public ICommand SavePurchaseCommand { get; protected set; }
-        public ICommand MarkAsCompletedPurchaseCommand { get; protected set; }
-        public ICommand UnmarkAsCompletedPurchaseCommand { get; protected set; }
-        public ICommand BackCommand { get; protected set; }
-        public ICommand CompletePurchaseCommand { get; protected set; }
-        public ICommand ClearPurchaseCommand { get; protected set; }
-        public ICommand UpPurchaseCommand { get; protected set; }
-        public ICommand DownPurchaseCommand { get; protected set; }
-        public ICommand ToPlansCommand { get; protected set; }
-        public ICommand TakePhotoCommand { get; protected set; }
-        public ICommand DeletePhotoCommand { get; protected set; }
-        public ICommand DeletePhotosCommand { get; protected set; }
+        
 
-        public void Back()
-        {
-            Main.CurrentPurchasesStackLayout.Children.Clear();
-            Main.CompletedPurchasesStackLayout.Children.Clear();
-            Main.CurrentPurchasesStackLayout.Children.Add(new PurchaseListPage(this));
-            Main.CompletedPurchasesStackLayout.Children.Add(new CompletedPurchaseListPage(this));
-        }
-        private void CreatePurchase()
-        {
-            Main.CurrentPurchasesStackLayout.Children.Clear();
-            var creatingPage = new PurchasePage(new PurchaseViewModel()
-            {
-                ListVM=this
-            });
-            Main.CurrentPurchasesStackLayout.Children.Add(creatingPage);
-        }
         private async void ClearPurchase()
         {
             var confirm = await Main.DisplayAlert("Внимание", "Очистить список покупок?", "Да", "Нет");
@@ -217,7 +304,7 @@ namespace ShoppingReminder.ViewModel
             {
                 return;
             }
-            App.CurrentPurchases = new List<PurchaseViewModel>();
+            App.CurrentPurchases.Clear();
             DeletePhotos();
             Back();
         }
@@ -322,57 +409,8 @@ namespace ShoppingReminder.ViewModel
             Main.history.Back();
             Back();
         }
-        private void MarkAsCompletedPurchase(object obj)
-        {
-            PurchaseViewModel purchase = obj as PurchaseViewModel;
-            if (purchase != null && purchase.isValid)
-            {
-                App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.Name).Completed = true;
-                ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
-            }
-            Back();
-        }
-        private async void DeletePurchase(object obj)
-        {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот элемент из списка?", "Да", "Нет");
-            if (!confirm)
-            {
-                return;
-            }
-            PurchaseViewModel purchase = obj as PurchaseViewModel;
-            if (purchase != null)
-            {
-                App.CurrentPurchases.Remove(purchase);
-            }
-            Back();
-        }
+        
 
-        private void SavePurchase(object obj)
-        {
-            PurchaseViewModel purchase = obj as PurchaseViewModel;
-            if (purchase != null && purchase.isValid)
-            {
-                if (string.IsNullOrEmpty(purchase.VaiableName))
-                {
-                    if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
-                    {
-                        Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
-                        return;
-                    }
-                    App.CurrentPurchases.Add(purchase);
-                }
-                else
-                {
-                    if(purchase.Name.Length < 1)
-                    {
-                        Main.DisplayAlert("Внимание!", "Название не может быть пустым.", "Ok");
-                        return;
-                    }
-                    var temp=App.CurrentPurchases.FirstOrDefault(p => p.Name == purchase.VaiableName);
-                }
-            }
-            Back();
-        }
         
         PurchaseViewModel selectedPurchase; 
         public PurchaseViewModel SelectedPurchase

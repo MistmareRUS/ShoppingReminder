@@ -3,11 +3,11 @@ using SQLite;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using ShoppingReminder.ViewModel;
+using System.Collections.ObjectModel;
 
 namespace ShoppingReminder.Repository
 {
@@ -22,15 +22,13 @@ namespace ShoppingReminder.Repository
             db.CreateTable<SerializedHistoryItem>();
             db.CreateTable<Plan>();
         }
-        ///******************покупки*********************//
+        ///******************активные покупки*********************//
         public void ClearPurchases()
         {            
             db.DropTable<Purchase>();
             db.CreateTable<Purchase>();
-        }
-        
-
-        public IEnumerable<Purchase> GetPurchaseItems()
+        }     
+        public List<Purchase> GetPurchaseItems()
         {
             return (from i in db.Table<Purchase>() select i).ToList();
 
@@ -61,8 +59,6 @@ namespace ShoppingReminder.Repository
             db.DropTable<Plan>();
             db.CreateTable<Plan>();
         }
-
-
         public IEnumerable<Plan> GetPlanItems()
         {
             return (from i in db.Table<Plan>() select i).ToList();
@@ -88,7 +84,6 @@ namespace ShoppingReminder.Repository
                 return db.Insert(item);
             }
         }
-
         ///******************история*********************//
 
         public void ClearHistory()
@@ -96,20 +91,18 @@ namespace ShoppingReminder.Repository
             db.DropTable<SerializedHistoryItem>();
             db.CreateTable<SerializedHistoryItem>();
         }
-
-        public List<HistoryViewModel> GetHistoryItems()
+        public ObservableCollection<HistoryViewModel> GetHistoryItems()
         {
             var sh= (from i in db.Table<SerializedHistoryItem>() select i).ToList();
-            var tempList = new List<HistoryViewModel>();
+            var tempCollect = new ObservableCollection<HistoryViewModel>();
             foreach (var item in sh)
             {
                 var tempDes = DeserializeHistory(item);
                 var tempHVM = new HistoryViewModel() { ListOfPurchase=tempDes };
-                tempList.Add(tempHVM);
+                tempCollect.Add(tempHVM);
             }
-            return tempList;
+            return tempCollect;
         }
-
         public ListOfPurchase GetHistoryItem(int id)
         {
             var sh= db.Get<SerializedHistoryItem>(id);
@@ -178,8 +171,5 @@ namespace ShoppingReminder.Repository
             };
             return deser;
         }
-
-
-
     }
 }
