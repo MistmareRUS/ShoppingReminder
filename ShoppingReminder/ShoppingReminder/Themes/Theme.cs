@@ -6,8 +6,8 @@ namespace ShoppingReminder.Themes
 {
     public enum Theme
     {
-        Default,
-        Dark,
+        Standart,
+        StandartDark,
         Lavender
     }
 }

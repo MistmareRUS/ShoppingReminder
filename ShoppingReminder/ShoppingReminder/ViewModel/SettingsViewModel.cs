@@ -43,7 +43,7 @@ namespace ShoppingReminder.ViewModel
                 return;
             }
             int photoCount = files.Length > 0 ? files.Length : 0;
-            var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {photoCount}."), "Да", "Нет");
+            var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {photoCount-1}."), "Да", "Нет");//1 вспомогательный файл. не фото.
             if (!confirm)
             {
                 return;
@@ -122,11 +122,11 @@ namespace ShoppingReminder.ViewModel
                         mergedDictionaries.Add(new LavenderTheme());
                         DependencyService.Get<IBarStyle>().SetColor("#B9A8D5");
                         break;
-                    case Theme.Dark:
+                    case Theme.StandartDark:
                         mergedDictionaries.Add(new DarkTheme());
                         DependencyService.Get<IBarStyle>().SetColor("#206072");
                         break;
-                    case Theme.Default:
+                    case Theme.Standart:
                     default:
                         mergedDictionaries.Add(new DefaultTheme());
                         DependencyService.Get<IBarStyle>().SetColor("#067898");

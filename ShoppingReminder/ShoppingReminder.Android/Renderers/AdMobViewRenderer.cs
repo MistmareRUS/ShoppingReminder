@@ -48,9 +48,11 @@ namespace ShoppingReminder.Droid.Renderers
             adView.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
             adView.LoadAd(new AdRequest.Builder()
+#if Debug
                                                  .AddTestDevice("31829191451A45D0C9BA5886FC352C30")//хонор
                                                  .AddTestDevice("0ADE3D52A292C689C77DFB0F7391684C")//беляш
                                                  .AddTestDevice("427589D7CAA65D4458800ECF9C484686")//хтс
+#endif
                                                  .Build());//TODO: номера тестовых девайсов
 
             return adView;

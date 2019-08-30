@@ -37,6 +37,7 @@ namespace ShoppingReminder
             PlanStackLayout = PlanStack;
             PhotoStackLayout = PhotoStack;
             SettingsStackLayout = SettingsStack;
+            NameLabel.FontFamily = Device.RuntimePlatform == Device.Android ? "jakobextractt.ttf#JacobExtraCTT" : "Assets/jakobextractt.ttf#JacobExtraCTT";
 
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
