@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
              xmlns:renderers="clr-namespace:ShoppingReminder.Renderers"
-             x:Class="ShoppingReminder.View.PurchasePage">
+             x:Class="ShoppingReminder.View.GroupItemPage" ClassId="ItemPage">
   <ContentView.Content>
       <StackLayout>
             <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button Text="удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Text="в планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
+                    <Button Text="удалить" Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="переместить" Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout>
@@ -22,9 +22,9 @@
                 <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                <Button Text="ок" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
-                        HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />                
+                <Button Text="ок" Command="{Binding ListVM.SaveGroupItemCommand}" CommandParameter="{Binding}" 
+                        HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />
             </StackLayout>
-      </StackLayout>
+        </StackLayout>
   </ContentView.Content>
 </ContentView>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             x:Class="ShoppingReminder.View.GroupListPage">
+  <ContentView.Content>
+      <StackLayout>
+            <local:AdMobView Style="{StaticResource AdBlock}"/>
+            <ListView ItemsSource="{Binding GroupsList}" SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"   HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Discription}"/>
+                                    <Label Text="{Binding Progress}" Style="{DynamicResource Discription}"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <Button Command="{Binding ListVM.DeleteGroupCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
+                                        <Button Text="Активировать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource OkBtn}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Spacing="0" Margin="0" Padding="0">
+                <Button Text="добавить" Command="{Binding CreateGroupCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+            </StackLayout>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

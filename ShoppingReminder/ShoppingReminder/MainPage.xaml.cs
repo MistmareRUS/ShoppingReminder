@@ -21,11 +21,13 @@ namespace ShoppingReminder
         public StackLayout PlanStackLayout { get; set; }
         public StackLayout PhotoStackLayout { get; set; }
         public StackLayout SettingsStackLayout { get; set; }
+        public StackLayout GroupStackLayout { get; set; }
         //вьюмодели для обращению к каждой из страниц приложения
         public PurchaseListViewModel activePurchases;
         public HistoryListViewModel history;
         public PlanListViewModel plan;
         public SettingsViewModel settings;
+        public GroupListViewModel groups;
 
         public MainPage()
         {
@@ -37,12 +39,14 @@ namespace ShoppingReminder
             PlanStackLayout = PlanStack;
             PhotoStackLayout = PhotoStack;
             SettingsStackLayout = SettingsStack;
-            NameLabel.FontFamily = Device.RuntimePlatform == Device.Android ? "jakobextractt.ttf#JacobExtraCTT" : "Assets/jakobextractt.ttf#JacobExtraCTT";
+            GroupStackLayout = GroupStack;
+            NameLabel.FontFamily = Device.RuntimePlatform == Device.Android ? "jakobextractt.ttf#JacobExtraCTT" : "Assets/jakobextractt.ttf#JacobExtraCTT";//убрать в XAML
 
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
             settings = new SettingsViewModel(this);
+            groups = new GroupListViewModel(this);
         }
         protected override bool OnBackButtonPressed()
         {
@@ -61,6 +65,17 @@ namespace ShoppingReminder
             else if (Shell.Current.CurrentItem.Title == "Настройки")
             {
                 settings.Back();
+            }
+            else if (Shell.Current.CurrentItem.Title == "Группы")//TODO: название
+            {
+                if (GroupStackLayout.Children[0].ClassId == "ItemPage")
+                {
+                    groups.BackToList();
+                }
+                else
+                {
+                    groups.Back();
+                }
             }
             else
             {

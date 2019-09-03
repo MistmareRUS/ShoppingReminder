@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:renderers="clr-namespace:ShoppingReminder.Renderers"
+             x:Class="ShoppingReminder.View.GroupPage">
+  <ContentView.Content>
+        <StackLayout Spacing="0" Margin="0" Padding="0">
+            <local:AdMobView Style="{StaticResource AdBlock}"/>
+            
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="0" Margin="0" Padding="0">
+                <Label Text="Название: " Style="{DynamicResource Discription}" HorizontalOptions="Start"/>
+                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}"/>
+                <!--<Label Text="{Binding Progress}" HorizontalOptions="End"  Style="{DynamicResource Discription}"/>-->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="активировать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
+                </StackLayout>
+            </StackLayout>
+            <BoxView Style="{DynamicResource Separator}"/>
+            
+            <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
+                <Label/>
+                <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
+                <Label/>
+                <Label  Text=" - добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label/>
+            </StackLayout>   
+
+            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedGroupItem, Mode=TwoWay}"  VerticalScrollBarVisibility="Always"
+                      HasUnevenRows="True" VerticalOptions="CenterAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid RowSpacing="0" Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Style="{DynamicResource Header}"/>
+                                    <Label Text="{Binding Count}" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End" Style="{DynamicResource Discription}"/>
+                                    <Label Text="{Binding Units}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource Discription}"/>
+                                    <Button Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>                                    
+                                    <CheckBox IsChecked="{Binding Completed,Mode=TwoWay}" CheckedChanged="CompleteCheckBox_CheckedChanged" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Button Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3"  Style="{DynamicResource ToPlanBtn}"/>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <BoxView Style="{DynamicResource Separator}"/>
+            <StackLayout Spacing="0" Margin="0" Padding="0">
+                <Button Text="добавить" Command="{Binding CreateGroupItemCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

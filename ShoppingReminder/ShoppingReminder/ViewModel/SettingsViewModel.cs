@@ -15,6 +15,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand ClearHistoryCommand { get; private set; }
         public ICommand ClearPhotosCommand { get; private set; }
         public ICommand ClearPlansCommand { get; private set; }
+        public ICommand ClearGroupsCommand { get; private set; }
         public MainPage Main;        
         public SettingsViewModel(MainPage mp)
         {
@@ -22,6 +23,7 @@ namespace ShoppingReminder.ViewModel
             ClearHistoryCommand = new Command(ClearHistory);
             ClearPlansCommand = new Command(ClearPlans);
             ClearPhotosCommand = new Command(ClearPhotos);
+            ClearGroupsCommand = new Command(ClearGroups);
             var themeNumber = GetUserSavedTheme();
             if (themeNumber != null)
             {
@@ -29,6 +31,18 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
+
+        private async void ClearGroups()
+        {
+            var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки групп?", "Да", "Нет");
+            if (!confirm)
+            {
+                return;
+            }
+            App.Database.ClearGroups();
+            Main.groups.Back();
+        }
+
         private async void ClearPhotos()
         {
             DirectoryInfo dir = new DirectoryInfo(@"/storage/emulated/0/Android/data/com.ArtMaryGames.ShoppingReminder/files/Pictures/ShoppingReminder");

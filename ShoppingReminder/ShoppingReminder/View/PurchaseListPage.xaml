@@ -6,8 +6,6 @@
     <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
-            <!--<local:AdMobView AdUnitId="ca-app-pub-3940256099942544/6300978111"  Style="{StaticResource AdBlock}"/>-->  <!--тестовый баннер-->
-            <local:AdMobView AdUnitId="ca-app-pub-5542764698208489/3929387019"  Style="{StaticResource AdBlock}" IsVisible="False"/>
             <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="0" Margin="0" Padding="0">
                 <Button Text="фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">

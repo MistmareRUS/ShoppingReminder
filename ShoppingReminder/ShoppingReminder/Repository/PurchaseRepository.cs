@@ -20,6 +20,7 @@ namespace ShoppingReminder.Repository
             db.CreateTable<Purchase>();
             db.CreateTable<SerializedHistoryItem>();
             db.CreateTable<Plan>();
+            db.CreateTable<SerializedGroup>();
         }
         ///******************покупки*********************//
         public void ClearPurchases()
@@ -83,6 +84,47 @@ namespace ShoppingReminder.Repository
                 return db.Insert(item);
             }
         }
+        ///******************группы*********************//
+        public void ClearGroups()
+        {
+            db.DropTable<SerializedGroup>();
+            db.CreateTable<SerializedGroup>();
+        }
+        public List<GroupViewModel> GetGroupItems()
+        {
+            var sg = (from i in db.Table<SerializedGroup>() select i).ToList();
+            var tempList = new List<GroupViewModel>();
+            foreach (var item in sg)
+            {
+                var tempDes = DeserializeGroup(item);
+                var tempGVM = new GroupViewModel(null) { Group=tempDes };
+                tempList.Add(tempGVM);
+            }
+            return tempList;
+        }
+        public Group GetGroupItem(int id)
+        {
+            var sg = db.Get<SerializedGroup>(id);
+            return DeserializeGroup(sg);
+        }
+        public int DeleteGroupItem(int id)
+        {
+            return db.Delete<SerializedGroup>(id);
+        }
+        public int SaveGroupItem(Group item)
+        {
+            Group group = item;
+            var temp = SerializeGroup(group);
+            if (item.Id != 0)
+            {
+                db.Update(temp);
+                return temp.Id;
+            }
+            else
+            {
+                return db.Insert(temp);
+            }
+        }
         ///******************история*********************//
         public void ClearHistory()
         {
@@ -91,19 +133,19 @@ namespace ShoppingReminder.Repository
         }
         public List<HistoryViewModel> GetHistoryItems()
         {
-            var sh= (from i in db.Table<SerializedHistoryItem>() select i).ToList();
+            var sh = (from i in db.Table<SerializedHistoryItem>() select i).ToList();
             var tempList = new List<HistoryViewModel>();
             foreach (var item in sh)
             {
                 var tempDes = DeserializeHistory(item);
-                var tempHVM = new HistoryViewModel() { ListOfPurchase=tempDes };
+                var tempHVM = new HistoryViewModel() { ListOfPurchase = tempDes };
                 tempList.Add(tempHVM);
             }
             return tempList;
         }
         public ListOfPurchase GetHistoryItem(int id)
         {
-            var sh= db.Get<SerializedHistoryItem>(id);
+            var sh = db.Get<SerializedHistoryItem>(id);
             return DeserializeHistory(sh);
         }
         public int DeleteHistoryItem(int id)
@@ -166,6 +208,26 @@ namespace ShoppingReminder.Repository
                 PurchasesList = (List<Purchase>)(ByteArrayToObject(ser.PurchasesList)),
                 Check = ser.Check,
                 ShopName=ser.ShopName
+            };
+            return deser;
+        }
+        SerializedGroup SerializeGroup(Group deser)
+        {
+            var ser = new SerializedGroup
+            {
+                PurchasesList = deser.PurchasesList!=null? ObjectToByteArray(deser.PurchasesList):null,
+                Id = deser.Id,
+                Name=deser.Name
+            };
+            return ser;
+        }
+        Group DeserializeGroup(SerializedGroup ser)
+        {
+            var deser = new Group
+            {
+                Id = ser.Id,
+                PurchasesList = ser.PurchasesList != null ? (List<Purchase>)(ByteArrayToObject(ser.PurchasesList)) : null,
+                Name=ser.Name
             };
             return deser;
         }

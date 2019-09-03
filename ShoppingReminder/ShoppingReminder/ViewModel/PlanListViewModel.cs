@@ -2,6 +2,7 @@
 using ShoppingReminder.View;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -105,18 +106,54 @@ namespace ShoppingReminder.ViewModel
             App.Database.DeletePlanItem(temp.Id);
             Back();
         }
-        private void AddToCurrentPurchase(object obj)
+        private async void AddToCurrentPurchase(object obj)
         {
-            PlanViewModel temp = (PlanViewModel)obj;
-            PurchaseViewModel purchase = new PurchaseViewModel()
+            PlanViewModel tempPlan = (PlanViewModel)obj;
+            var dirs =Main.groups.GroupsList.Where(g => g.Name != "Без названия").Select(g => g.Name).ToArray();
+            string[] directions = new string[dirs.Length + 1];
+            directions[0] = "В активный список";
+            for (int i = 1; i <= dirs.Length; i++)
             {
-                Name = temp.Name,
-                ListVM = Main.activePurchases
-            };
-            App.CurrentPurchases.Add(purchase);
-            App.Database.DeletePlanItem(temp.Id);
-            Main.activePurchases.Back();
-            Main.plan.Back();
+                directions[i] = dirs[i - 1];
+            }
+            var direct = await Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);
+            if (direct == "Отмена")
+            {
+                return;
+            }            
+            else if (direct == directions[0])//к активным
+            {
+                PurchaseViewModel purchase = new PurchaseViewModel() { Name = tempPlan.Name,ListVM = Main.activePurchases };
+
+                if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
+                {
+                    Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                    return;
+                }
+                App.CurrentPurchases.Add(purchase);
+                Main.activePurchases.Back();
+                App.Database.DeletePlanItem(tempPlan.Id);
+                Back();
+                if (App.CurrentPurchases.Any(p => p.Completed))
+                {
+                    ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
+                }
+                Main.DisplayAlert("", "Добавлено к активному списку", "Ок");
+            }
+            else//в группу
+            {
+                var grIndex = Main.groups.GroupsList.IndexOf(Main.groups.GroupsList.FirstOrDefault(g => g.Name == direct));
+                if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
+                {
+                    Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                    return;
+                }
+                Main.groups.GroupsList[grIndex].PurchasesList.Add(new Purchase() { Name = tempPlan.Name });
+                App.Database.SaveGroupItem(Main.groups.GroupsList[grIndex].Group);
+                App.Database.DeletePlanItem(tempPlan.Id);
+                Back();
+                Main.groups.Back();
+            }
         }
     }
 }

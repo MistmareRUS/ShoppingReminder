@@ -11,6 +11,7 @@ namespace ShoppingReminder
     public partial class App : Application
     {
         public static int HistoryAbleToSaveCount = 10;
+        public static string UnitsList = "Шт,Кг,Упак,л";
 
         public const string DATABASE_NAME = "Purchase.db";
         private static PurchaseRepository database;
@@ -29,6 +30,7 @@ namespace ShoppingReminder
         public static List<PurchaseViewModel> CurrentPurchases { get; set; }
         public static List<PlanViewModel> Plans { get; set; }
         public static List<HistoryViewModel> HistoryOfPurchase { get; set; }
+        public static List<GroupViewModel> Groups { get; set; }
         MainPage MP;
         
         public App()
@@ -36,7 +38,8 @@ namespace ShoppingReminder
             InitializeComponent();
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
-            HistoryOfPurchase = Database.GetHistoryItems();            
+            HistoryOfPurchase = Database.GetHistoryItems();
+            Groups = Database.GetGroupItems();
             MainPage = MP = new MainPage();
         }
 
@@ -70,7 +73,7 @@ namespace ShoppingReminder
                 Plans.Add(temp);
             }
         }
-        void SaveCurrentPurchasesToDB()
+        public static void SaveCurrentPurchasesToDB()
         {
             Database.ClearPurchases();
             foreach (var item in CurrentPurchases)

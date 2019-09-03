@@ -45,6 +45,23 @@
         </Tab>        
     </FlyoutItem>
 
+    <FlyoutItem Title="Группы">
+        <!--Style="{DynamicResource PlanFI}">-->
+        <Tab>
+            <ShellContent>
+                <ContentPage>
+                    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+                        <Image  Style="{DynamicResource BGImage}"/>
+                        <StackLayout x:Name="GroupStack" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+
+                        </StackLayout>
+                        <Button  Clicked="SideMenuActivate" AbsoluteLayout.LayoutBounds="0.05,0.97,48,48" AbsoluteLayout.LayoutFlags="PositionProportional" Style="{DynamicResource MenuBtn}"/>
+
+                    </AbsoluteLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
 
     <FlyoutItem Title="Запланированное" Style="{DynamicResource PlanFI}">
         <Tab>

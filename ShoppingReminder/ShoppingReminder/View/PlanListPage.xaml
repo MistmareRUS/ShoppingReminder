@@ -12,7 +12,8 @@
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}"/>
+                                    <Label Text=" . " Style="{DynamicResource Header}"/>
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                                         <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource FromPlanBtn}"/>
                                         <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
