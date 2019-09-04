@@ -90,6 +90,7 @@ namespace ShoppingReminder.ViewModel
             var text = (Entry)obj;
             if (string.IsNullOrEmpty(text.Text))
             {
+                Main.DisplayAlert("Внимание!", "Введите название.", "Ок");
                 return;
             }
             App.Database.SavePlanItem(new Plan(){ Name = text.Text });
@@ -98,13 +99,13 @@ namespace ShoppingReminder.ViewModel
         private async  void DeletePlanItem(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот предмет из списка?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                PlanViewModel temp = (PlanViewModel)obj;
+                App.Database.DeletePlanItem(temp.Id);
+                Back();
             }
-            PlanViewModel temp = (PlanViewModel)obj;
-            App.Database.DeletePlanItem(temp.Id);
-            Back();
+           
         }
         private async void AddToCurrentPurchase(object obj)
         {
@@ -116,12 +117,8 @@ namespace ShoppingReminder.ViewModel
             {
                 directions[i] = dirs[i - 1];
             }
-            var direct = await Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);
-            if (direct == "Отмена")
-            {
-                return;
-            }            
-            else if (direct == directions[0])//к активным
+            var direct = await Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);                       
+            if (direct == directions[0])//к активным
             {
                 PurchaseViewModel purchase = new PurchaseViewModel() { Name = tempPlan.Name,ListVM = Main.activePurchases };
 
@@ -140,7 +137,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 Main.DisplayAlert("", "Добавлено к активному списку", "Ок");
             }
-            else//в группу
+            else if(directions.Any(d => d == direct))//в группу
             {
                 var grIndex = Main.groups.GroupsList.IndexOf(Main.groups.GroupsList.FirstOrDefault(g => g.Name == direct));
                 if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))

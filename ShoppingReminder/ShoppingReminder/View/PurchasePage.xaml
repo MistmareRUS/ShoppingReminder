@@ -10,7 +10,7 @@
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button Text="удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Text="в планы" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource ToPlanBtn}"/>
+                    <Button Text="переместить" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource MoveBtn}"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout>

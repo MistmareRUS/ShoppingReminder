@@ -7,16 +7,25 @@
   <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
-            
-            <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="0" Margin="0" Padding="0">
-                <Label Text="Название: " Style="{DynamicResource Discription}" HorizontalOptions="Start"/>
-                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}"/>
-                <!--<Label Text="{Binding Progress}" HorizontalOptions="End"  Style="{DynamicResource Discription}"/>-->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Text="активировать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
-                </StackLayout>
-            </StackLayout>
+            <Grid RowSpacing="0" Padding="0" Margin="0" MinimumHeightRequest="50">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Название: " Style="{DynamicResource Discription}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"
+                                           Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
+                <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="5"  Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="выбрать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="6" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
+            </Grid>            
             <BoxView Style="{DynamicResource Separator}"/>
             
             <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
@@ -44,13 +53,14 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
+                                        <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Style="{DynamicResource Header}"/>
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Style="{DynamicResource Header}"/>
                                     <Label Text="{Binding Count}" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End" Style="{DynamicResource Discription}"/>
                                     <Label Text="{Binding Units}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource Discription}"/>
-                                    <Button Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>                                    
-                                    <CheckBox IsChecked="{Binding Completed,Mode=TwoWay}" CheckedChanged="CompleteCheckBox_CheckedChanged" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Button Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="3"  Style="{DynamicResource ToPlanBtn}"/>
+                                    <Button Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="5" Style="{DynamicResource DeleteBtn}"/>                                    
+                                    <CheckBox IsChecked="{Binding Completed,Mode=TwoWay}" Scale="1.7" CheckedChanged="CompleteCheckBox_CheckedChanged" Grid.Row="1" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Button Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4"  Style="{DynamicResource MoveBtn}"/>
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>

@@ -60,18 +60,13 @@
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <Style x:Key="ToPlanBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_ToCalendar48.png"/>
+    <Style x:Key="MoveBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Move48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <Style x:Key="FromPlanBtn" TargetType="Button">
-        <Setter Property="ImageSource" Value="Default_FromCalendar48.png"/>
-        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
-        <Setter Property="ContentLayout" Value="Top, 0"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
-    </Style>
+   
     <Style x:Key="DeleteBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Delete48.png"/>
         <Setter Property="TextColor" Value="{StaticResource MainColor}"/>

@@ -35,12 +35,11 @@ namespace ShoppingReminder.ViewModel
         private async void ClearGroups()
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки групп?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                App.Database.ClearGroups();
+                Main.groups.Back();
             }
-            App.Database.ClearGroups();
-            Main.groups.Back();
         }
 
         private async void ClearPhotos()
@@ -58,50 +57,47 @@ namespace ShoppingReminder.ViewModel
             }
             int photoCount = files.Length > 0 ? files.Length : 0;
             var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {photoCount-1}."), "Да", "Нет");//1 вспомогательный файл. не фото.
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                foreach (var item in files)
+                {
+                    File.Delete(item.FullName);
+                }
+                App.Current.Properties["CurrentPhotos"] = null;
+                for (int i = 0; i < App.HistoryOfPurchase.Count; i++)
+                {
+                    var tempHVM = App.HistoryOfPurchase[i];
+                    var tempLOP = App.Database.GetHistoryItem(tempHVM.Id);
+                    tempLOP.Check = "";
+                    App.Database.SaveHistoryItem(tempLOP);
+                }
+                Main.history.Back();
+                Main.activePurchases.Back();
             }            
-            foreach (var item in files)
-            {
-                File.Delete(item.FullName);
-            }
-            App.Current.Properties["CurrentPhotos"] = null;
-            for (int i = 0; i < App.HistoryOfPurchase.Count; i++)
-            {
-                var tempHVM = App.HistoryOfPurchase[i];
-                var tempLOP= App.Database.GetHistoryItem(tempHVM.Id);
-                tempLOP.Check = "";
-                App.Database.SaveHistoryItem(tempLOP);
-            }
-            Main.history.Back();
-            Main.activePurchases.Back();
         }
         private async void ClearPlans()
         {
             var confirm =await Main.DisplayAlert("Внимание!", "Очистить список запланированных покупок?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
-            }
-            App.Database.ClearPlans();
-            App.LoadPlansFromDB();
-            Main.plan.Back();
+                App.Database.ClearPlans();
+                App.LoadPlansFromDB();
+                Main.plan.Back();
+            }            
         }
         private async void ClearHistory()
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки истории?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                foreach (var item in App.HistoryOfPurchase)
+                {
+                    Main.DeletePhotosHelper(item.Check);
+                    App.Database.DeleteHistoryItem(item.Id);
+                }
+                App.HistoryOfPurchase.Clear();
+                Main.history.Back();
             }            
-            foreach (var item in App.HistoryOfPurchase)
-            {
-                Main.DeletePhotosHelper(item.Check);
-                App.Database.DeleteHistoryItem(item.Id);
-            }
-            App.HistoryOfPurchase.Clear();
-            Main.history.Back();
         }
         public void Back()
         {
@@ -132,6 +128,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     //TODO:Новые темы сюда и в перечисление.
                     //передавать цвет как BGColor
+                    //а так же добавлять новый If в Android.BarStyle
                     case Theme.Lavender:
                         mergedDictionaries.Add(new LavenderTheme());
                         DependencyService.Get<IBarStyle>().SetColor("#B9A8D5");
@@ -146,7 +143,8 @@ namespace ShoppingReminder.ViewModel
                         DependencyService.Get<IBarStyle>().SetColor("#067898");
                         break;
                 }
-                App.Current.Properties["CurrentTheme"] = (int)theme;
+                Main.DisplayAlert("Внимание!", "Для полного применения темы необходимо перезапустить приложение.", "Ок.");
+                App.Current.Properties["CurrentTheme"] = (int)theme;                
             }
         }
 

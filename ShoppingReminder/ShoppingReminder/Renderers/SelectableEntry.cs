@@ -6,5 +6,5 @@ namespace ShoppingReminder.Renderers
 {
     public class SelectableEntry:Xamarin.Forms.Entry
     {
-    }
+    }    
 }

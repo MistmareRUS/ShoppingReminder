@@ -11,14 +11,24 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text=" . " Style="{DynamicResource Header}"/>
-                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                        <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource FromPlanBtn}"/>
-                                        <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                                    </StackLayout>
-                                </StackLayout>
+                                <Grid RowSpacing="0" Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="-" Style="{DynamicResource Header}" Grid.Column="0"/>
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Header}" Grid.Column="1" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
+                                        <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Grid.Column="5" Style="{DynamicResource MoveBtn}"/>
+                                        <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Grid.Column="6" Style="{DynamicResource DeleteBtn}"/>                                    
+                                    </Grid>                              
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>

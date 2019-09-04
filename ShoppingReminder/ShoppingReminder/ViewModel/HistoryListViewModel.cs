@@ -35,49 +35,51 @@ namespace ShoppingReminder.ViewModel
         private async void DeletePhotos(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить фотографии прикрепленные к данному сохранению?", "Да", "Нет");
-            if (!confirm)
-                return;
-            var fullPath = obj as string;
-            if (fullPath == null)
+            if (confirm)
             {
-                await Main.DisplayAlert("Внимание!", "Нет фотографий.", "Ок");
-                return;
+                var fullPath = obj as string;
+                if (fullPath == null)
+                {
+                    Main.DisplayAlert("Внимание!", "Нет фотографий.", "Ок");
+                    return;
+                }
+                Main.DeletePhotosHelper(fullPath);
+                HistoryViewModel tempHVM = PurchaseList.FirstOrDefault(p => p.Check == fullPath);
+                ListOfPurchase tempList = new ListOfPurchase
+                {
+                    Id = tempHVM.Id,
+                    Date = tempHVM.Date,
+                    Check = "",
+                    PurchasesList = tempHVM.PurchasesList
+                };
+                App.Database.SaveHistoryItem(tempList);
+                Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
+                Back();
             }
-            Main.DeletePhotosHelper(fullPath);
-            HistoryViewModel tempHVM = PurchaseList.FirstOrDefault(p => p.Check == fullPath);
-            ListOfPurchase tempList = new ListOfPurchase
-            {
-                Id = tempHVM.Id,
-                Date = tempHVM.Date,
-                Check = "",
-                PurchasesList = tempHVM.PurchasesList
-            };
-            App.Database.SaveHistoryItem(tempList);            
-            await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
-            Back();
         }
         private async void DeletePhoto(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить фотографию?", "Да", "Нет");
-            if (!confirm)
-                return;
-            string path = (string)obj;
-            File.Delete(path);
-            HistoryViewModel tempHVM = PurchaseList.FirstOrDefault(p => p.Check.Contains(path));
-            var fullPath = tempHVM.Check;
-            var pathIndex = fullPath.IndexOf(path);
-            var newFullPath = fullPath.Remove(pathIndex, path.Length + 1);
-
-            ListOfPurchase tempList = new ListOfPurchase
+            if (confirm)
             {
-                Id = tempHVM.Id,
-                Date = tempHVM.Date,
-                Check = newFullPath,
-                PurchasesList = tempHVM.PurchasesList
-            };
-            App.Database.SaveHistoryItem(tempList);            
-            await Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
-            Back();
+                string path = (string)obj;
+                File.Delete(path);
+                HistoryViewModel tempHVM = PurchaseList.FirstOrDefault(p => p.Check.Contains(path));
+                var fullPath = tempHVM.Check;
+                var pathIndex = fullPath.IndexOf(path);
+                var newFullPath = fullPath.Remove(pathIndex, path.Length + 1);
+
+                ListOfPurchase tempList = new ListOfPurchase
+                {
+                    Id = tempHVM.Id,
+                    Date = tempHVM.Date,
+                    Check = newFullPath,
+                    PurchasesList = tempHVM.PurchasesList
+                };
+                App.Database.SaveHistoryItem(tempList);
+                Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
+                Back();
+            }
         }
         public void GetPhotos(object obj)
         {
@@ -104,19 +106,19 @@ namespace ShoppingReminder.ViewModel
         private async void DeleteHistoryItem(object obj)
         {
             var confirm = await Main.DisplayAlert("Внимание!", "Удалить данный список из истории покупок?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                var index = (int)obj;
+                var item = App.HistoryOfPurchase.FirstOrDefault(h => h.Id == index);
+                Main.DeletePhotosHelper(item.Check);
+                var result = App.Database.DeleteHistoryItem(index);
+                if (result == 0)
+                {
+                    Main.DisplayAlert("Внимание!", "Произошла ошибка при удалении", "ОК");
+                }
+                Back();
             }
-            var index = (int)obj;
-            var item = App.HistoryOfPurchase.FirstOrDefault(h => h.Id == index);
-            Main.DeletePhotosHelper(item.Check);
-            var result=App.Database.DeleteHistoryItem(index);
-            if (result == 0)
-            {
-                await Main.DisplayAlert("Внимание!","Произошла ошибка при удалении","ОК");
-            }
-            Back();
+            
         }
         HistoryViewModel selectedPurchaseList;
         public HistoryViewModel SelectedPurchaseList

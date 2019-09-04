@@ -61,14 +61,14 @@
                                     <Button Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Grid.Row="1" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>
                                     <Button Grid.Row="0" Grid.Column="5" Command="{Binding ListVM.UpPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource UpBtn}"/>
                                     <Button Grid.Row="1" Grid.Column="5" Command="{Binding ListVM.DownPurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DownBtn}"/>
-                                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" Style="{DynamicResource ToPlanBtn}"/>
+                                    <Button Grid.Row="1" Grid.Column="2" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" Style="{DynamicResource MoveBtn}"/>
                                 </Grid>                                
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <BoxView Style="{DynamicResource Separator}"/>
+            <BoxView Style="{DynamicResource Separator}"/>            
             <StackLayout Spacing="0" Margin="0" Padding="0">
                 <Button Text="добавить" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>

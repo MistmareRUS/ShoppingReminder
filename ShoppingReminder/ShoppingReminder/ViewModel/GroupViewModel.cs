@@ -112,36 +112,37 @@ namespace ShoppingReminder.ViewModel
         private  async void ClearGroup(object obj)
         {
             var confirm = await ListVM.Main.DisplayAlert("Внимание!", "Очистить текущий список покупок", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                GroupViewModel groupVM = obj as GroupViewModel;
+                ListVM.ActiveGroup = groupVM;
+                ListVM.ActiveGroup.Group.PurchasesList.Clear();
+                ListVM.ActiveGroup.PurchasesList.Clear();
+                ListVM.ActiveGroup.Purchases.Clear();
+                App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
+                ListVM.BackToList();
             }
-            GroupViewModel groupVM = obj as GroupViewModel;
-            ListVM.ActiveGroup = groupVM;
-            ListVM.ActiveGroup.Group.PurchasesList.Clear();
-            ListVM.ActiveGroup.PurchasesList.Clear();
-            ListVM.ActiveGroup.Purchases.Clear();
-            App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
-            ListVM.BackToList();
+            
         }
         private async void MoveItem(object obj)
         {
             var item = (GroupItemViewModel)obj;
-            var dirs = ListVM.GroupsList.Where(g=>g.Name!=ListVM.ActiveGroup.Name&&g.Name!= "Без названия").Select(g => g.Name).ToArray();
+            if (string.IsNullOrEmpty(item.Name))
+            {
+               ListVM.Main.DisplayAlert("Внимание!", "Заполните название.", "Ок");
+               return;
+            }
+            var dirs = ListVM.GroupsList.Where(g => g.Name != ListVM.ActiveGroup.Name && g.Name != "Без названия").Select(g => g.Name).ToArray();
             string[] directions = new string[dirs.Length + 2];
-            directions[0]= "В активный список";
+            directions[0] = "В активный список";
             for (int i = 1; i <= dirs.Length; i++)
             {
                 directions[i] = dirs[i - 1];
             }
             directions[directions.Length - 1] = "В планы";
 
-            var direct = await ListVM.Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null,directions);
-            if (direct == "Отмена")
-            {
-                return;
-            }
-            else if (direct == directions[directions.Length - 1])//в планы
+            var direct = await ListVM.Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);           
+            if (direct == directions[directions.Length - 1])//в планы
             {
                 App.Database.SavePlanItem(new Plan() { Name = item.Name });
                 ListVM.Main.plan.Back();
@@ -166,7 +167,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 ListVM.Main.DisplayAlert("", "Добавлено к активному списку", "Ок");
             }
-            else
+            else if(directions.Any(d=>d==direct))
             {
                 var grIndex = ListVM.GroupsList.IndexOf(ListVM.GroupsList.FirstOrDefault(g => g.Name == direct));
                 if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == direct.ToLower())    )
@@ -184,12 +185,12 @@ namespace ShoppingReminder.ViewModel
         private async void DeleteGroupItem(object obj)
         {
             var confirm = await ListVM.Main.DisplayAlert("Внимание!", "Удалить из списка?", "Да", "Нет");
-            if (!confirm)
+            if (confirm)
             {
-                return;
+                var item = (GroupItemViewModel)obj;
+                DeleteItem(item);
             }
-            var item = (GroupItemViewModel)obj;
-            DeleteItem(item);
+            
             
         }
         void DeleteItem(GroupItemViewModel item)

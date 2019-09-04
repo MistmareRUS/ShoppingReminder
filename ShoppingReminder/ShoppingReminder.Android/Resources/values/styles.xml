@@ -11,26 +11,55 @@
     <item name="windowActionBar">false</item>
     <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">#2196F3</item>
+    <item name="colorPrimary">#2196F3</item>        <!-- Цвет заголовка при выборе из нескольких окон приложений  -->
     <!-- colorPrimaryDark is used for the status bar -->
     <item name="colorPrimaryDark">#1976D2</item>                                  
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#FFDE40</item>                                    <!--  цвет ОКеев и чекбоксов -->
+    <item name="colorAccent">#7109AA</item>                                    <!--  цвет ОКеев и чекбоксов -->
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
+  
+  <style name="MainTheme.Standart" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:windowBackground">@drawable/test</item>
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="colorPrimary">#39ABCC</item> 
+    <item name="colorPrimaryDark">#6F0AAB</item> 
+    <item name="colorAccent">#39ABCC</item>
+    <item name="windowActionModeOverlay">true</item>
+    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+  </style>
 
+  <style name="MainTheme.Lavender" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:windowBackground">@drawable/test</item>
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="colorPrimary">#8D7BAB</item>
+    <item name="colorPrimaryDark">#6F0AAB</item>
+    <item name="colorAccent">#8D7BAB</item>
+    <item name="windowActionModeOverlay">true</item>
+    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+  </style>
+  
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#00CC00</item>
   </style>
   
   <style name="Theme.Splash" parent="android:Theme">    
     <item name="android:windowContentOverlay">@drawable/Icon100</item>
     <item name="android:windowNoTitle">true</item>
+  </style>
+  
+  <style name="MainTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowNoTitle">true</item>  
+    <item name="android:windowFullscreen">true</item>  
+    <item name="android:windowContentOverlay">@null</item>  
+    <item name="android:windowActionBar">true</item>  
   </style>
   
 </resources>
