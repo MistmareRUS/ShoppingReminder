@@ -84,12 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarStyle.cs" />
+    <Compile Include="Dependecies\RareApp.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyWebViewRenderer.cs" />
     <Compile Include="Renderers\AdMobViewRenderer.cs" />
     <Compile Include="Renderers\SelectableEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SplashScreen.cs" />
     <Compile Include="SQLite_Android.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +119,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dependecies\" />
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
@@ -240,18 +241,6 @@
     <AndroidResource Include="Resources\drawable\Lavender_SetList48.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Lavender_FIPlan.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Lavender_FISettings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Lavender_FIMain.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Lavender_FIHistory.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\Lavender_BG300.png" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +254,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Default_FIGroup48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\spl.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\star48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

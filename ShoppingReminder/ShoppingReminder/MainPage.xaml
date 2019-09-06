@@ -125,5 +125,6 @@
                 </ContentPage>
             </ShellContent>
         </Tab>        
-    </FlyoutItem>    
+    </FlyoutItem>
+    <MenuItem Text="Оценить приложение" Command="{Binding RateAppCommand}" IconImageSource="star48"/>
 </Shell>

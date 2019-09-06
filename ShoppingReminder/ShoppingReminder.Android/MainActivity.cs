@@ -1,20 +1,23 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Util;
 using Plugin.CurrentActivity;
 using Plugin.Settings;
+using ShoppingReminder.Droid.Dependecies;
 
 [assembly: UsesFeature("android.hardware.camera", Required = false)]
 [assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
 namespace ShoppingReminder.Droid
 {
-    [Activity(Label = "Shopping Reminder", Icon = "@drawable/icon100",  MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize,
+    [Activity(Label = "Shopping Reminder", Icon = "@drawable/icon100",  MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize,
         ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             BarStyle.ma = this;
+            RateApp.ma = this;
             SetTheme(CrossSettings.Current.GetValueOrDefault("ThemeId", Resource.Style.MainTheme_Standart));  
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -24,7 +27,6 @@ namespace ShoppingReminder.Droid
             CrossCurrentActivity.Current.Init(this, savedInstanceState);//камера
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
-            
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
@@ -38,6 +40,6 @@ namespace ShoppingReminder.Droid
             else
             {
             }
-        }
+        }        
     }
 }

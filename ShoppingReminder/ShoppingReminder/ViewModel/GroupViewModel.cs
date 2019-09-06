@@ -160,7 +160,9 @@ namespace ShoppingReminder.ViewModel
                 }
                 App.CurrentPurchases.Add(purchase);
                 ListVM.Main.activePurchases.Back();
-                DeleteItem(item);
+                
+                    DeleteItem(item);
+
                 if (App.CurrentPurchases.Any(p => p.Completed))
                 {
                     ((Tab)(ListVM.Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
@@ -195,9 +197,14 @@ namespace ShoppingReminder.ViewModel
         }
         void DeleteItem(GroupItemViewModel item)
         {
-            ListVM.ActiveGroup.Group.PurchasesList.Remove(ListVM.ActiveGroup.Group.PurchasesList.FirstOrDefault(p => p.Name == item.Name));
-            ListVM.ActiveGroup.Purchases.Remove(ListVM.ActiveGroup.Purchases.FirstOrDefault(p => p.Name == item.Name));
-            App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
+            var purch = ListVM.ActiveGroup.Group.PurchasesList!=null? ListVM.ActiveGroup.Group.PurchasesList.FirstOrDefault(p => p.Name == item.Name):null;
+            var givm = ListVM.ActiveGroup.Purchases!=null? ListVM.ActiveGroup.Purchases.FirstOrDefault(p => p.Name == item.Name):null;
+            if (purch!=null&&givm!=null)
+            {
+                ListVM.ActiveGroup.Group.PurchasesList.Remove(purch);
+                ListVM.ActiveGroup.Purchases.Remove(givm);
+                App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
+            }
             ListVM.BackToList();
         }
 
@@ -208,6 +215,13 @@ namespace ShoppingReminder.ViewModel
             if (ListVM.ActiveGroup.Id != 0)
             {
                 App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
+            }
+            else
+            {
+                App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
+                var allGroups= App.Database.GetGroupItems();
+                ListVM.ActiveGroup.Id = allGroups[allGroups.Count - 1].Id;
+                ListVM.GroupsList.Add(ListVM.ActiveGroup);
             }
         }
 
@@ -252,19 +266,19 @@ namespace ShoppingReminder.ViewModel
                 }
                 
                 App.Database.SaveGroupItem(Group);//сохраняет эту группу в БД
-            }
-            if (needToSave)
-            {
-                ListVM.Back();
-                ListVM.ActiveGroup = ListVM.GroupsList[ListVM.GroupsList.Count - 1];
-                ListVM.ActiveGroup.Purchases = new List<GroupItemViewModel>();
-                foreach (var groupIVM in ListVM.ActiveGroup.Group.PurchasesList)
+                if (needToSave)
                 {
-                    ListVM.ActiveGroup.Purchases.Add(ListVM.PurchasesToGIVMConverter(groupIVM));
+                    ListVM.Back();
+                    ListVM.ActiveGroup = ListVM.GroupsList[ListVM.GroupsList.Count - 1];
+                    ListVM.ActiveGroup.Purchases = new List<GroupItemViewModel>();
+                    foreach (var groupIVM in ListVM.ActiveGroup.Group.PurchasesList)
+                    {
+                        ListVM.ActiveGroup.Purchases.Add(ListVM.PurchasesToGIVMConverter(groupIVM));
+                    }
                 }
             }
             ListVM.BackToList();
-        }
+        }        
         public void CompleteToggled(GroupItemViewModel givm)
         {
             Group = ListVM.ActiveGroup.Group;

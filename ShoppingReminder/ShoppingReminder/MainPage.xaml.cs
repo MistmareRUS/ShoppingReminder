@@ -29,10 +29,21 @@ namespace ShoppingReminder
         public SettingsViewModel settings;
         public GroupListViewModel groups;
 
+        private ICommand rateAppCommand;
+        public ICommand RateAppCommand
+        {
+            get { return this.rateAppCommand; }
+            set
+            {
+                this.rateAppCommand = value;
+            }
+        }
+
         public MainPage()
         {
             InitializeComponent();
-            
+            RateAppCommand = new Command(RateApp);
+            BindingContext = this;
             CurrentPurchasesStackLayout = CurrentStack;
             CompletedPurchasesStackLayout = CompletetCurrentStack;
             HistoryStackLayout = HistoryStack;
@@ -41,13 +52,22 @@ namespace ShoppingReminder
             SettingsStackLayout = SettingsStack;
             GroupStackLayout = GroupStack;
             NameLabel.FontFamily = Device.RuntimePlatform == Device.Android ? "jakobextractt.ttf#JacobExtraCTT" : "Assets/jakobextractt.ttf#JacobExtraCTT";//убрать в XAML
-
             activePurchases = new PurchaseListViewModel(this);
             plan = new PlanListViewModel(this);
             history = new HistoryListViewModel(this);
             settings = new SettingsViewModel(this);
             groups = new GroupListViewModel(this);
         }
+
+        private async   void RateApp()
+        {
+            var confirm=await DisplayAlert("Внимание!", "Вы можете оценить приложение. Это поможет его продвижению.", "Оценить","Позже");
+            if (confirm)
+            {
+                DependencyService.Get<IRareApp>().Rate();
+            }
+        }
+
         protected override bool OnBackButtonPressed()
         {
             if (Shell.Current.CurrentItem.Title == "Текущая покупка")
@@ -66,7 +86,7 @@ namespace ShoppingReminder
             {
                 settings.Back();
             }
-            else if (Shell.Current.CurrentItem.Title == "Группы")//TODO: название
+            else if (Shell.Current.CurrentItem.Title == "Группы")
             {
                 if (GroupStackLayout.Children[0].ClassId == "ItemPage")
                 {

@@ -2,6 +2,7 @@
 using ShoppingReminder.Repository;
 using ShoppingReminder.ViewModel;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -35,16 +36,16 @@ namespace ShoppingReminder
         
         public App()
         {
-            InitializeComponent();
+            InitializeComponent();                   
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
             HistoryOfPurchase = Database.GetHistoryItems();
             Groups = Database.GetGroupItems();
-            MainPage = MP = new MainPage();
+            MainPage = MP = new MainPage(); 
         }
-
+        
         protected override void OnStart()
-        {
+        {           
         }
         protected override void OnSleep()
         {
@@ -103,7 +104,6 @@ namespace ShoppingReminder
                 };
                 CurrentPurchases.Add(temp);
             }
-        }
-        
+        }       
     }
 }

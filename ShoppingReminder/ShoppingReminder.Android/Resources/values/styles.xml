@@ -49,17 +49,12 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#00CC00</item>
   </style>
-  
-  <style name="Theme.Splash" parent="android:Theme">    
-    <item name="android:windowContentOverlay">@drawable/Icon100</item>
-    <item name="android:windowNoTitle">true</item>
-  </style>
-  
-  <style name="MainTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:windowNoTitle">true</item>  
-    <item name="android:windowFullscreen">true</item>  
-    <item name="android:windowContentOverlay">@null</item>  
-    <item name="android:windowActionBar">true</item>  
+
+  <style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/spl</item>
+    <item name="android:windowNoTitle">false</item>
+    <item name="android:windowFullscreen">false</item>
+    <item name="android:windowAnimationStyle">@null</item>    
   </style>
   
 </resources>

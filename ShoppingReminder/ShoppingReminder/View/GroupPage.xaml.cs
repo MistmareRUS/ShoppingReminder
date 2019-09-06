@@ -22,7 +22,7 @@ namespace ShoppingReminder.View
         {
             var entry = (SelectableEntry)sender;
             if (entry.Text != string.Empty && entry.Text != ListVM.ListVM.ActiveGroup.Name)
-            {
+            {                
                 ListVM.NameChange(entry.Text);
             }
             else
