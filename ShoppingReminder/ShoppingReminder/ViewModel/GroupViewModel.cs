@@ -116,9 +116,8 @@ namespace ShoppingReminder.ViewModel
             {
                 GroupViewModel groupVM = obj as GroupViewModel;
                 ListVM.ActiveGroup = groupVM;
-                ListVM.ActiveGroup.Group.PurchasesList.Clear();
-                ListVM.ActiveGroup.PurchasesList.Clear();
-                ListVM.ActiveGroup.Purchases.Clear();
+                ListVM.ActiveGroup.PurchasesList=new List<Purchase>();
+                ListVM.ActiveGroup.Purchases = new List<GroupItemViewModel>();
                 App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
                 ListVM.BackToList();
             }
@@ -172,7 +171,11 @@ namespace ShoppingReminder.ViewModel
             else if(directions.Any(d=>d==direct))
             {
                 var grIndex = ListVM.GroupsList.IndexOf(ListVM.GroupsList.FirstOrDefault(g => g.Name == direct));
-                if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == direct.ToLower())    )
+                if (ListVM.GroupsList[grIndex].PurchasesList==null)
+                {
+                    ListVM.GroupsList[grIndex].PurchasesList = new List<Purchase>();
+                }
+                else if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == direct.ToLower())    )
                 {
                     ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
                     return;
@@ -180,6 +183,7 @@ namespace ShoppingReminder.ViewModel
                 ListVM.GroupsList[grIndex].PurchasesList.Add(new Purchase() { Name = item.Name, Count = item.Count, Completed = item.Completed, Units = item.Units });
                 App.Database.SaveGroupItem(ListVM.GroupsList[grIndex].Group);
                 DeleteItem(item);
+                ListVM.Main.DisplayAlert("", $"Перемещено в группу {direct}", "Ок");
                 ListVM.BackToList();
             }
         }
@@ -218,9 +222,12 @@ namespace ShoppingReminder.ViewModel
             }
             else
             {
+
                 App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
                 var allGroups= App.Database.GetGroupItems();
                 ListVM.ActiveGroup.Id = allGroups[allGroups.Count - 1].Id;
+                //ListVM.ActiveGroup.PurchasesList = new List<Purchase>();
+                //ListVM.ActiveGroup.Purchases = new List<GroupItemViewModel>();
                 ListVM.GroupsList.Add(ListVM.ActiveGroup);
             }
         }

@@ -91,8 +91,8 @@ namespace ShoppingReminder.ViewModel
             var confirm = await Main.DisplayAlert("Внимание!", "Сделать данную группу активным списком?", "Да", "Нет");
             if (confirm)
             {
-                var group = (GroupViewModel)obj;
-                if (group.PurchasesList.Count < 1)
+                var group = obj as GroupViewModel;                
+                if (group == null || group.PurchasesList == null||group.PurchasesList.Count < 1)
                 {
                     Main.DisplayAlert("Внимание!", "Список пуст. Оперция отменена.", "ОК");
                     return;
@@ -133,6 +133,10 @@ namespace ShoppingReminder.ViewModel
                     {
                         ActivateHelper(group);
                     }
+                }
+                else
+                {
+                    ActivateHelper(group);
                 }
             }
         }

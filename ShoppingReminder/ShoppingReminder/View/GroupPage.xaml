@@ -7,25 +7,12 @@
   <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
-            <Grid RowSpacing="0" Padding="0" Margin="0" MinimumHeightRequest="50">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions >
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Text="Название: " Style="{DynamicResource Discription}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"
-                                           Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
-                <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="5"  Style="{DynamicResource DeleteBtn}"/>
-                <Button Text="выбрать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" Grid.Row="0" Grid.Column="6" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
-            </Grid>            
+            <StackLayout Orientation="Horizontal" Padding="0" Margin="0" Spacing="0">                
+            
+                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
+                <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="выбрать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
+            </StackLayout>
             <BoxView Style="{DynamicResource Separator}"/>
             
             <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">

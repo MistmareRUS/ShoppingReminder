@@ -125,8 +125,7 @@
         <Setter Property="FontSize" Value="Large"/>
         <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>
-        <Setter Property="HorizontalTextAlignment" Value="Center"/>
-        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        
     </Style>
     <Style x:Key="Discription" TargetType="Label">
         <Setter Property="FontSize" Value="Medium"/>

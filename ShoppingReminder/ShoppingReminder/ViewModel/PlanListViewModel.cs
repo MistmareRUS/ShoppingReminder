@@ -140,7 +140,11 @@ namespace ShoppingReminder.ViewModel
             else if(directions.Any(d => d == direct))//в группу
             {
                 var grIndex = Main.groups.GroupsList.IndexOf(Main.groups.GroupsList.FirstOrDefault(g => g.Name == direct));
-                if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
+                if (Main.groups.GroupsList[grIndex].PurchasesList == null)
+                {
+                    Main.groups.GroupsList[grIndex].PurchasesList = new List<Purchase>();
+                }
+                else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
                 {
                     Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
                     return;

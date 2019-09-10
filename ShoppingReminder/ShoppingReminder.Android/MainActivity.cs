@@ -5,6 +5,7 @@ using Android.Util;
 using Plugin.CurrentActivity;
 using Plugin.Settings;
 using ShoppingReminder.Droid.Dependecies;
+using System;
 
 [assembly: UsesFeature("android.hardware.camera", Required = false)]
 [assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
@@ -23,8 +24,7 @@ namespace ShoppingReminder.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);//плагин для диалоговых окон с вводом текста
-            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-5542764698208489~2621881069");// мой ID рекламы
-            CrossCurrentActivity.Current.Init(this, savedInstanceState);//камера
+            Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-5542764698208489~2621881069");// мой ID рекламы            
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
