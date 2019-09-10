@@ -260,7 +260,7 @@ namespace ShoppingReminder.ViewModel
                 if (App.CurrentPurchases.Any(p => !p.Completed))
                 {
                     notAllCompleted = "Отмена";//значение, на случай нажатия бэк-кнопки при диалоговом окошке
-                    notAllCompleted = await Main.DisplayActionSheet("Не все покупки завершенны. Какие из них сохранить?", "Отмена", null,
+                    notAllCompleted = await Main.DisplayActionSheet("Не все покупки завершены. Какие из них сохранить?", "Отмена", null,
                                                                         "Сохранить только завершенные", "Сохранить все", "Сохранить завершенные, а оставшиеся перенести на следующую покупку.");
                 }
                 if (notAllCompleted == null||notAllCompleted == "Отмена")

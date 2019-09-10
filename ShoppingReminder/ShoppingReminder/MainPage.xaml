@@ -7,7 +7,7 @@
     <Shell.FlyoutHeader>
         <StackLayout Orientation="Horizontal" Style="{DynamicResource FlyoutHeader}">
             <Image Source="Icon100.png"/>
-            <Label x:Name="NameLabel" Text="Shopping Reminder" FontSize="Title"  
+            <Label x:Name="NameLabel" Text="Shopping Reminder" FontSize="Title"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
                    TextColor="#FFEE00"/>
         </StackLayout>
        
