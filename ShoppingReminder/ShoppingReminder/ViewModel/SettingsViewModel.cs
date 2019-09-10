@@ -29,6 +29,10 @@ namespace ShoppingReminder.ViewModel
             {
                 SetTheme((Theme)themeNumber);
             }
+            else
+            {
+                SetTheme(Theme.Standart);
+            }
             Back();
         }
 
