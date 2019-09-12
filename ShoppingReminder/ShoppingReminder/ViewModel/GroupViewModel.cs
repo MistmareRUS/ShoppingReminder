@@ -128,25 +128,43 @@ namespace ShoppingReminder.ViewModel
             var item = (GroupItemViewModel)obj;
             if (string.IsNullOrEmpty(item.Name))
             {
-               ListVM.Main.DisplayAlert("Внимание!", "Заполните название.", "Ок");
-               return;
+                await ListVM.Main.DisplayAlert("Внимание!", "Заполните название.", "Ок");
+                return;
             }
             var dirs = ListVM.GroupsList.Where(g => g.Name != ListVM.ActiveGroup.Name && g.Name != "Без названия").Select(g => g.Name).ToArray();
-            string[] directions = new string[dirs.Length + 2];
+            string[] directions = new string[dirs.Length + 3];
             directions[0] = "В активный список";
             for (int i = 1; i <= dirs.Length; i++)
             {
                 directions[i] = dirs[i - 1];
             }
-            directions[directions.Length - 1] = "В планы";
+            directions[directions.Length - 2] = "В планы";
+            directions[directions.Length - 1] = "Отправить";
 
-            var direct = await ListVM.Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);           
-            if (direct == directions[directions.Length - 1])//в планы
+            var direct = await ListVM.Main.DisplayActionSheet($"Переместить \"{item.Name}\" в ...", "Отмена", null, directions);
+            if (direct == directions[directions.Length - 2])//в планы
             {
                 App.Database.SavePlanItem(new Plan() { Name = item.Name });
                 ListVM.Main.plan.Back();
                 DeleteItem(item);
-                ListVM.Main.DisplayAlert("", "Перемещено в планы", "Ок");
+                await ListVM.Main.DisplayAlert("", "Перемещено в планы", "Ок");
+            }
+            else if (direct == directions[directions.Length - 1])//отправка по сети
+            {
+                try
+                {
+                    ListVM.Main.SharePurchases(new Purchase[] { new Purchase {Name=item.Name,Count=item.Count,Units=item.Units }  });
+                }
+                catch
+                {
+                    await ListVM.Main.DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                    return;
+                }
+                bool clear = await ListVM.Main.DisplayAlert("Внимание!", $"Удалить \"{item.Name}\" из списка?", "Ок", "Отмена");
+                if (clear)
+                {
+                    DeleteItem(item);
+                }
             }
             else if (direct == directions[0])//к активным
             {
@@ -154,19 +172,19 @@ namespace ShoppingReminder.ViewModel
 
                 if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
                 {
-                    ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                    await ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
                     return;
                 }
                 App.CurrentPurchases.Add(purchase);
                 ListVM.Main.activePurchases.Back();
                 
-                    DeleteItem(item);
+                DeleteItem(item);
 
                 if (App.CurrentPurchases.Any(p => p.Completed))
                 {
                     ((Tab)(ListVM.Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
                 }
-                ListVM.Main.DisplayAlert("", "Добавлено к активному списку", "Ок");
+                await ListVM.Main.DisplayAlert("", "Добавлено к активному списку", "Ок");
             }
             else if(directions.Any(d=>d==direct))
             {
@@ -177,7 +195,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 else if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == direct.ToLower())    )
                 {
-                    ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                    await ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
                     return;
                 }
                 ListVM.GroupsList[grIndex].PurchasesList.Add(new Purchase() { Name = item.Name, Count = item.Count, Completed = item.Completed, Units = item.Units });

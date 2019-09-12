@@ -24,12 +24,16 @@ namespace ShoppingReminder.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);//плагин для диалоговых окон с вводом текста
             Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, "ca-app-pub-5542764698208489~2621881069");// мой ID рекламы   
             CrossCurrentActivity.Current.Init(this, savedInstanceState);//камера
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);//Share
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App((int)(Android.OS.Build.VERSION.SdkInt)));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
         public override void OnBackPressed()
         {

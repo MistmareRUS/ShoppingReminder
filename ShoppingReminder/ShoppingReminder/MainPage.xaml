@@ -126,5 +126,6 @@
             </ShellContent>
         </Tab>        
     </FlyoutItem>
+    <MenuItem Text="Ввести присланный список" Command="{Binding ReceivePurcasesCommand}" IconImageSource="star48"/>
     <MenuItem Text="Оценить приложение" Command="{Binding RateAppCommand}" IconImageSource="star48"/>
 </Shell>

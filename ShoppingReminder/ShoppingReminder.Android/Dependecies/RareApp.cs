@@ -18,7 +18,7 @@ namespace ShoppingReminder.Droid.Dependecies
             {
                 ma.StartActivity(myAppLinkToMarket);
             }
-            catch (ActivityNotFoundException e)
+            catch
             {
                 Toast.MakeText(ma, " Не получилось открыть маркет!",ToastLength.Long).Show();
             }

@@ -8,7 +8,8 @@ using System;
 using System.IO;
 using System.Windows.Input;
 using Xamarin.Forms;
-
+using Xamarin.Essentials;
+using System.Text;
 
 namespace ShoppingReminder
 {
@@ -38,11 +39,24 @@ namespace ShoppingReminder
                 this.rateAppCommand = value;
             }
         }
+        private ICommand receivePurcasesCommand;
+        public ICommand ReceivePurcasesCommand
+        {
+            get
+            {
+                return this.receivePurcasesCommand;
+            }
+            set
+            {
+                this.receivePurcasesCommand = value;
+            }
+        }
 
         public MainPage()
         {
             InitializeComponent();
             RateAppCommand = new Command(RateApp);
+            ReceivePurcasesCommand = new Command(ReceivePurcases);
             BindingContext = this;
             CurrentPurchasesStackLayout = CurrentStack;
             CompletedPurchasesStackLayout = CompletetCurrentStack;
@@ -57,6 +71,13 @@ namespace ShoppingReminder
             history = new HistoryListViewModel(this);
             settings = new SettingsViewModel(this);
             groups = new GroupListViewModel(this);
+        }
+
+        private async void ReceivePurcases()
+        {
+            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
+            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Отмена";
+            var receiveString = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Вставьте полученое от другого пользователя скопированное сообщение:");
         }
 
         private async   void RateApp()
@@ -251,6 +272,22 @@ namespace ShoppingReminder
         {
             Shell.Current.FlyoutIsPresented = true; 
         }        
+        public async void SharePurchases(Purchase[] purchases )
+        {
+            StringBuilder message = new StringBuilder();
+            message.AppendLine("Привет! Нужно купить:");
+            foreach (var item in purchases)
+            {
+                message.AppendLine($"- {item.Name} {(item.Count==0?"":item.Count.ToString())} {item.Units}");
+            }
+            message.Append("*Это сообщение отправлено из приложения ShoppingRemnder. Его можно скопировать и вставить в хреновину*");
+
+            await Share.RequestAsync(new ShareTextRequest
+            {                
+                Text=message.ToString(),
+                Subject="Тема, типа"
+            });
+        }
     }
     
     

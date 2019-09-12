@@ -11,6 +11,7 @@
             
                 <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
                 <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="передать"  Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}"/>
                 <Button Text="выбрать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
             </StackLayout>
             <BoxView Style="{DynamicResource Separator}"/>

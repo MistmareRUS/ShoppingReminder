@@ -23,7 +23,7 @@ namespace ShoppingReminder.View
             Picker picker = sender as Picker;
             Theme theme = (Theme)picker.SelectedItem;
             viewModel.SetTheme(theme);
-        }        
+        }
     }
     class EnumPicker : Picker
     {

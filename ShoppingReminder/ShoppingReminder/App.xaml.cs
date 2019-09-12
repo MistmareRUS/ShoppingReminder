@@ -34,13 +34,13 @@ namespace ShoppingReminder
         public static List<GroupViewModel> Groups { get; set; }
         MainPage MP;
         
-        public App()
+        public App(int OSVersion)
         {
             InitializeComponent();                   
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();
             HistoryOfPurchase = Database.GetHistoryItems();
-            Groups = Database.GetGroupItems();
+            Groups = Database.GetGroupItems();            
             MainPage = MP = new MainPage(); 
         }
         

@@ -10,6 +10,7 @@
                 <Button Text="фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button Text="очистить"  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="передать"  Command="{Binding SharePurchasesCommand}" Style="{DynamicResource ShareBtn}"/>
                     <Button Text="завершить" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
                 </StackLayout>
             </StackLayout>

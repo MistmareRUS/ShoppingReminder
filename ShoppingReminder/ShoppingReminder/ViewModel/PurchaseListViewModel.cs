@@ -25,6 +25,7 @@ namespace ShoppingReminder.ViewModel
         public ICommand TakePhotoCommand { get; protected set; }
         public ICommand DeletePhotoCommand { get; protected set; }
         public ICommand DeletePhotosCommand { get; protected set; }
+        public ICommand SharePurchasesCommand { get; protected set; }
         public IEnumerable<PurchaseViewModel> Purchases => App.CurrentPurchases.Where(p => !p.Completed);
         public IEnumerable<PurchaseViewModel> CompletedPurchases => App.CurrentPurchases.Where(p => p.Completed);
         public MainPage Main;
@@ -46,6 +47,7 @@ namespace ShoppingReminder.ViewModel
             DeletePhotoCommand = new Command(DeletePhoto);
             DeletePhotosCommand = new Command(DeletePhotos);
             UnmarkAsCompletedPurchaseCommand = new Command(UnmarkAsCompletedPurchase);
+            SharePurchasesCommand = new Command(SharePurchases);
 
             foreach (var item in App.CurrentPurchases)
             {
@@ -53,6 +55,42 @@ namespace ShoppingReminder.ViewModel
             }
             Back();
         }
+
+        private async void SharePurchases()
+        {
+            if (App.CurrentPurchases.Count > 0)
+            {
+                var confirm = await Main.DisplayAlert("Внимание", "Поделиться текущим списком покупок?", "Да", "Нет");
+                if (confirm)
+                {
+                    Purchase[] sendingPurchases = new Purchase[App.CurrentPurchases.Count];
+                    for (int i = 0; i < App.CurrentPurchases.Count; i++)
+                    {
+                        sendingPurchases[i] = new Purchase { Name = App.CurrentPurchases[i].Name, Count = App.CurrentPurchases[i].Count, Units = App.CurrentPurchases[i].Units };
+                    }
+                    try
+                    {
+                        Main.SharePurchases(sendingPurchases);
+                    }
+                    catch
+                    {
+                        await Main.DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                        return;
+                    }
+                    bool clear = await Main.DisplayAlert("Внимание!", "Очистить текущий список покупок?", "Ок", "Отмена");
+                    if (clear)
+                    {
+                        ClearPurchase();
+                    }
+                }
+            }
+            else
+            {
+                Main.DisplayAlert("Внимание!", "Список товаров пуст", "Ок");
+                return;
+            }
+        }
+
         private void UnmarkAsCompletedPurchase(object obj)
         {
             PurchaseViewModel purchase = obj as PurchaseViewModel;
@@ -138,26 +176,45 @@ namespace ShoppingReminder.ViewModel
             PurchaseViewModel tempPurchase = obj as PurchaseViewModel;
             if (string.IsNullOrEmpty(tempPurchase.Name))
             {
-                Main.DisplayAlert("Внимание!", "Заполните название.", "Ок");
+                await Main.DisplayAlert("Внимание!", "Заполните название.", "Ок");
                 return;
             }
             var dirs = Main.groups.GroupsList.Where(g => g.Name != "Без названия").Select(g => g.Name).ToArray();
-            string[] directions = new string[dirs.Length + 1];
+            string[] directions = new string[dirs.Length + 2];
             for (int i = 0; i < dirs.Length; i++)
             {
                 directions[i] = dirs[i];
             }
-            directions[directions.Length - 1] = "В планы";
+            directions[directions.Length - 2] = "В планы";            
+            directions[directions.Length - 1] = "Поделиться";
 
-            var direct = await Main.DisplayActionSheet("Переместить элемент в ...", "Отмена", null, directions);            
-            if (direct == directions[directions.Length - 1])//в планы
+            var direct = await Main.DisplayActionSheet($"Переместить \"{tempPurchase.Name}\" в ...", "Отмена", null, directions);            
+            if (direct == directions[directions.Length - 2])//в планы
             {
                 App.Database.SavePlanItem(new Plan() { Name = tempPurchase.Name });
                 Main.plan.Back();                
                 App.CurrentPurchases.Remove(tempPurchase);
                 Main.DisplayAlert("", "Перемещено в планы", "Ок");
                 Back();
-            }            
+            }  
+            else if(direct== directions[directions.Length - 1])//отправка по сети
+            {
+                try
+                {
+                    Main.SharePurchases(new Purchase[] { tempPurchase.Purchase });
+                }
+                catch
+                {
+                    await Main.DisplayAlert("Внимание!","Кажется, ваше устройство не поддерживает эту функцию.","Ок");
+                    return;
+                }
+                bool clear = await Main.DisplayAlert("Внимание!",$"Удалить \"{tempPurchase.Name}\" из списка?","Ок","Отмена");
+                if (clear)
+                {
+                    App.CurrentPurchases.Remove(tempPurchase);
+                    Back();
+                }
+            }
             else if(directions.Any(d => d == direct))
             {
                 var grIndex = Main.groups.GroupsList.IndexOf(Main.groups.GroupsList.FirstOrDefault(g => g.Name == direct));
@@ -167,7 +224,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
                 {
-                    Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
+                    await Main.DisplayAlert("Внимание!", $"\"{tempPurchase.Name}\" уже имеется в списке.", "Ok");
                     return;
                 }
                 Main.groups.GroupsList[grIndex].PurchasesList.Add(new Purchase() { Name = tempPurchase.Name, Count = tempPurchase.Count, Completed = tempPurchase.Completed, Units = tempPurchase.Units });
@@ -250,7 +307,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     if (GetCurrentPhotoString() == null)
                     {
-                        Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков для сохранения. Сохранение невозможно.", "Ок");
+                        await Main.DisplayAlert("Внимание!", "Нет ни товаров, ни фотографий чеков для сохранения. Сохранение невозможно.", "Ок");
                         return;
                     }
                     bool onlyPhoto = await Main.DisplayAlert("Внимание!", "В списке нет ни одного товара. Сохранить только фото?", "Да", "Нет");
@@ -276,7 +333,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
                 Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
-                var shopName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название магазина:");//TODO:при бэк кнопке!! active page back??
+                var shopName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название магазина:");
                 if (string.IsNullOrEmpty(shopName))
                 {
                     shopName = "не указано";

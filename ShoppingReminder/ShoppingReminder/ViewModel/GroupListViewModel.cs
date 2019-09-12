@@ -58,6 +58,18 @@ namespace ShoppingReminder.ViewModel
                 this.backCommand = value;
             }
         }
+        private ICommand sharePurchasesCommand;
+        public ICommand SharePurchasesCommand
+        {
+            get
+            {
+                return this.sharePurchasesCommand;
+            }
+            set
+            {
+                this.sharePurchasesCommand = value;
+            }
+        }
 
 
         public List<GroupViewModel> GroupsList => App.Groups;
@@ -70,9 +82,47 @@ namespace ShoppingReminder.ViewModel
             ActivateGroupCommand = new Command(ActivateGroup);
             CreateGroupCommand = new Command(CreateGroup);
             BackCommand = new Command(Back);
+            SharePurchasesCommand = new Command(SharePurchases);
             Back();
         }
 
+        private async void SharePurchases(object obj)
+        {
+            var gvm = obj as GroupViewModel;
+            if (gvm.PurchasesList != null && gvm.PurchasesList.Count>0)
+            {
+                var confirm = await Main.DisplayAlert("Внимание!", $"Поделиться группой \"{gvm.Name}\"?", "Да", "Нет");
+                if (confirm)
+                {
+                    Purchase[] sendingPurchases = new Purchase[gvm.PurchasesList.Count];
+                    for (int i = 0; i < gvm.PurchasesList.Count; i++)
+                    {
+                        sendingPurchases[i] = new Purchase { Name = gvm.PurchasesList[i].Name, Count = gvm.PurchasesList[i].Count, Units = gvm.PurchasesList[i].Units };
+                    }
+                    try
+                    {
+                        Main.SharePurchases(sendingPurchases);
+                    }
+                    catch
+                    {
+                        await Main.DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                        return;
+                    }
+                    bool clear = await Main.DisplayAlert("Внимание!", $"Удалить \"{gvm.Name}\" из списка групп?", "Ок", "Отмена");
+                    if (clear)
+                    {
+                        App.Database.DeleteGroupItem(gvm.Id);
+                        Back();
+                    }
+
+                }
+            }
+            else
+            {
+                Main.DisplayAlert("Внимание!", "Список товаров пуст", "Ок");
+                return;
+            }
+        }
 
         private void CreateGroup(object obj)
         {
@@ -94,7 +144,7 @@ namespace ShoppingReminder.ViewModel
                 var group = obj as GroupViewModel;                
                 if (group == null || group.PurchasesList == null||group.PurchasesList.Count < 1)
                 {
-                    Main.DisplayAlert("Внимание!", "Список пуст. Оперция отменена.", "ОК");
+                    await Main.DisplayAlert("Внимание!", "Список пуст. Оперция отменена.", "ОК");
                     return;
                 }
                 if (App.CurrentPurchases.Count > 0)
@@ -112,7 +162,6 @@ namespace ShoppingReminder.ViewModel
                         Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
                         Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
                         var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название для группы:");
-                        //TODO: возможность отмены
                         var newGroup = new Group { Name = groupName == null ? "Сохраненный список" : groupName, PurchasesList = new List<Purchase>() };
                         foreach (var item in App.CurrentPurchases)
                         {

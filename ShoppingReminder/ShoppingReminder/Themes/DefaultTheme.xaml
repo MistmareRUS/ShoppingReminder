@@ -116,6 +116,12 @@
         <Setter Property="ContentLayout" Value="Top, 0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
+    <Style x:Key="ShareBtn" TargetType="Button">
+        <Setter Property="ImageSource" Value="Default_Share48.png"/>
+        <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
+        <Setter Property="ContentLayout" Value="Top, 0"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
     <Style x:Key="MenuBtn" TargetType="Button">
         <Setter Property="ImageSource" Value="Default_Menu48.png"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
