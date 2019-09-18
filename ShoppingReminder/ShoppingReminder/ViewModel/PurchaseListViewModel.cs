@@ -191,11 +191,19 @@ namespace ShoppingReminder.ViewModel
             var direct = await Main.DisplayActionSheet($"Переместить \"{tempPurchase.Name}\" в ...", "Отмена", null, directions);            
             if (direct == directions[directions.Length - 2])//в планы
             {
-                App.Database.SavePlanItem(new Plan() { Name = tempPurchase.Name });
-                Main.plan.Back();                
-                App.CurrentPurchases.Remove(tempPurchase);
-                Main.DisplayAlert("", "Перемещено в планы", "Ок");
-                Back();
+                if (!Main.plan.PlanList.Any(p => p.Name.ToLower() == tempPurchase.Name.ToLower()))
+                {
+                    App.Database.SavePlanItem(new Plan() { Name = tempPurchase.Name });
+                    Main.plan.Back();
+                    App.CurrentPurchases.Remove(tempPurchase);
+                    Main.DisplayAlert("", "Перемещено в планы", "Ок");
+                    Back();
+                }
+                else
+                {
+                    await Main.DisplayAlert("", $"{tempPurchase.Name} уже есть в списке планов.", "Ок");
+                }
+               
             }  
             else if(direct== directions[directions.Length - 1])//отправка по сети
             {
@@ -215,14 +223,14 @@ namespace ShoppingReminder.ViewModel
                     Back();
                 }
             }
-            else if(directions.Any(d => d == direct))
+            else if(directions.Any(d => d == direct))//в группу
             {
                 var grIndex = Main.groups.GroupsList.IndexOf(Main.groups.GroupsList.FirstOrDefault(g => g.Name == direct));
                 if (Main.groups.GroupsList[grIndex].PurchasesList == null)
                 {
                     Main.groups.GroupsList[grIndex].PurchasesList = new List<Purchase>();
                 }
-                else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
+                else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == tempPurchase.Name.ToLower()))
                 {
                     await Main.DisplayAlert("Внимание!", $"\"{tempPurchase.Name}\" уже имеется в списке.", "Ok");
                     return;

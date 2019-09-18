@@ -88,9 +88,9 @@ namespace ShoppingReminder.ViewModel
         private void Create(object obj)
         {
             var text = (Entry)obj;
-            if (string.IsNullOrEmpty(text.Text))
+            if (string.IsNullOrEmpty(text.Text)|| PlanList.Any(p => p.Name.ToLower() == text.Text.ToLower()))
             {
-                Main.DisplayAlert("Внимание!", "Введите название.", "Ок");
+                Main.DisplayAlert("Внимание!", "Введите название, которого еще нет в списке.", "Ок");
                 return;
             }
             App.Database.SavePlanItem(new Plan(){ Name = text.Text });
@@ -163,7 +163,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     Main.groups.GroupsList[grIndex].PurchasesList = new List<Purchase>();
                 }
-                else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == direct.ToLower()))
+                else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == tempPlan.Name.ToLower()))
                 {
                     await Main.DisplayAlert("Внимание!", $"\"{tempPlan.Name}\" уже есть в списке.", "Ok");
                     return;

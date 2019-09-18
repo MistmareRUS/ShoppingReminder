@@ -115,12 +115,27 @@ namespace ShoppingReminder
                     {
                         if (direct == directions[directions.Length - 2])//в планы
                         {
+                            string areInPlans = string.Empty;
                             foreach (var item in purchaseArray)
                             {
-                                App.Database.SavePlanItem(new Plan() { Name = item.Name });
+                                if (!plan.PlanList.Any(p => p.Name.ToLower() == item.Name.ToLower()))
+                                {
+                                    App.Database.SavePlanItem(new Plan() { Name = item.Name });
+                                }
+                                else
+                                {
+                                    areInPlans += "\n[" + item.Name + "] ";
+                                }
                             }
                             plan.Back();
-                            await DisplayAlert("", "Добавлено к планам", "Ок");
+                            if (!string.IsNullOrEmpty(areInPlans))
+                            {
+                                await DisplayAlert("Внимание!", "Товары " + areInPlans + "\nуже были в списке.", "Ок");
+                            }
+                            else
+                            {
+                                await DisplayAlert("", "Добавлено к планам", "Ок");
+                            }
                         }
                         else if (direct == directions[directions.Length - 1])//отправка по сети
                         {
@@ -134,7 +149,7 @@ namespace ShoppingReminder
                                 return;
                             }                            
                         }
-                        else if (direct == directions[0])//к активным  //TODO: проверка таких же имен
+                        else if (direct == directions[0])//к активным
                         {
                             if (App.CurrentPurchases.Count > 0)
                             {
@@ -205,7 +220,7 @@ namespace ShoppingReminder
                             await DisplayAlert("", $"Перемещено в группу {direct}", "Ок");
                             groups.BackToList();
                         }
-                        else if (direct=="Новая группа")
+                        else if (direct=="Новая группа")//в новыю группу
                         {
                             Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
                             Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
@@ -216,6 +231,7 @@ namespace ShoppingReminder
                                 newGroup.PurchasesList.Add(item);
                             }
                             App.Database.SaveGroupItem(newGroup);
+                            await DisplayAlert("Внимание!", $"Добавлено в { newGroup.Name}", "Ок");
                             groups.Back();
                         }
                     }
@@ -238,7 +254,7 @@ namespace ShoppingReminder
             string areInCurrent=string.Empty;
             foreach (var item in purchases)
             {
-                if (!App.CurrentPurchases.Any(p => p.Name == item.Name))
+                if (!App.CurrentPurchases.Any(p => p.Name.ToLower() == item.Name.ToLower()))
                 {
                     App.CurrentPurchases.Add(new PurchaseViewModel()
                     {
@@ -251,14 +267,18 @@ namespace ShoppingReminder
                 }
                 else
                 {
-                    areInCurrent +="["+ item.Name+"] ";
+                    areInCurrent +="\n["+ item.Name+"] ";
                 }
             }
             App.SaveCurrentPurchasesToDB();
             activePurchases.Back();
             if (!string.IsNullOrEmpty(areInCurrent))
             {
-                DisplayAlert("Внимание!","Товары "+areInCurrent+" уже были в списке.", "Ок");
+                DisplayAlert("Внимание!","Товары "+areInCurrent+"\nуже были в списке.", "Ок");
+            }
+            else
+            {
+                DisplayAlert("Внимание!", "Добавлено в текущему списку.", "Ок");
             }
             if (App.CurrentPurchases.Any(p => p.Completed))
             {
@@ -268,7 +288,7 @@ namespace ShoppingReminder
 
         private Purchase[] PurchasePasre(string receiveString)
         {
-            if (!string.IsNullOrEmpty(receiveString))//проверка на пустоту
+            if (!string.IsNullOrEmpty(receiveString))
             {
                 List<string> purchasesString = new List<string>();
                 int startIndex = 0;

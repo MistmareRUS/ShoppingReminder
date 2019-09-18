@@ -194,7 +194,7 @@ namespace ShoppingReminder.ViewModel
             string areInCurrent = string.Empty;
             foreach (var item in group.PurchasesList)
             {
-                if (!App.CurrentPurchases.Any(p => p.Name == item.Name))
+                if (!App.CurrentPurchases.Any(p => p.Name.ToLower() == item.Name.ToLower()))
                 {
                     App.CurrentPurchases.Add(new PurchaseViewModel()
                     {
@@ -207,7 +207,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 else
                 {
-                    areInCurrent += "[" + item.Name + "] ";
+                    areInCurrent += "\n[" + item.Name + "] ";
                 }
             }
             App.SaveCurrentPurchasesToDB();
@@ -215,7 +215,11 @@ namespace ShoppingReminder.ViewModel
             Main.activePurchases.Back();
             if (!string.IsNullOrEmpty(areInCurrent))
             {
-                Main.DisplayAlert("Внимание!", "Товары " + areInCurrent + " уже были в списке.", "Ок");
+                Main.DisplayAlert("Внимание!", "Товары " + areInCurrent + "\nуже были в списке.", "Ок");
+            }
+            else
+            {
+                Main.DisplayAlert("Внимание!", "Добавлено к текущему списку.", "Ок");
             }
             if (App.CurrentPurchases.Any(p => p.Completed))
             {

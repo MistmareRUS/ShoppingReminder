@@ -111,7 +111,7 @@ namespace ShoppingReminder.ViewModel
         
         private  async void ClearGroup(object obj)
         {
-            var confirm = await ListVM.Main.DisplayAlert("Внимание!", "Очистить текущий список покупок", "Да", "Нет");
+            var confirm = await ListVM.Main.DisplayAlert("Внимание!", "Очистить текущую группу покупок", "Да", "Нет");
             if (confirm)
             {
                 GroupViewModel groupVM = obj as GroupViewModel;
@@ -144,10 +144,17 @@ namespace ShoppingReminder.ViewModel
             var direct = await ListVM.Main.DisplayActionSheet($"Переместить \"{item.Name}\" в ...", "Отмена", null, directions);
             if (direct == directions[directions.Length - 2])//в планы
             {
-                App.Database.SavePlanItem(new Plan() { Name = item.Name });
-                ListVM.Main.plan.Back();
-                DeleteItem(item);
-                await ListVM.Main.DisplayAlert("", "Перемещено в планы", "Ок");
+                if (!ListVM.Main.plan.PlanList.Any(p=>p.Name.ToLower()==item.Name.ToLower()))
+                {
+                    App.Database.SavePlanItem(new Plan() { Name = item.Name });
+                    ListVM.Main.plan.Back();
+                    DeleteItem(item);
+                    await ListVM.Main.DisplayAlert("", "Перемещено в планы", "Ок");
+                }
+                else
+                {
+                    await ListVM.Main.DisplayAlert("", $"{item.Name} уже есть в списке планов.", "Ок");
+                }
             }
             else if (direct == directions[directions.Length - 1])//отправка по сети
             {
@@ -244,8 +251,6 @@ namespace ShoppingReminder.ViewModel
                 App.Database.SaveGroupItem(ListVM.ActiveGroup.Group);
                 var allGroups= App.Database.GetGroupItems();
                 ListVM.ActiveGroup.Id = allGroups[allGroups.Count - 1].Id;
-                //ListVM.ActiveGroup.PurchasesList = new List<Purchase>();
-                //ListVM.ActiveGroup.Purchases = new List<GroupItemViewModel>();
                 ListVM.GroupsList.Add(ListVM.ActiveGroup);
             }
         }
