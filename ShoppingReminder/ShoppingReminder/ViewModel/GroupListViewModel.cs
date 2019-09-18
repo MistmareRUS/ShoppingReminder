@@ -119,7 +119,7 @@ namespace ShoppingReminder.ViewModel
             }
             else
             {
-                Main.DisplayAlert("Внимание!", "Список товаров пуст", "Ок");
+                await Main.DisplayAlert("Внимание!", "Список товаров пуст", "Ок");
                 return;
             }
         }
@@ -162,7 +162,7 @@ namespace ShoppingReminder.ViewModel
                         Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
                         Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
                         var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название для группы:");
-                        var newGroup = new Group { Name = groupName == null ? "Сохраненный список" : groupName, PurchasesList = new List<Purchase>() };
+                        var newGroup = new Group { Name = groupName == null ? DateTime.Now.ToString("dd MMM yyyy - HH:mm") : groupName, PurchasesList = new List<Purchase>() };
                         foreach (var item in App.CurrentPurchases)
                         {
                             newGroup.PurchasesList.Add(new Purchase
@@ -191,20 +191,32 @@ namespace ShoppingReminder.ViewModel
         }
         void ActivateHelper(GroupViewModel group)
         {
+            string areInCurrent = string.Empty;
             foreach (var item in group.PurchasesList)
             {
-                App.CurrentPurchases.Add(new PurchaseViewModel()
+                if (!App.CurrentPurchases.Any(p => p.Name == item.Name))
                 {
-                    Name = item.Name,
-                    Count = item.Count,
-                    Units = item.Units,
-                    Completed = item.Completed,
-                    ListVM = Main.activePurchases
-                });
+                    App.CurrentPurchases.Add(new PurchaseViewModel()
+                    {
+                        Name = item.Name,
+                        Count = item.Count,
+                        Units = item.Units,
+                        Completed = item.Completed,
+                        ListVM = Main.activePurchases
+                    });
+                }
+                else
+                {
+                    areInCurrent += "[" + item.Name + "] ";
+                }
             }
             App.SaveCurrentPurchasesToDB();
             App.Database.DeleteGroupItem(group.Id);
             Main.activePurchases.Back();
+            if (!string.IsNullOrEmpty(areInCurrent))
+            {
+                Main.DisplayAlert("Внимание!", "Товары " + areInCurrent + " уже были в списке.", "Ок");
+            }
             if (App.CurrentPurchases.Any(p => p.Completed))
             {
                 ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;

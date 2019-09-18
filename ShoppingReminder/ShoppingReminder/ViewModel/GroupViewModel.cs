@@ -193,7 +193,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     ListVM.GroupsList[grIndex].PurchasesList = new List<Purchase>();
                 }
-                else if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == direct.ToLower())    )
+                else if (ListVM.GroupsList[grIndex].PurchasesList. Any(p => p.Name.ToLower() == item.Name.ToLower())    )
                 {
                     await ListVM.Main.DisplayAlert("Внимание!", "Такой элемент уже имеется в списке.", "Ok");
                     return;

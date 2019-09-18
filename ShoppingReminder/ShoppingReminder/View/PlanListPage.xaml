@@ -17,17 +17,14 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions >
                                         <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="4*"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="-" Style="{DynamicResource Header}" Grid.Column="0"/>
                                     <Label Text="{Binding Name}" Style="{DynamicResource Header}" Grid.Column="1" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
-                                        <Button Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Grid.Column="5" Style="{DynamicResource MoveBtn}"/>
-                                        <Button Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Grid.Column="6" Style="{DynamicResource DeleteBtn}"/>                                    
+                                    <Button  Command="{Binding ListVM.AddToCurrentPurchaseCommand}" CommandParameter="{Binding}" Grid.Column="3" Style="{DynamicResource MoveBtn}"/>
+                                    <Button  Command="{Binding ListVM.DeletePlanItemCommand}" CommandParameter="{Binding}" Grid.Column="4" Style="{DynamicResource DeleteBtn}"/>                                    
                                     </Grid>                              
                             </ViewCell.View>
                         </ViewCell>

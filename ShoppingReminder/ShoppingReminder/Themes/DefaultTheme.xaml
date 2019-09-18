@@ -152,7 +152,7 @@
         <Setter Property="TitleColor" Value="{DynamicResource DarkColor}"/>
     </Style>
     <Style x:Key="Entry" TargetType="Entry">
-        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="FontSize" Value="Medium"/>
         <Setter Property="TextColor" Value="{DynamicResource DarkColor}"/>
         <Setter Property="PlaceholderColor" Value="{DynamicResource DarkColor}"/>
         <Setter Property="FontAttributes" Value="Bold"/>

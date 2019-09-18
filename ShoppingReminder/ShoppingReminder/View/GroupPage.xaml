@@ -7,13 +7,18 @@
   <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
-            <StackLayout Orientation="Horizontal" Padding="0" Margin="0" Spacing="0">                
-            
-                <renderers:SelectableEntry Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
-                <Button Text="очистить"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                <Button Text="передать"  Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}"/>
-                <Button Text="выбрать" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
-            </StackLayout>
+            <Grid RowSpacing="0" Padding="0" Margin="0" MinimumHeightRequest="58">
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <renderers:SelectableEntry Grid.Column="0" Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
+                <Button Text="очистить" Grid.Column="1"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="передать" Grid.Column="2"  Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}"/>
+                <Button Text="выбрать" Grid.Column="3" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
+            </Grid>
             <BoxView Style="{DynamicResource Separator}"/>
             
             <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
@@ -36,7 +41,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions >
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
