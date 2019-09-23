@@ -1,4 +1,5 @@
-﻿using ShoppingReminder.Model;
+﻿using ShoppingReminder.Languages;
+using ShoppingReminder.Model;
 using ShoppingReminder.Repository;
 using ShoppingReminder.ViewModel;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace ShoppingReminder
     public partial class App : Application
     {
         public static int HistoryAbleToSaveCount = 10;
-        public static string UnitsList = "Шт,Кг,Упак,л";
+        public static string UnitsList = Resource.UnitsList;
 
         public const string DATABASE_NAME = "Purchase.db";
         private static PurchaseRepository database;
@@ -36,6 +37,11 @@ namespace ShoppingReminder
         
         public App(int OSVersion)
         {
+            //if (Device.OS != TargetPlatform.WinPhone)
+            //{
+            //    Resource.Culture = DependencyService.Get<ILocalize>()
+            //                        .GetCurrentCultureInfo();
+            //}
             InitializeComponent();                   
             LoadCurrentPurchasesFromDB();
             LoadPlansFromDB();

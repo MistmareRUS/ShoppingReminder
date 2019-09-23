@@ -1,4 +1,5 @@
-﻿using ShoppingReminder.Model;
+﻿using ShoppingReminder.Languages;
+using ShoppingReminder.Model;
 using ShoppingReminder.View;
 using System.Collections.Generic;
 using System.IO;
@@ -34,13 +35,13 @@ namespace ShoppingReminder.ViewModel
 
         private async void DeletePhotos(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить фотографии прикрепленные к данному сохранению?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention+"!", Resource.DeletePhotosAttachedToThisList, Resource.Yes, Resource.No);
             if (confirm)
             {
                 var fullPath = obj as string;
                 if (fullPath == null)
                 {
-                    Main.DisplayAlert("Внимание!", "Нет фотографий.", "Ок");
+                    Main.DisplayAlert(Resource.Attention + "!", Resource.ThereAreNoPhotos, Resource.Ok);
                     return;
                 }
                 Main.DeletePhotosHelper(fullPath);
@@ -53,13 +54,13 @@ namespace ShoppingReminder.ViewModel
                     PurchasesList = tempHVM.PurchasesList
                 };
                 App.Database.SaveHistoryItem(tempList);
-                Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.PhotosHaveBeenDeleted, Resource.Ok);
                 Back();
             }
         }
         private async void DeletePhoto(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить фотографию?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!",Resource.DeletePhoto+"?", Resource.Yes, Resource.No);
             if (confirm)
             {
                 string path = (string)obj;
@@ -77,7 +78,7 @@ namespace ShoppingReminder.ViewModel
                     PurchasesList = tempHVM.PurchasesList
                 };
                 App.Database.SaveHistoryItem(tempList);
-                Main.DisplayAlert("Внимание!", "Фотографии были удалены.", "Ок");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.PhotosHaveBeenDeleted,Resource.Ok);
                 Back();
             }
         }
@@ -105,7 +106,7 @@ namespace ShoppingReminder.ViewModel
         }        
         private async void DeleteHistoryItem(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить данный список из истории покупок?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!", Resource.DeleteThisListFromPurchaseHistory, Resource.Yes, Resource.No);
             if (confirm)
             {
                 var index = (int)obj;
@@ -114,7 +115,7 @@ namespace ShoppingReminder.ViewModel
                 var result = App.Database.DeleteHistoryItem(index);
                 if (result == 0)
                 {
-                    Main.DisplayAlert("Внимание!", "Произошла ошибка при удалении", "ОК");
+                    Main.DisplayAlert(Resource.Attention + "!", Resource.AnErrorOccurredWhileUninstalling, Resource.Ok);
                 }
                 Back();
             }
@@ -141,7 +142,7 @@ namespace ShoppingReminder.ViewModel
                     {
                         var lbl = new Label
                         {
-                            Text = "К данной покупке не прикреплено ни одного фото.",
+                            Text = Resource.NoCheckPhotosHaveBeenTakenWithThisPurchase,
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalOptions = LayoutOptions.CenterAndExpand

@@ -3,26 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
              xmlns:renderers="clr-namespace:ShoppingReminder.Renderers"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.PurchasePage">
   <ContentView.Content>
       <StackLayout>
             <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Orientation="Horizontal">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button Text="удалить" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Text="переместить" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource MoveBtn}"/>
+                    <Button Text="{languages:Translate Text=Delete}" Command="{Binding ListVM.DeletePurchaseCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="{languages:Translate Text=Move}" Command="{Binding ListVM.ToPlansCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource MoveBtn}"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout>
-                <Label Text="Название:" Style="{DynamicResource Discription}"/>
-                <Entry Text="{Binding Name}" Style="{DynamicResource Entry}"/>
-                <Label Text="Количество:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=Title, After=' :'}" Style="{DynamicResource Discription}"/>
+                <Entry Text="{Binding Name}" x:Name="nameEntry" Style="{DynamicResource Entry}"/>
+                <Label Text="{languages:Translate Text=Quantity, After=' :'}" Style="{DynamicResource Discription}"/>
                 <renderers:SelectableEntry Text="{Binding Count}" Style="{DynamicResource Entry}" Keyboard="Telephone"/>
-                <Label Text="Ед. измерения:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=Units, After=' :'}" Style="{DynamicResource Discription}"/>
                 <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                <Button Text="ок" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
+                <Button x:Name="okBtn" Text="{languages:Translate Text=Ok}" Command="{Binding ListVM.SavePurchaseCommand}" CommandParameter="{Binding}" 
                         HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />                
             </StackLayout>
       </StackLayout>

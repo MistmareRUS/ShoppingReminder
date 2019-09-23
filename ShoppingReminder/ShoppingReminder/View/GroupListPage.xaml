@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.GroupListPage">
   <ContentView.Content>
       <StackLayout>
@@ -16,19 +17,17 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions >
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="3*"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" Style="{DynamicResource Discription}" Grid.Column="0" Grid.ColumnSpan="3"/>
-                                    <Label Text="{Binding Progress}" Style="{DynamicResource Discription}" HorizontalTextAlignment="Center" Grid.Column="3"/>
-                                    <Button Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}" Grid.Column="4"/>
-                                    <Button Command="{Binding ListVM.DeleteGroupCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}" Grid.Column="5"/>
-                                    <Button Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource OkBtn}" Grid.Column="6"/>                                    
+                                    <Label Text="{Binding Name}" Style="{DynamicResource Discription}" Grid.Column="0"/>
+                                    <Label Text="{Binding Progress}" Style="{DynamicResource Discription}" HorizontalTextAlignment="Center" Grid.Column="1"/>
+                                    <Button Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}" Grid.Column="2"/>
+                                    <Button Command="{Binding ListVM.DeleteGroupCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}" Grid.Column="3"/>
+                                    <Button Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource OkBtn}" Grid.Column="4"/>                                    
                                      </Grid>
                             </ViewCell.View>
                         </ViewCell>
@@ -36,7 +35,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Spacing="0" Margin="0" Padding="0">
-                <Button Text="добавить" Command="{Binding CreateGroupCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Button Text="{languages:Translate Text=Add}" Command="{Binding CreateGroupCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>
   </ContentView.Content>

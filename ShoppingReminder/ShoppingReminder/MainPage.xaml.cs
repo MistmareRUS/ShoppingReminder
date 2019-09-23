@@ -12,6 +12,7 @@ using Xamarin.Essentials;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using ShoppingReminder.Languages;
 
 namespace ShoppingReminder
 {
@@ -88,9 +89,9 @@ namespace ShoppingReminder
             }
             catch
             {
-                Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
-                Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Отмена";
-                boofer = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Вставьте полученое от другого пользователя скопированное сообщение:");
+                Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = Resource.Ok;
+                Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = Resource.Cancel;
+                boofer = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync(Resource.Attention+"!", Resource.PasteTheCopiedMessageReceivedFromAnotherUser+":");
                 if (!string.IsNullOrEmpty(boofer))
                     hasText = true;
             }
@@ -99,17 +100,17 @@ namespace ShoppingReminder
             {
                 if (boofer.StartsWith("*ShoppingReminder:*"))
                 {
-                    var dirs = groups.GroupsList.Where(g => g.Name != "Без названия").Select(g => g.Name).ToArray();
+                    var dirs = groups.GroupsList.Where(g => g.Name != Resource.WithoutTitle).Select(g => g.Name).ToArray();
                     string[] directions = new string[dirs.Length + 4];
-                    directions[0] = "В активный список";
+                    directions[0] = Resource.ToActiveList;
                     for (int i = 1; i <= dirs.Length; i++)
                     {
                         directions[i] = dirs[i - 1];
                     }
-                    directions[directions.Length - 3] = "Новая группа";
-                    directions[directions.Length - 2] = "В планы";
-                    directions[directions.Length - 1] = "Переслать";
-                    var direct = await DisplayActionSheet("В памяти содержится список. Куда его отправить?", "Отмена",null,directions);
+                    directions[directions.Length - 3] = Resource.CreateNewGroup;
+                    directions[directions.Length - 2] = Resource.ToPlans;
+                    directions[directions.Length - 1] = Resource.Share;
+                    var direct = await DisplayActionSheet(Resource.TheMemoryContainsAListWhereToSendIt+"?", Resource.Cancel,null,directions);
                     Purchase[] purchaseArray = PurchasePasre(boofer);
                     if (purchaseArray != null)
                     {
@@ -130,11 +131,11 @@ namespace ShoppingReminder
                             plan.Back();
                             if (!string.IsNullOrEmpty(areInPlans))
                             {
-                                await DisplayAlert("Внимание!", "Товары " + areInPlans + "\nуже были в списке.", "Ок");
+                                await DisplayAlert(Resource.Attention + "!",Resource.Products+ ":" + areInPlans + "\n"+Resource.WereAlredyOnTheList, Resource.Ok);
                             }
                             else
                             {
-                                await DisplayAlert("", "Добавлено к планам", "Ок");
+                                await DisplayAlert("", Resource.AddedToThePlans, Resource.Ok);
                             }
                         }
                         else if (direct == directions[directions.Length - 1])//отправка по сети
@@ -145,7 +146,7 @@ namespace ShoppingReminder
                             }
                             catch
                             {
-                                await DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                                await DisplayAlert(Resource.Attention + "!", Resource.YourDeviceDoesNotSupportThisFeature, Resource.Ok);
                                 return;
                             }                            
                         }
@@ -153,19 +154,18 @@ namespace ShoppingReminder
                         {
                             if (App.CurrentPurchases.Count > 0)
                             {
-                                var varians = await DisplayActionSheet("В активном списке есть элементы.", "Отмена", null, new string[] {"Заменить этим списком"
-                                                                                                                           , "Заменить этим списком, а активный сохранить в новую группу"
-                                                                                                                           , "Добавить к текущему" });
-                                if (varians == "Заменить этим списком")
+                                string[] ways = new string[] { Resource.ReplaceWithThisList, Resource.ReplaceWithThisListAndSaveTheActiveListInANewGroup, Resource.AddedToCurrentList };
+                                var varians = await DisplayActionSheet(Resource.ThereAreItemsInTheActiveList, Resource.Cancel, null, ways);
+                                if (varians == ways[0])
                                 {
                                     App.CurrentPurchases = new List<PurchaseViewModel>();
                                     ActivateHelper(purchaseArray);
                                 }
-                                else if (varians == "Заменить этим списком, а активный сохранить в новую группу")
+                                else if (varians ==ways[1])
                                 {
-                                    Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
-                                    Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
-                                    var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название для группы:");
+                                    Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = Resource.Ok;
+                                    Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = Resource.DoNotIndicate;
+                                    var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync(Resource.Attention+"!",Resource.EnterANameForTheGoup+":");
                                     var newGroup = new Model.Group { Name = groupName == null ? DateTime.Now.ToString("dd MMM yyyy - HH:mm") : groupName, PurchasesList = new List<Purchase>() };
                                     foreach (var item in App.CurrentPurchases)
                                     {
@@ -183,7 +183,7 @@ namespace ShoppingReminder
                                     App.CurrentPurchases = new List<PurchaseViewModel>();
                                     ActivateHelper(purchaseArray);
                                 }
-                                else if (varians == "Добавить к текущему")
+                                else if (varians == ways[2])
                                 {
                                     ActivateHelper(purchaseArray);
                                 }
@@ -214,36 +214,36 @@ namespace ShoppingReminder
                             }
                             if (!string.IsNullOrEmpty(areInCurrent))
                             {
-                                await DisplayAlert("Внимание!", "Товары " + areInCurrent + " уже были в списке.", "Ок");
+                                await DisplayAlert(Resource.Attention + "!", Resource.Products + areInCurrent + "\n"+ Resource.WereAlreadyOnTheList,Resource.Ok);
                             }
                             App.Database.SaveGroupItem(groups.GroupsList[grIndex].Group);
-                            await DisplayAlert("", $"Перемещено в группу {direct}", "Ок");
+                            await DisplayAlert("", Resource.MovedToGroup+" \""+direct+"\"", Resource.Ok);
                             groups.BackToList();
                         }
-                        else if (direct=="Новая группа")//в новыю группу
+                        else if (direct==Resource.CreateNewGroup)//в новую группу
                         {
-                            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
-                            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
-                            var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название для группы:");
+                            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = Resource.Ok;
+                            Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = Resource.DoNotIndicate;
+                            var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync(Resource.Attention+"!",Resource.EnterANameForTheGoup+":");
                             var newGroup = new Model.Group { Name = groupName == null ? DateTime.Now.ToString("dd MMM yyyy - HH:mm") : groupName, PurchasesList = new List<Purchase>() };
                             foreach (var item in purchaseArray)
                             {
                                 newGroup.PurchasesList.Add(item);
                             }
                             App.Database.SaveGroupItem(newGroup);
-                            await DisplayAlert("Внимание!", $"Добавлено в { newGroup.Name}", "Ок");
+                            await DisplayAlert(Resource.Attention + "!", Resource.AddedTo+"\""+ newGroup.Name+"\"", Resource.Ok);
                             groups.Back();
                         }
                     }
                 }
                 else
                 {
-                    await DisplayAlert("Внимание!", "В памяти нет подходящего списка. Откройте присланное сообщение и скопируйте его в буфер обмена.", "Ок");
+                    await DisplayAlert(Resource.Attention + "!", Resource.ThereIsNoSuitableListInMemoryOpenTheSentMessageAndCopyItToTheClipboard, Resource.Ok);
                 }
             }
             else
             {
-                await DisplayAlert("Внимание!", "Нет подходящего списка. Откройте присланное сообщение и скопируйте его в буфер обмена.", "Ок");
+                await DisplayAlert(Resource.Attention + "!", Resource.ThereIsNoSuitableListInMemoryOpenTheSentMessageAndCopyItToTheClipboard, Resource.Ok);
             }
             //TODO:очистить буфер.
             //await Clipboard.SetTextAsync(null);
@@ -274,11 +274,11 @@ namespace ShoppingReminder
             activePurchases.Back();
             if (!string.IsNullOrEmpty(areInCurrent))
             {
-                DisplayAlert("Внимание!","Товары "+areInCurrent+"\nуже были в списке.", "Ок");
+                DisplayAlert(Resource.Attention+"!",Resource.Products+areInCurrent+"\n"+ Resource.WereAlreadyOnTheList,Resource.Ok);
             }
             else
             {
-                DisplayAlert("Внимание!", "Добавлено в текущему списку.", "Ок");
+                DisplayAlert(Resource.Attention + "!", Resource.AddedToCurrentList, Resource.Ok);
             }
             if (App.CurrentPurchases.Any(p => p.Completed))
             {
@@ -348,7 +348,7 @@ namespace ShoppingReminder
 
         private async   void RateApp()
         {
-            var confirm=await DisplayAlert("Внимание!", "Вы можете оценить приложение. Это поможет его продвижению.", "Оценить","Позже");
+            var confirm=await DisplayAlert(Resource.Attention + "!", Resource.YouCanRateTheAppThisWillHelpToPromoteIt, Resource.Rate,Resource.Later);
             if (confirm)
             {
                 DependencyService.Get<IRareApp>().Rate();
@@ -357,23 +357,23 @@ namespace ShoppingReminder
 
         protected override bool OnBackButtonPressed()
         {
-            if (Shell.Current.CurrentItem.Title == "Текущая покупка")
+            if (Shell.Current.CurrentItem.Title == Resource.FICurrentPurcases)
             {
                 activePurchases.Back();
             }
-            else if (Shell.Current.CurrentItem.Title == "Запланированное")
+            else if (Shell.Current.CurrentItem.Title == Resource.FIPlans)
             {
                 plan.Back();
             }
-            else if (Shell.Current.CurrentItem.Title == "История покупок")
+            else if (Shell.Current.CurrentItem.Title == Resource.FIHistory)
             {
                 history.Back();
             }
-            else if (Shell.Current.CurrentItem.Title == "Настройки")
+            else if (Shell.Current.CurrentItem.Title == Resource.FISettings)
             {
                 settings.Back();
             }
-            else if (Shell.Current.CurrentItem.Title == "Группы")
+            else if (Shell.Current.CurrentItem.Title == Resource.FIGroups)
             {
                 if (GroupStackLayout.Children[0].ClassId == "ItemPage")
                 {
@@ -386,7 +386,8 @@ namespace ShoppingReminder
             }
             else
             {
-                DisplayAlert("Необратотанная страница", Shell.Current.CurrentItem.Title, "Ok");
+                DisplayAlert(Resource.UnhandledPage, Shell.Current.CurrentItem.Title, Resource.Ok);
+                activePurchases.Back();
             }
             return true;
         }
@@ -404,7 +405,7 @@ namespace ShoppingReminder
                 }
                 if (cameraStatus != PermissionStatus.Granted || storageStatus != PermissionStatus.Granted)
                 {
-                    await DisplayAlert("Внимание!", "Доступ отклонен.", "Ок");
+                    await DisplayAlert(Resource.Attention + "!", Resource.AccessDenied, Resource.Ok);
                     return;
                 }
 
@@ -428,7 +429,7 @@ namespace ShoppingReminder
             }
             else
             {
-                await DisplayAlert("Внимание!", "Камера не доступна.", "Ок");
+                await DisplayAlert(Resource.Attention + "!", Resource.CameraNotAvailable, Resource.Ok);
                 return;
             }
         }
@@ -474,13 +475,13 @@ namespace ShoppingReminder
                 layout.Children.Clear();
                 layout.Children.Add(wv);
 
-                var BackBtn = new Button { Text = "все фото"};
+                var BackBtn = new Button { Text = Resource.AllThePhotos };
                 BackBtn.SetDynamicResource(Button.StyleProperty, "ListBtn");
                 BackBtn.Clicked += (_s, _e) =>
                 {
                     GetPhotos(source, layout, back, deletePhoto, deletePhotos);
                 };
-                var DelBtn = new Button() { Command = deletePhoto, CommandParameter = tempSrc, Text = "удалить" };
+                var DelBtn = new Button() { Command = deletePhoto, CommandParameter = tempSrc, Text = Resource.Delete };
                 DelBtn.SetDynamicResource(Button.StyleProperty, "DeleteBtn");
                 var btnStack = new StackLayout
                 {
@@ -498,7 +499,7 @@ namespace ShoppingReminder
             layout.Children.Clear();
             layout.Children.Add(lv);
             
-            var delBtn= new Button() { Command = deletePhotos, CommandParameter = source, Text = "удалить все" };
+            var delBtn= new Button() { Command = deletePhotos, CommandParameter = source, Text = Resource.DeleteAll };
             delBtn.SetDynamicResource(Button.StyleProperty, "DeleteBtn");
             var listBtnStack = new StackLayout
             {
@@ -508,7 +509,7 @@ namespace ShoppingReminder
                     delBtn
                 }
             };
-            var countLbl = new Label { Text = " Всего фото: " + sourses.Length.ToString()+" ", VerticalTextAlignment = TextAlignment.End, VerticalOptions=LayoutOptions.End, HorizontalOptions=LayoutOptions.EndAndExpand};
+            var countLbl = new Label { Text =Resource.AllThePhotos+ ": " + sourses.Length.ToString()+" ", VerticalTextAlignment = TextAlignment.End, VerticalOptions=LayoutOptions.End, HorizontalOptions=LayoutOptions.EndAndExpand};
             countLbl.SetDynamicResource(Label.StyleProperty, "Discription");
             countLbl.SetDynamicResource(Label.TextColorProperty, "MainColor");
             layout.Children.Add(new StackLayout {
@@ -546,12 +547,12 @@ namespace ShoppingReminder
             {
                 message.AppendLine( $"[ {item.Name}{(item.Count == 0 ? "" :" - "+ item.Count.ToString()+(string.IsNullOrEmpty(item.Units)?"":" "+ item.Units))} ]");
             }
-            message.Append("_Это сообщение можно использовать в приложении ShoppingRemnder, скопировав его в специальную форму._");
+            message.Append("_"+Resource.YouCanUseThisMessageInTheShoppingRemnderApplicationByCopyingIt + "_");
 
             await Share.RequestAsync(new ShareTextRequest
-            {                
-                Text=message.ToString(),
-                Subject="Нужно купить!"
+            {
+                Text = message.ToString(),
+                Subject = Resource.NeedToBuy;
             });
         }
     }

@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"       
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              xmlns:local="clr-namespace:ShoppingReminder"
        x:Class="ShoppingReminder.MainPage"
-             Style="{DynamicResource ShellStyle}">
+             Style="{DynamicResource ShellStyle}">    
     <Shell.FlyoutHeader>
         <StackLayout Orientation="Horizontal" Style="{DynamicResource FlyoutHeader}">
             <Image Source="Icon100.png"/>
@@ -14,9 +15,9 @@
         
     </Shell.FlyoutHeader>
 
-    <FlyoutItem Title="Текущая покупка" Style="{DynamicResource MainFI}">
-        <Tab Title="Активные покупки">
-            <ShellContent>
+    <FlyoutItem Title="{languages:Translate Text=FICurrentPurcases}" Route="CurrentFI" Style="{DynamicResource MainFI}">
+        <Tab Title="{languages:Translate Text=FITActivePurchases}" Route="ActieveTab">
+            <ShellContent Route="Active">
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">                       
                         <Image  Style="{DynamicResource BGImage}"/>
@@ -28,7 +29,7 @@
                 </ContentPage>
             </ShellContent>
         </Tab>
-        <Tab Title="Купленные">
+        <Tab Title="{languages:Translate Text=FITPurcased}">
             <ShellContent>
                 <ContentPage >
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
@@ -45,7 +46,7 @@
         </Tab>        
     </FlyoutItem>
 
-    <FlyoutItem Title="Группы" Style="{DynamicResource GroupsFI}">
+    <FlyoutItem Title="{languages:Translate Text=FIGroups}" Style="{DynamicResource GroupsFI}">
         <Tab>
             <ShellContent>
                 <ContentPage>
@@ -62,7 +63,7 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Запланированное" Style="{DynamicResource PlanFI}">
+    <FlyoutItem Title="{languages:Translate Text=FIPlans}" Style="{DynamicResource PlanFI}">
         <Tab>
             <ShellContent>
                 <ContentPage>
@@ -79,8 +80,8 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="История покупок" Style="{DynamicResource HistoryFI}">
-        <Tab Title="История покупок">
+    <FlyoutItem Title="{languages:Translate Text=FIHistory}" Style="{DynamicResource HistoryFI}">
+        <Tab Title="{languages:Translate Text=FITHistoryOfPurchases}">
             <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
@@ -94,7 +95,7 @@
                 </ContentPage>
             </ShellContent>
         </Tab>
-        <Tab Title="Фото" IsEnabled="False">
+        <Tab Title="{languages:Translate Text=FIPhotos}" IsEnabled="False">
             <ShellContent>
                 <ContentPage>
                     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
@@ -111,7 +112,7 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Настройки" Style="{DynamicResource SettingsFI}">
+    <FlyoutItem Title="{languages:Translate Text=FISettings}" Style="{DynamicResource SettingsFI}">
         <Tab>
             <ShellContent>
                 <ContentPage>
@@ -126,6 +127,6 @@
             </ShellContent>
         </Tab>        
     </FlyoutItem>
-    <MenuItem Text="Ввести присланный список" Command="{Binding ReceivePurcasesCommand}" IconImageSource="star48"/>
-    <MenuItem Text="Оценить приложение" Command="{Binding RateAppCommand}" IconImageSource="star48"/>
+    <MenuItem Text="{languages:Translate Text=FIEnterReceivedList}" Command="{Binding ReceivePurcasesCommand}" IconImageSource="star48"/>
+    <MenuItem Text="{languages:Translate Text=FIRateApp}" Command="{Binding RateAppCommand}" IconImageSource="star48"/>
 </Shell>

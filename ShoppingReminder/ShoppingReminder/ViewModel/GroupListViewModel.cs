@@ -1,4 +1,5 @@
-﻿using ShoppingReminder.Model;
+﻿using ShoppingReminder.Languages;
+using ShoppingReminder.Model;
 using ShoppingReminder.View;
 using System;
 using System.Collections.Generic;
@@ -91,7 +92,7 @@ namespace ShoppingReminder.ViewModel
             var gvm = obj as GroupViewModel;
             if (gvm.PurchasesList != null && gvm.PurchasesList.Count>0)
             {
-                var confirm = await Main.DisplayAlert("Внимание!", $"Поделиться группой \"{gvm.Name}\"?", "Да", "Нет");
+                var confirm = await Main.DisplayAlert(Resource.Attention+"!", Resource.ShareAGroup+" "+gvm.Name+"?", Resource.Yes, Resource.No);
                 if (confirm)
                 {
                     Purchase[] sendingPurchases = new Purchase[gvm.PurchasesList.Count];
@@ -105,10 +106,10 @@ namespace ShoppingReminder.ViewModel
                     }
                     catch
                     {
-                        await Main.DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                        await Main.DisplayAlert(Resource.Attention + "!", Resource.YourDeviceDoesNotSupportThisFeature, Resource.Ok);
                         return;
                     }
-                    bool clear = await Main.DisplayAlert("Внимание!", $"Удалить \"{gvm.Name}\" из списка групп?", "Ок", "Отмена");
+                    bool clear = await Main.DisplayAlert(Resource.Attention + "!", Resource.Delete+" "+gvm.Name+" "+ Resource.FromTheListOfGroups + "?", Resource.Yes, Resource.No);
                     if (clear)
                     {
                         App.Database.DeleteGroupItem(gvm.Id);
@@ -119,7 +120,7 @@ namespace ShoppingReminder.ViewModel
             }
             else
             {
-                await Main.DisplayAlert("Внимание!", "Список товаров пуст", "Ок");
+                await Main.DisplayAlert(Resource.Attention + "!", Resource.ListIsEmpty, Resource.Ok);
                 return;
             }
         }
@@ -129,7 +130,7 @@ namespace ShoppingReminder.ViewModel
             Main.GroupStackLayout.Children.Clear();
             var gvm = new GroupViewModel(this)
             {
-                Group = new Group() { Name = "Без названия" },
+                Group = new Group() { Name = Resource.WithoutTitle },
                 needToSave = true
             };
             ActiveGroup = gvm;
@@ -138,30 +139,29 @@ namespace ShoppingReminder.ViewModel
 
         private async void ActivateGroup(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Сделать данную группу активным списком?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!", Resource.MakeThitGroupAnActiveList+"?", Resource.Yes, Resource.No);
             if (confirm)
             {
                 var group = obj as GroupViewModel;                
                 if (group == null || group.PurchasesList == null||group.PurchasesList.Count < 1)
                 {
-                    await Main.DisplayAlert("Внимание!", "Список пуст. Оперция отменена.", "ОК");
+                    await Main.DisplayAlert(Resource.Attention + "!", Resource.TheListIsEmptyTheOperationWasCanceled, Resource.Ok);
                     return;
                 }
                 if (App.CurrentPurchases.Count > 0)
                 {
-                    var varians = await Main.DisplayActionSheet("В активном списке есть элементы.", "Отмена", null, new string[] {"Заменить этим списком"
-                                                                                                                           , "Заменить этим списком, а активный сохранить в новую группу"
-                                                                                                                           , "Добавить к текущему" });
-                    if (varians == "Заменить этим списком")
+                    string[] ways = new string[] { Resource.ReplaceWithThisList, Resource.ReplaceWithThisListAndSaveTheActiveListInANewGroup, Resource.AddToCurrentList };
+                    var varians = await Main.DisplayActionSheet(Resource.ThereAreItemsInTheActiveList, Resource.Cancel, null, ways);
+                    if (varians == ways[0])
                     {
                         App.CurrentPurchases = new List<PurchaseViewModel>();
                         ActivateHelper(group);
                     }
-                    else if (varians == "Заменить этим списком, а активный сохранить в новую группу")
+                    else if (varians == ways[1])
                     {
-                        Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = "Ок";
-                        Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = "Не указывать";
-                        var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync("Внимание!", "Введите название для группы:");
+                        Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogAffirmative = Resource.Ok;
+                        Plugin.DialogKit.CrossDiaglogKit.GlobalSettings.DialogNegative = Resource.DoNotIndicate;
+                        var groupName = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync(Resource.Attention + "!", Resource.EnterANameForTheGoup+":");
                         var newGroup = new Group { Name = groupName == null ? DateTime.Now.ToString("dd MMM yyyy - HH:mm") : groupName, PurchasesList = new List<Purchase>() };
                         foreach (var item in App.CurrentPurchases)
                         {
@@ -178,7 +178,7 @@ namespace ShoppingReminder.ViewModel
                         App.CurrentPurchases = new List<PurchaseViewModel>();
                         ActivateHelper(group);
                     }
-                    else if (varians == "Добавить к текущему")
+                    else if (varians == ways[2])
                     {
                         ActivateHelper(group);
                     }
@@ -215,11 +215,11 @@ namespace ShoppingReminder.ViewModel
             Main.activePurchases.Back();
             if (!string.IsNullOrEmpty(areInCurrent))
             {
-                Main.DisplayAlert("Внимание!", "Товары " + areInCurrent + "\nуже были в списке.", "Ок");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.Products + areInCurrent + "\n"+Resource.WereAlreadyOnTheList, Resource.Ok);
             }
             else
             {
-                Main.DisplayAlert("Внимание!", "Добавлено к текущему списку.", "Ок");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.AddedToCurrentList, Resource.Ok);
             }
             if (App.CurrentPurchases.Any(p => p.Completed))
             {
@@ -230,14 +230,14 @@ namespace ShoppingReminder.ViewModel
 
         private async  void DeleteGroup(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить данную группу товаров?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!", Resource.DeleteThisProductGroup, Resource.Yes, Resource.No);
             if (confirm)
             {
                 var index = (int)obj;
                 var result = App.Database.DeleteGroupItem(index);
                 if (result == 0)
                 {
-                    await Main.DisplayAlert("Внимание!", "Произошла ошибка при удалении", "ОК");
+                    await Main.DisplayAlert(Resource.Attention + "!", Resource.AnErrorOccurredWhileUninstalling, Resource.Ok);
                 }
                 Back();
             }            

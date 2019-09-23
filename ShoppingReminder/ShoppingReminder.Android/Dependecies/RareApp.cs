@@ -20,7 +20,10 @@ namespace ShoppingReminder.Droid.Dependecies
             }
             catch
             {
-                Toast.MakeText(ma, " Не получилось открыть маркет!",ToastLength.Long).Show();
+                if(Java.Util.Locale.Default.ToString()=="ru_RU")
+                    Toast.MakeText(ma, "Play market не доступен!",ToastLength.Long).Show();
+                else
+                    Toast.MakeText(ma, "Play market not available!",ToastLength.Long).Show();
             }
         }
         public static MainActivity ma;

@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarStyle.cs" />
+    <Compile Include="Dependecies\Localize.cs" />
     <Compile Include="Dependecies\RareApp.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyWebViewRenderer.cs" />

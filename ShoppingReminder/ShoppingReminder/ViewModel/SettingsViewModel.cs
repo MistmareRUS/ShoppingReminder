@@ -1,4 +1,5 @@
-﻿using ShoppingReminder.Themes;
+﻿using ShoppingReminder.Languages;
+using ShoppingReminder.Themes;
 using ShoppingReminder.View;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace ShoppingReminder.ViewModel
 
         private async void ClearGroups()
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки групп?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention+"!",  Resource.ClearTheGroups+"?", Resource.Yes, Resource.No);
             if (confirm)
             {
                 App.Database.ClearGroups();
@@ -56,11 +57,11 @@ namespace ShoppingReminder.ViewModel
             }
             catch
             {
-                await Main.DisplayAlert("Внимание!", "Фотографий не обнаружено.", "Ок");
+                await Main.DisplayAlert(Resource.Attention + "!", Resource.ThereAreNoPhotos, Resource.Ok);
                 return;
             }
             int photoCount = files.Length > 0 ? files.Length : 0;
-            var confirm =await Main.DisplayAlert("Внимание!",string.Format( $"Удалить все фотографии? Всего : {photoCount-1}."), "Да", "Нет");//1 вспомогательный файл. не фото.
+            var confirm =await Main.DisplayAlert(Resource.Attention + "!", Resource.DeleteThePhotos+"? "+ Resource.ThereAre+": "+(photoCount-1).ToString()+" "+Resource.Photos.ToLower(), Resource.Yes, Resource.No);//1 вспомогательный файл. не фото.
             if (confirm)
             {
                 foreach (var item in files)
@@ -81,7 +82,7 @@ namespace ShoppingReminder.ViewModel
         }
         private async void ClearPlans()
         {
-            var confirm =await Main.DisplayAlert("Внимание!", "Очистить список запланированных покупок?", "Да", "Нет");
+            var confirm =await Main.DisplayAlert(Resource.Attention + "!", Resource.ClearThePlans+"?", Resource.Yes,Resource.No);
             if (confirm)
             {
                 App.Database.ClearPlans();
@@ -91,7 +92,7 @@ namespace ShoppingReminder.ViewModel
         }
         private async void ClearHistory()
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Очистить списки истории?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!", Resource.ClearTheHistory+"?", Resource.Yes, Resource.No);
             if (confirm)
             {
                 foreach (var item in App.HistoryOfPurchase)
@@ -147,7 +148,7 @@ namespace ShoppingReminder.ViewModel
                         DependencyService.Get<IBarStyle>().SetColor("#067898");
                         break;
                 }
-                Main.DisplayAlert("Внимание!", "Для полного применения темы необходимо перезапустить приложение.", "Ок.");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.ToFullyApplyTheThemeYouMustRestartTheApplication, Resource.Ok);
                 App.Current.Properties["CurrentTheme"] = (int)theme;                
             }
         }

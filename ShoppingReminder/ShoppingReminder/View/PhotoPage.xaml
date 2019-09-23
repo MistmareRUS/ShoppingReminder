@@ -2,12 +2,13 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.PhotoPage">
   <ContentView.Content>
       <StackLayout>
             <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Чеки покупок от:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=PurchaseReceiptsFrom}" Style="{DynamicResource Discription}"/>
                 <Label Text="{Binding }"/>
             </StackLayout>
             <ListView ItemsSource="{Binding }">
@@ -23,7 +24,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>                
             </ListView>
-            <Label x:Name="NoPhotos" Text="С данной покупкой не было сденано ни одной фотографии чеков" IsVisible="False"
+            <Label x:Name="NoPhotos" Text="{languages:Translate Text=NoCheckPhotosHaveBeenTakenWithThisPurchase}" IsVisible="False"
                    Style="{DynamicResource Discription}"/>
         </StackLayout>
   </ContentView.Content>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
              xmlns:renderers="clr-namespace:ShoppingReminder.Renderers"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.GroupPage">
   <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
@@ -15,22 +16,21 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <renderers:SelectableEntry Grid.Column="0" Text="{Binding Name,Mode=OneWay}" Unfocused="NameEntry_Unfocused" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{DynamicResource Entry}" />
-                <Button Text="очистить" Grid.Column="1"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                <Button Text="передать" Grid.Column="2"  Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}"/>
-                <Button Text="выбрать" Grid.Column="3" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
+                <Button Text="{languages:Translate Clear}" Grid.Column="1"  Command="{Binding ClearGroupCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="{languages:Translate Share}" Grid.Column="2"  Command="{Binding ListVM.SharePurchasesCommand}" CommandParameter="{Binding}" Style="{DynamicResource ShareBtn}"/>
+                <Button Text="{languages:Translate Select}" Grid.Column="3" Command="{Binding ListVM.ActivateGroupCommand}" CommandParameter="{Binding}"  HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>                
             </Grid>
             <BoxView Style="{DynamicResource Separator}"/>
             
             <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
                 <Label/>
-                <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=ListIsEmpty}"   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text=" - добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text="{languages:Translate Text=AddNewPurchase, Before=' - '}" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>   
 
-            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedGroupItem, Mode=TwoWay}"  VerticalScrollBarVisibility="Always"
-                      HasUnevenRows="True" VerticalOptions="CenterAndExpand">
+            <ListView x:Name="purchaseList" ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedGroupItem, Mode=TwoWay}" HasUnevenRows="True" VerticalOptions="CenterAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -62,7 +62,7 @@
             </ListView>
             <BoxView Style="{DynamicResource Separator}"/>
             <StackLayout Spacing="0" Margin="0" Padding="0">
-                <Button Text="добавить" Command="{Binding CreateGroupItemCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Button Text="{languages:Translate Text=Add}" Command="{Binding CreateGroupItemCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

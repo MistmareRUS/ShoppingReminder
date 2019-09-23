@@ -9,7 +9,7 @@ using ShoppingReminder.Droid.Dependecies;
 [assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
 namespace ShoppingReminder.Droid
 {
-    [Activity(Label = "Shopping Reminder", Icon = "@drawable/icon100",  MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize,
+    [Activity(Label = "ShoppingReminder", Icon = "@drawable/icon100",  MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize,
         ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

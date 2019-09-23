@@ -2,17 +2,18 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.HistoryItemPage">
   <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Spacing="0" Margin="0" Padding="0">
                 <StackLayout Orientation="Horizontal" Spacing="0" Margin="0" Padding="0">
-                    <Label Text="Дата: " Style="{DynamicResource Discription}"/>
+                    <Label Text="{languages:Translate Text=Date}" Style="{DynamicResource Discription}"/>
                     <Label Text="{Binding Date,StringFormat='{}{0:dd MMM yyyy - HH:mm}'}" Style="{DynamicResource Header}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="Магазин: " Style="{DynamicResource Discription}"/>
+                    <Label Text="{languages:Translate Text=Shop}" Style="{DynamicResource Discription}"/>
                     <Label Text="{Binding ShopName}" Style="{DynamicResource Header}"/>                    
                 </StackLayout>
             </StackLayout>
@@ -42,7 +43,7 @@
             </ListView>
             <BoxView Style="{DynamicResource Separator}"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="0" Margin="0" Padding="0">
-                <Button Text="удалить" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
+                <Button Text="{languages:Translate Text=Delete}" Command="{Binding ListVM.DeleteHistoryItemCommand}" CommandParameter="{Binding Id}" Style="{DynamicResource DeleteBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>

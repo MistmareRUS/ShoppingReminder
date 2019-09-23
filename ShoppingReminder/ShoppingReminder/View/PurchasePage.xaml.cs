@@ -2,7 +2,7 @@
 using ShoppingReminder.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,11 +28,23 @@ namespace ShoppingReminder.View
 
             ViewModel = vm;
             BindingContext = ViewModel;
+            UnitsPicker.Unfocused += (s,e) => UnfocusHelper(s,e);
+        }
+        void UnfocusHelper(object o,FocusEventArgs e)
+        {
+            //Navigation.RemovePage(Navigation.ModalStack[0]);
+            //Navigation.RemovePage(Navigation.NavigationStack[0]);
+            //Shell.Current.GoToAsync("//CurrentFI/ActieveTab/Active");
 
+            //Picker p = o as Picker;
+            //var n = p.Navigation;
+            
+            nameEntry.Focus();
+            nameEntry.Unfocus();
         }
         private void UnitsPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ViewModel.Units = UnitsPicker.Items[UnitsPicker.SelectedIndex];            
+            ViewModel.Units = UnitsPicker.Items[UnitsPicker.SelectedIndex];
         }
     }
 }

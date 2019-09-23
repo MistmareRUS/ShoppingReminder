@@ -3,28 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
              xmlns:renderers="clr-namespace:ShoppingReminder.Renderers"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.GroupItemPage" ClassId="ItemPage">
   <ContentView.Content>
       <StackLayout>
             <local:AdMobView Style="{StaticResource AdBlock}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="{languages:Translate Text=Group}" Style="{DynamicResource Discription}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
+                <Label Grid.Column="1" Text="{Binding ListVM.Name}" Style="{DynamicResource Header}" HorizontalOptions="Center"/>
+                <Button  Grid.Column="2"  Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource DeleteBtn}"/>
+                <Button  Grid.Column="3" Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource MoveBtn}"/>
+            </Grid>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Группа :" Style="{DynamicResource Discription}"/>
-                <Label Text="{Binding ListVM.Name}" Style="{DynamicResource Header}"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button  Command="{Binding ListVM.DeleteGroupItemCommand}" CommandParameter="{Binding}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button  Command="{Binding ListVM.MoveItemCommand}" CommandParameter="{Binding}" HorizontalOptions="End" Style="{DynamicResource MoveBtn}"/>
-                </StackLayout>
             </StackLayout>
             <StackLayout>
-                <Label Text="Название:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=Title}" Style="{DynamicResource Discription}"/>
                 <Entry Text="{Binding Name}" Style="{DynamicResource Entry}"/>
-                <Label Text="Количество:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=Quantity}" Style="{DynamicResource Discription}"/>
                 <renderers:SelectableEntry Text="{Binding Count}" Style="{DynamicResource Entry}" Keyboard="Telephone"/>
-                <Label Text="Ед. измерения:" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=Units}" Style="{DynamicResource Discription}"/>
                 <Picker x:Name="UnitsPicker" SelectedIndexChanged="UnitsPicker_SelectedIndexChanged" SelectedItem="{Binding Units}" Style="{DynamicResource Picker}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                <Button Text="ок" Command="{Binding ListVM.SaveGroupItemCommand}" CommandParameter="{Binding}" 
+                <Button Text="{languages:Translate Text=Ok}" Command="{Binding ListVM.SaveGroupItemCommand}" CommandParameter="{Binding}" 
                         HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" Style="{DynamicResource OkBtn}" />
             </StackLayout>
         </StackLayout>

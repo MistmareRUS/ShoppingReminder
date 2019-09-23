@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace ShoppingReminder.Droid
 {
-    [Activity(Label = "Shopping Reminder", MainLauncher = true, Theme = "@style/Theme.Splash", NoHistory = true, Icon = "@drawable/Icon100")]
+    [Activity(Label = "ShoppingReminder", MainLauncher = true, Theme = "@style/Theme.Splash", NoHistory = true, Icon = "@drawable/Icon100")]
     public class SplashScreen : Activity
     {
         protected override void OnCreate(Bundle bundle)

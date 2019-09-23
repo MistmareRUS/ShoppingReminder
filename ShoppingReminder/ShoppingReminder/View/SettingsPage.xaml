@@ -4,6 +4,7 @@
              xmlns:view="clr-namespace:ShoppingReminder.View"
              xmlns:themes="clr-namespace:ShoppingReminder.Themes"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.SettingsPage">
   <ContentView.Content>
       <StackLayout>
@@ -13,15 +14,14 @@
             <Label/>
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Image Style="{DynamicResource SettingImg}"/>
-                <view:EnumPicker x:Name="ThemePicker" SelectedIndexChanged="ThemePicker_SelectedIndexChanged" Title="Выбрать тему оформления" 
+                <view:EnumPicker x:Name="ThemePicker" SelectedIndexChanged="ThemePicker_SelectedIndexChanged" Title="{languages:Translate Text=ChooseATheme}" 
                              SelectedItem="{Binding CurrentTheme}" Style="{DynamicResource Picker}" HorizontalOptions="CenterAndExpand" 
                     EnumType="{x:Type themes:Theme}"/>
             </StackLayout>
-            <Button Text="Очистить историю" Style="{DynamicResource SetBtn}" Command="{Binding ClearHistoryCommand}" VerticalOptions="CenterAndExpand"/>
-            <Button Text="Очистить группы" Style="{DynamicResource SetBtn}" Command="{Binding ClearGroupsCommand}" VerticalOptions="CenterAndExpand"/>
-            <Button Text="Очистить планы" Style="{DynamicResource SetBtn}" Command="{Binding ClearPlansCommand}" VerticalOptions="CenterAndExpand"/>
-            <Button Text="Удалить фотограФии" Style="{DynamicResource SetBtn}" Command="{Binding ClearPhotosCommand}" VerticalOptions="EndAndExpand"/>
-            <!--<Label Text="размер текста"/>-->
-        </StackLayout>
+            <Button Text="{languages:Translate Text=ClearTheHistory}"  Style="{DynamicResource SetBtn}" Command="{Binding ClearHistoryCommand}" VerticalOptions="CenterAndExpand"/>
+            <Button Text="{languages:Translate Text=ClearTheGroups}" Style="{DynamicResource SetBtn}" Command="{Binding ClearGroupsCommand}" VerticalOptions="CenterAndExpand"/>
+            <Button Text="{languages:Translate Text=ClearThePlans}" Style="{DynamicResource SetBtn}" Command="{Binding ClearPlansCommand}" VerticalOptions="CenterAndExpand"/>
+            <Button Text="{languages:Translate Text=DeleteThePhotos}" Style="{DynamicResource SetBtn}" Command="{Binding ClearPhotosCommand}" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
   </ContentView.Content>
 </ContentView>

@@ -1,4 +1,5 @@
-﻿using ShoppingReminder.Model;
+﻿using ShoppingReminder.Languages;
+using ShoppingReminder.Model;
 using ShoppingReminder.View;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,7 @@ namespace ShoppingReminder.ViewModel
             var text = (Entry)obj;
             if (string.IsNullOrEmpty(text.Text)|| PlanList.Any(p => p.Name.ToLower() == text.Text.ToLower()))
             {
-                Main.DisplayAlert("Внимание!", "Введите название, которого еще нет в списке.", "Ок");
+                Main.DisplayAlert(Resource.Attention + "!", Resource.EnterANameThatIsNotYetListed, Resource.Ok);
                 return;
             }
             App.Database.SavePlanItem(new Plan(){ Name = text.Text });
@@ -98,7 +99,7 @@ namespace ShoppingReminder.ViewModel
         }
         private async  void DeletePlanItem(object obj)
         {
-            var confirm = await Main.DisplayAlert("Внимание!", "Удалить этот предмет из списка?", "Да", "Нет");
+            var confirm = await Main.DisplayAlert(Resource.Attention + "!", Resource.RemoveThiItemFromTheList +"? ", Resource.Yes, Resource.No);
             if (confirm)
             {
                 PlanViewModel temp = (PlanViewModel)obj;
@@ -110,22 +111,22 @@ namespace ShoppingReminder.ViewModel
         private async void AddToCurrentPurchase(object obj)
         {
             PlanViewModel tempPlan = (PlanViewModel)obj;
-            var dirs =Main.groups.GroupsList.Where(g => g.Name != "Без названия").Select(g => g.Name).ToArray();
+            var dirs =Main.groups.GroupsList.Where(g => g.Name != Resource.WithoutTitle).Select(g => g.Name).ToArray();
             string[] directions = new string[dirs.Length + 2];
-            directions[0] = "В активный список";
+            directions[0] = Resource.ToActiveList;
             for (int i = 1; i <= dirs.Length; i++)
             {
                 directions[i] = dirs[i - 1];
             }
-            directions[directions.Length - 1] = "Поделиться";
-            var direct = await Main.DisplayActionSheet($"Переместить \"{tempPlan.Name}\" в ...", "Отмена", null, directions);                       
+            directions[directions.Length - 1] = Resource.Share;
+            var direct = await Main.DisplayActionSheet(Resource.Move+" \""+ tempPlan.Name+"\" "+Resource.to+ "...", Resource.Cancel, null, directions);                       
             if (direct == directions[0])//к активным
             {
                 PurchaseViewModel purchase = new PurchaseViewModel() { Name = tempPlan.Name,ListVM = Main.activePurchases };
 
                 if (App.CurrentPurchases.Any(p => p.Name.ToLower() == purchase.Name.ToLower()))
                 {
-                    await Main.DisplayAlert("Внимание!", $"\"{tempPlan.Name}\" уже имеется в списке.", "Ok");
+                    await Main.DisplayAlert(Resource.Attention + "!", $"\"{tempPlan.Name}\" " +Resource.IsAlreadyInTheList, Resource.Ok);
                     return;
                 }
                 App.CurrentPurchases.Add(purchase);
@@ -136,7 +137,7 @@ namespace ShoppingReminder.ViewModel
                 {
                     ((Tab)(Main.CompletedPurchasesStackLayout.Parent.Parent.Parent.Parent)).IsEnabled = true;
                 }
-                await Main.DisplayAlert("", $"\"{tempPlan.Name}\" добавлено к активному списку", "Ок");
+                await Main.DisplayAlert("", $"\"{tempPlan.Name}\" "+Resource.AddedToCurrentList, Resource.Ok);
             }
             else if(direct == directions[directions.Length - 1])//отправка по сети
             {
@@ -146,10 +147,10 @@ namespace ShoppingReminder.ViewModel
                 }
                 catch
                 {
-                    await Main.DisplayAlert("Внимание!", "Кажется, ваше устройство не поддерживает эту функцию.", "Ок");
+                    await Main.DisplayAlert(Resource.Attention + "!", Resource.YourDeviceDoesNotSupportThisFeature, Resource.Ok);
                     return;
                 }
-                bool clear = await Main.DisplayAlert("Внимание!", $"Удалить \"{tempPlan.Name}\" из списка?", "Ок", "Отмена");
+                bool clear = await Main.DisplayAlert(Resource.Attention + "!",  Resource.Delete+" \""+ tempPlan.Name+"\" "+ Resource.FromTheList, Resource.Ok, Resource.No);
                 if (clear)
                 {
                     App.Database.DeletePlanItem(tempPlan.Id);
@@ -165,7 +166,7 @@ namespace ShoppingReminder.ViewModel
                 }
                 else if (Main.groups.GroupsList[grIndex].PurchasesList.Any(p => p.Name.ToLower() == tempPlan.Name.ToLower()))
                 {
-                    await Main.DisplayAlert("Внимание!", $"\"{tempPlan.Name}\" уже есть в списке.", "Ok");
+                    await Main.DisplayAlert(Resource.Attention + "!", $"\"{tempPlan.Name}\" "+Resource.IsAlreadyInTheList , Resource.Ok);
                     return;
                 }
                 Main.groups.GroupsList[grIndex].PurchasesList.Add(new Purchase() { Name = tempPlan.Name });

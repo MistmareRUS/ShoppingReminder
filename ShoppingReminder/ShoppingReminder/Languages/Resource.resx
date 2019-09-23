@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="AddedToCurrentList" xml:space="preserve">
+    <value>добавлено к текущему списку</value>
+  </data>
+  <data name="AddNewProduct" xml:space="preserve">
+    <value>Добавить новый товар</value>
+  </data>
+  <data name="AddNewPurchase" xml:space="preserve">
+    <value>Добавить новый товар</value>
+  </data>
+  <data name="AddPhotosOfReceipts" xml:space="preserve">
+    <value>Добавить фотографии чеков</value>
+  </data>
+  <data name="AddToCurrentList" xml:space="preserve">
+    <value>Добавить к текущему</value>
+  </data>
+  <data name="AllProductsAreMarkedAsPurchasedYouCan" xml:space="preserve">
+    <value>Все товары отмечены, как купленные. Вы можете</value>
+  </data>
+  <data name="AnErrorOccurredWhileUninstalling" xml:space="preserve">
+    <value>Произошла ошибка при удалении</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Внимание</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ChooseATheme" xml:space="preserve">
+    <value>Выбрать тему оформления</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="ClearCurrentShoppingList" xml:space="preserve">
+    <value>Очистить текущий список покупок</value>
+  </data>
+  <data name="ClearTheGroups" xml:space="preserve">
+    <value>Очистить группы</value>
+  </data>
+  <data name="ClearTheHistory" xml:space="preserve">
+    <value>Очистить историю</value>
+  </data>
+  <data name="ClearThePlans" xml:space="preserve">
+    <value>Очистить планы</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
+  <data name="CompleteThePurchase" xml:space="preserve">
+    <value>Завершить покупку</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="DeleteThePhotos" xml:space="preserve">
+    <value>Удалить фотографии</value>
+  </data>
+  <data name="DeleteThisProductGroup" xml:space="preserve">
+    <value>Удалить данную группу товаров</value>
+  </data>
+  <data name="DoNotIndicate" xml:space="preserve">
+    <value>Не указывать</value>
+  </data>
+  <data name="EnterANameForTheGoup" xml:space="preserve">
+    <value>Введите название для группы</value>
+  </data>
+  <data name="FromTheListOfGroups" xml:space="preserve">
+    <value>из списка групп</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Группа</value>
+  </data>
+  <data name="ListIsEmpty" xml:space="preserve">
+    <value>Список пуст</value>
+  </data>
+  <data name="MakeThitGroupAnActiveList" xml:space="preserve">
+    <value>Сделать данную группу активным списком?</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Переместить</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="NoCheckPhotosHaveBeenTakenWithThisPurchase" xml:space="preserve">
+    <value>С данной покупкой не было сделано ни одной фотографии чеков</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="Photos" xml:space="preserve">
+    <value>Фото</value>
+  </data>
+  <data name="PlannedPurchase" xml:space="preserve">
+    <value>Запланированная покупка</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Продукты</value>
+  </data>
+  <data name="PurchaseReceiptsFrom" xml:space="preserve">
+    <value>Чеки покупок от</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="ReplaceWithThisList" xml:space="preserve">
+    <value>Заменить этим списком</value>
+  </data>
+  <data name="ReplaceWithThisListAndSaveTheActiveListInANewGroup" xml:space="preserve">
+    <value>Заменить этим списком, а активный сохранить в новую группу</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Передать</value>
+  </data>
+  <data name="ShareAGroup" xml:space="preserve">
+    <value>Поделиться группой</value>
+  </data>
+  <data name="Shop" xml:space="preserve">
+    <value>Магазин</value>
+  </data>
+  <data name="TheListIsEmptyTheOperationWasCanceled" xml:space="preserve">
+    <value>Список пуст. Оперция отменена</value>
+  </data>
+  <data name="ThereAreItemsInTheActiveList" xml:space="preserve">
+    <value>В активном списке есть элементы.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Ед. измерения</value>
+  </data>
+  <data name="WereAlreadyOnTheList" xml:space="preserve">
+    <value>уже были в списке</value>
+  </data>
+  <data name="WithoutTitle" xml:space="preserve">
+    <value>Без названия</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="YourDeviceDoesNotSupportThisFeature" xml:space="preserve">
+    <value>Ваше устройство не поддерживает эту функцию</value>
+  </data>
+  <data name="AlreadyOnTheListOfPlans" xml:space="preserve">
+    <value>уже есть в списке планов</value>
+  </data>
+  <data name="DeletePhoto" xml:space="preserve">
+    <value>Удалить фото</value>
+  </data>
+  <data name="DeletePhotosAttachedToThisList" xml:space="preserve">
+    <value>Удалить фотографии прикрепленные к данному списку</value>
+  </data>
+  <data name="DeleteThisListFromPurchaseHistory" xml:space="preserve">
+    <value>Удалить данный список из истории покупок</value>
+  </data>
+  <data name="EnterANameThatIsNotYetListed" xml:space="preserve">
+    <value>Введите название, которого еще нет в списке</value>
+  </data>
+  <data name="FillTheName" xml:space="preserve">
+    <value>Заполните название</value>
+  </data>
+  <data name="FromTheList" xml:space="preserve">
+    <value>из списка</value>
+  </data>
+  <data name="IsAlreadyInTheList" xml:space="preserve">
+    <value>уже имеется в списке</value>
+  </data>
+  <data name="MovedToGroup" xml:space="preserve">
+    <value>Переммещено в группу</value>
+  </data>
+  <data name="MovedToPlans" xml:space="preserve">
+    <value>Перемещено в планы</value>
+  </data>
+  <data name="PhotosHaveBeenDeleted" xml:space="preserve">
+    <value>Фотографии были удалены</value>
+  </data>
+  <data name="RemoveFromList" xml:space="preserve">
+    <value>Удалить из списка</value>
+  </data>
+  <data name="ThereAreNoPhotos" xml:space="preserve">
+    <value>Нет фотографий</value>
+  </data>
+  <data name="TitleCannotBeEmpty" xml:space="preserve">
+    <value>Название не может быть пустым</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>в</value>
+  </data>
+  <data name="ToActiveList" xml:space="preserve">
+    <value>В активны список</value>
+  </data>
+  <data name="ToPlans" xml:space="preserve">
+    <value>В планы</value>
+  </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Доступ отклонен</value>
+  </data>
+  <data name="AddedTo" xml:space="preserve">
+    <value>Добавлено в</value>
+  </data>
+  <data name="AddedToThePlans" xml:space="preserve">
+    <value>Добавлено в планы</value>
+  </data>
+  <data name="AllThePhotos" xml:space="preserve">
+    <value>Все фото</value>
+  </data>
+  <data name="CameraNotAvailable" xml:space="preserve">
+    <value>Камера не доступна</value>
+  </data>
+  <data name="CreateNewGroup" xml:space="preserve">
+    <value>Создать новую группу</value>
+  </data>
+  <data name="DeleteAll" xml:space="preserve">
+    <value>удалить все</value>
+  </data>
+  <data name="EnterStoreName" xml:space="preserve">
+    <value>Введите название магазина</value>
+  </data>
+  <data name="FICurrentPurcases" xml:space="preserve">
+    <value>Текущие покупки</value>
+  </data>
+  <data name="FIEnterReceivedList" xml:space="preserve">
+    <value>Ввести полученный список</value>
+  </data>
+  <data name="FIGroups" xml:space="preserve">
+    <value>Группы</value>
+  </data>
+  <data name="FIHistory" xml:space="preserve">
+    <value>История покупок</value>
+  </data>
+  <data name="FIPlans" xml:space="preserve">
+    <value>Запланированные</value>
+  </data>
+  <data name="FIRateApp" xml:space="preserve">
+    <value>Оценить приложение</value>
+  </data>
+  <data name="FISettings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="FITActivePurchases" xml:space="preserve">
+    <value>Активные покупки</value>
+  </data>
+  <data name="FITHistoryOfPurchases" xml:space="preserve">
+    <value>История покупок</value>
+  </data>
+  <data name="FITPhotos" xml:space="preserve">
+    <value>Фото</value>
+  </data>
+  <data name="FITPurcased" xml:space="preserve">
+    <value>Купленные</value>
+  </data>
+  <data name="Later" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="NeedToBuy" xml:space="preserve">
+    <value>Нужно купить</value>
+  </data>
+  <data name="NotAllPurchasesAreCompletedWhichOnesToSave" xml:space="preserve">
+    <value>Не все покупки завершены. Какие из них сохранить</value>
+  </data>
+  <data name="NotIndicated" xml:space="preserve">
+    <value>Не указано</value>
+  </data>
+  <data name="PasteTheCopiedMessageReceivedFromAnotherUser" xml:space="preserve">
+    <value>Вставьте полученое от другого пользователя скопированное сообщение</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Оценить</value>
+  </data>
+  <data name="RemoveThiItemFromTheList" xml:space="preserve">
+    <value>Удалить этот предмет из списка</value>
+  </data>
+  <data name="SaveAll" xml:space="preserve">
+    <value>Сохранить все</value>
+  </data>
+  <data name="SaveCompletedAndTransferTheRemainingToTheNextPurchase" xml:space="preserve">
+    <value>Сохранить завершенные, а оставшиеся перенести на следующую покупку</value>
+  </data>
+  <data name="SaveOnlyCmpleted" xml:space="preserve">
+    <value>Сохранить только завершенные</value>
+  </data>
+  <data name="ShareYourCurrentShoppingList" xml:space="preserve">
+    <value>Поделиться текущим списком покупок</value>
+  </data>
+  <data name="TheMemoryContainsAListWhereToSendIt" xml:space="preserve">
+    <value>В памяти содержится список. Куда его отправить</value>
+  </data>
+  <data name="ThereAre" xml:space="preserve">
+    <value>Всего</value>
+  </data>
+  <data name="ThereAreNoGoodsOrPhotosOfReceiptsToSaveSavingIsNotPossible" xml:space="preserve">
+    <value>Нет ни товаров, ни фотографий чеков для сохранения. Сохранение невозможно</value>
+  </data>
+  <data name="ThereAreNoProductsInTheListSaveOnlyPhoto" xml:space="preserve">
+    <value>В списке нет ни одного товара. Сохранить только фото</value>
+  </data>
+  <data name="ThereIsNoSuitableListInMemoryOpenTheSentMessageAndCopyItToTheClipboard" xml:space="preserve">
+    <value>В памяти нет подходящего списка. Откройте присланное сообщение и скопируйте его в буфер обмена</value>
+  </data>
+  <data name="ToFullyApplyTheThemeYouMustRestartTheApplication" xml:space="preserve">
+    <value>Для полного применения темы необходимо перезапустить приложение</value>
+  </data>
+  <data name="UnhandledPage" xml:space="preserve">
+    <value>Необратотанная страница</value>
+  </data>
+  <data name="UnitsList" xml:space="preserve">
+    <value>Шт,Кг,Упак,л</value>
+  </data>
+  <data name="WereAlredyOnTheList" xml:space="preserve">
+    <value>уже были в списке</value>
+  </data>
+  <data name="YouCanRateTheAppThisWillHelpToPromoteIt" xml:space="preserve">
+    <value>Вы можете оценить приложение. Это поможет его продвижению</value>
+  </data>
+  <data name="YouCanUseThisMessageInTheShoppingRemnderApplicationByCopyingIt" xml:space="preserve">
+    <value>Это сообщение можно использовать в приложении ShoppingReminder, скопировав его</value>
+  </data>
+</root>

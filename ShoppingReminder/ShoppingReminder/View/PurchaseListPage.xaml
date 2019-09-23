@@ -2,36 +2,37 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.PurchaseListPage">
     <ContentView.Content>
         <StackLayout Spacing="0" Margin="0" Padding="0">
             <local:AdMobView Style="{StaticResource AdBlock}"/>
             <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="0" Margin="0" Padding="0">
-                <Button Text="фото" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
+                <Button Text="{languages:Translate Text=Photos}" HorizontalOptions="Start" Command="{Binding TakePhotoCommand}" Style="{DynamicResource PhotoBtn}"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button Text="очистить"  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
-                    <Button Text="передать"  Command="{Binding SharePurchasesCommand}" Style="{DynamicResource ShareBtn}"/>
-                    <Button Text="завершить" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
+                    <Button Text="{languages:Translate Text=Clear}"  Command="{Binding ClearPurchaseCommand}" Style="{DynamicResource DeleteBtn}"/>
+                    <Button Text="{languages:Translate Text=Share}"  Command="{Binding SharePurchasesCommand}" Style="{DynamicResource ShareBtn}"/>
+                    <Button Text="{languages:Translate Text=Complete}" Command="{Binding CompletePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource OkBtn}"/>
                 </StackLayout>
             </StackLayout>
             <BoxView Style="{DynamicResource Separator}"/>
             <StackLayout x:Name="emptyListstack" IsVisible="False" Spacing="0" Margin="0" Padding="0">
                 <Label/>
-                <Label Text="Список пуст."   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
+                <Label Text="{languages:Translate Text=ListIsEmpty}"   HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text=" - добавить новый товар" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text="{languages:Translate Before=' - ', Text=AddNewProduct}" x:Name="emptyListLabel"  HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" x:Name="allCompliteListStack" IsVisible="False" VerticalOptions="CenterAndExpand" Spacing="0" Margin="0" Padding="0">
                 <Label/>
-                <Label  Text="Все товары отмечены, как купленные. Вы можете:" HorizontalOptions="CenterAndExpand" Style="{DynamicResource Discription}"/>
+                <Label  Text="{languages:Translate Text=AllProductsAreMarkedAsPurchasedYouCan}" HorizontalOptions="CenterAndExpand" Style="{DynamicResource Discription}"/>
                 <Label/>
-                <Label  Text=" - завершить покупку" x:Name="completeLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text="{languages:Translate Before=' - ', Text=CompleteThePurchase}" x:Name="completeLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text=" - добавить фотографии чеков" x:Name="photoLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text="{languages:Translate Before=' - ', Text=AddPhotosOfReceipts}" x:Name="photoLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
-                <Label  Text=" - добавить новый товар" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
+                <Label  Text="{languages:Translate Before=' - ', Text=AddNewProduct}" x:Name="addNewLbl" HorizontalOptions="StartAndExpand" Style="{DynamicResource Link}"/>
                 <Label/>
             </StackLayout>
             
@@ -71,7 +72,7 @@
             </ListView>
             <BoxView Style="{DynamicResource Separator}"/>            
             <StackLayout Spacing="0" Margin="0" Padding="0">
-                <Button Text="добавить" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Button Text="{languages:Translate Text=Add}" Command="{Binding CreatePurchaseCommand}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

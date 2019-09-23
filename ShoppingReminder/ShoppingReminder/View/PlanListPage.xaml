@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingReminder.Ad"
+             xmlns:languages="clr-namespace:ShoppingReminder.Languages"
              x:Class="ShoppingReminder.View.PlanListPage">
   <ContentView.Content>
       <StackLayout>
@@ -32,8 +33,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Vertical">
-                <Entry Placeholder="Введите запланированную покупку..." x:Name="newPlanEntry" HorizontalTextAlignment="Center" Style="{DynamicResource Entry}"/>
-                <Button Text="добавить" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
+                <Entry Placeholder="{languages:Translate Text=PlannedPurchase, After='...'}" x:Name="newPlanEntry" HorizontalTextAlignment="Center" Style="{DynamicResource Entry}"/>
+                <Button Text="{languages:Translate Text=Add}" Command="{Binding CreateCommand}" CommandParameter="{x:Reference newPlanEntry}" HorizontalOptions="End" Style="{DynamicResource AddBtn}"/>
             </StackLayout>
       </StackLayout>
   </ContentView.Content>
